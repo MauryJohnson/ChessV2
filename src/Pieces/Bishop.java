@@ -1,9 +1,13 @@
 package Pieces;
 
-import Main.*;
 import Moves.*;
 
-public class Bishop<T,Q,R> extends Board implements UpLeft<T,Q,R>,UpRight<T,Q,R>,DownLeft<T,Q,R>,DownRight<T,Q,R>{
+public class Bishop<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>,DownLeft<T,Q,R>,DownRight<T,Q,R>{
+
+	public Bishop(char Player) {
+		super(Player);
+		// TODO Auto-generated constructor stub
+	}
 
 	//Position of piece, can be used to calculate where all pieces are on board
 	int [] Position;

@@ -1,10 +1,13 @@
 package Pieces;
 
-import Main.*;
-
 import Moves.*;
 
-public class Rooke<T,Q,R> extends Board implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q,R>,Right<T,Q,R> {
+public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q,R>,Right<T,Q,R> {
+	
+	public Rooke(char Player) {
+		super(Player);
+		// TODO Auto-generated constructor stub
+	}
 
 	//Position of piece, can be used to calculate where all pieces are on board
 	int [] Position;

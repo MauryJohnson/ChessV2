@@ -1,0 +1,11 @@
+How to use apply!
+
+[1,....,8] are in the coordinates corresponding to the clockwise positions of the piece.
+[9,....,16] determine if that piece is enemy in the one to one correspondence with the FIRST SET 
+in terms of position
+[>=17] - piece is an ally
+[<=0] - ERROR cases... -1 if out of bounds...
+
+apply one of these ints corresponding to the transition from pos1[] to pos2[]. 
+
+Of course, each piece will have to interpolate if this is valid for their moveset.

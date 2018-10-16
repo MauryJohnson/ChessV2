@@ -2,16 +2,16 @@ package Main;
 
 public class Board extends Game {
     
-	char[][] Board = new char[8][8];
+	public static char[][] Board = new char[8][8];
     
 	//
 	public Board() {
 		//Create new Board
 		//Later on create Board of classes, each position either has a piece or does not
 				//Each piece will be classified like this, each char pertains to a different type of piece. Char used to name a piece
-				
 		
 				//*********** THIS IS RAW BOARD, NO PLAYERS IMPLEMENTED YET, SO THIS WILL REPRESENT THE BOARD WITHOUT PLAYERS
+		
 				char [] R1 = {'r','k','b','Q','K','b','k','r'};	
 				char [] R2 = {'p','p','p','p','p','p','p','p'};	
 				
