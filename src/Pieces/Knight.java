@@ -8,7 +8,7 @@ import Moves.*;
 //Special cases UpLeft, UpRight,DownLeft,DownRight
 //Since have knight, will move twice then go, ignoring all pieces hopped over except for the final position
 
-public class Knight<T,Q,R> extends Piece implements KnightLeftDown<T,Q,R>,KnightLeftUp<T,Q,R>,KnightRightDown<T,Q,R>,KnightRightUp<T,Q,R>{
+public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>,DownLeft<T,Q,R>,DownRight<T,Q,R>,KnightLeftDown<T,Q,R>,KnightLeftUp<T,Q,R>,KnightRightDown<T,Q,R>,KnightRightUp<T,Q,R>{
 	
 	//IF EVER IF EVER THAT THIS IS CREATED WITHOUT PIECE CREATED, INITIALIZE PIECE CLASS
 	public Knight(char Player) {
@@ -49,6 +49,30 @@ public class Knight<T,Q,R> extends Piece implements KnightLeftDown<T,Q,R>,Knight
 
 	@Override
 	public R TryKnightLeftDown() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public R TryDownRight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public R TryDownLeft() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public R TryUpRight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public R TryUpLeft() {
 		// TODO Auto-generated method stub
 		return null;
 	}
