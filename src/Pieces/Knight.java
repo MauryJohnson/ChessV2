@@ -10,13 +10,11 @@ import Moves.*;
 
 public class Knight<T,Q,R> extends Piece implements KnightLeftDown<T,Q,R>,KnightLeftUp<T,Q,R>,KnightRightDown<T,Q,R>,KnightRightUp<T,Q,R>{
 	
+	//IF EVER IF EVER THAT THIS IS CREATED WITHOUT PIECE CREATED, INITIALIZE PIECE CLASS
 	public Knight(char Player) {
 		super(Player);
 		// TODO Auto-generated constructor stub
 	}
-
-	//Position of piece, can be used to calculate where all pieces are on board
-	int [] Position;
 	
 	@Override
 	public R TryKnightRightUp() {

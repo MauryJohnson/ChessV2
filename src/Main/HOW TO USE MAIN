@@ -1,0 +1,4 @@
+Game is where Game starts
+ChessXX is NOTHING
+Board Depends on Game
+Player Depends on Board

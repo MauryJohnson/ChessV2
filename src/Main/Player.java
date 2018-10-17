@@ -7,9 +7,8 @@ import Pieces.*;
 public class Player extends Board{
 char Player;
 
-Piece R;
-Piece K;
-Piece B;
+Piece[] Pieces;
+
 
 public char[][] GetBoard(){
 	return Board;
@@ -21,10 +20,29 @@ public Player(char Player) {
 }
 
 public void INIT() {
-	R = new Rooke<int[],int[],int[][]>(Player);
-	K = new Knight<int[],int[],int[][]>(Player);
-	B = new Bishop<int[],int[],int[][]>(Player);
-		
+	//R = new Rooke<int[],int[],int[][]>(Player);
+	//N = new Knight<int[],int[],int[][]>(Player);
+	//B = new Bishop<int[],int[],int[][]>(Player);
+	Piece[] P = {new Rooke<int[],int[],int[][]>(Player),
+			new Knight<int[],int[],int[][]>(Player),
+			new Bishop<int[],int[],int[][]>(Player)
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			/* ADD MORE PIECES LATER */};
+	Pieces = P;
 }
 
 //Knight K<a,b,c>..

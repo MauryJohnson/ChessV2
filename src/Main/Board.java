@@ -6,6 +6,11 @@ public class Board extends Game {
     
 	//
 	public Board() {
+		if(Board[0][0]!='\u0000') {
+			//Board already Initialized... STATIC
+			System.out.println("Already Initialized Board, Continue");
+			return;
+		}
 		//Create new Board
 		//Later on create Board of classes, each position either has a piece or does not
 				//Each piece will be classified like this, each char pertains to a different type of piece. Char used to name a piece

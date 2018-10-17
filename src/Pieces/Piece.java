@@ -4,17 +4,16 @@ import Main.*;
 
 public abstract class Piece extends Player {
 
-	
-	public Piece(char Player) {
-		super(Player);
-		// TODO Auto-generated constructor stub
-	}
-
 	//Have to know what player piece has
 	char Player;
 	//Have to have current position of piece
 	int[] CurrentPosition = new int[2];
-	
+
+	//Constructs Player IF YOU EVER CREATED PIECE W/O PLAYER
+	public Piece(char Player) {
+		super(Player);
+		// TODO Auto-generated constructor stub
+	}
 	
 	public void SetPlayer(char c) {
 		this.Player = c;
