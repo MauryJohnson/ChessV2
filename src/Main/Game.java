@@ -9,6 +9,7 @@ public static void main(String[] args) {
 	Board B = new Board();
 	//B.Board[7][7] = 'O';
 	///System.out.println(B);
+	//TTTTT
 	
 	Player P1 = new Player('B');
 	P1.INIT();
