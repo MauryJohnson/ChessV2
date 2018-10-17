@@ -28,14 +28,38 @@ public static void main(String[] args) {
 	P2.Pieces[0].ApplyMove(new int[2]);
 	//////////////////////////
 	
-	P1.Board[7][7] = 'Y';
+	P1.Board[7][7] = 'r';
+	
+	int[] RET = {0};
 	
 	//More advanced testing...
-	((Knight<int[],int[],int[][]>)P2.Pieces[1]).TryKnightRightUp();
+	//KNIGHT TRY MOVE TESTING ALL
+	//PLAYER 2
+	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryDownLeft()[0]);
+	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryDownRight()[0]);
+	//PLAYER 1
+	/*ReturnStatus(((Knight<int[],int[],int[]>)P1.Pieces[1]).TryUpLeft()[0]);
+	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryUpRight()[0]);
+	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightRightUp()[0]);
+	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightRightDown()[0]);
+	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightLeftUp()[0]);
+	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightLeftDown()[0]);
+	*/
+	
+	
 	P1.Board[7][7] = 'Z';
-	((Bishop<int[],int[],int[][]>)P2.Pieces[2]).TryDownLeft();
+	//ReturnStatus(((Bishop<int[],int[],int[]>)P2.Pieces[2]).TryDownLeft()[0]);
 	/////////////////////////
 	
+}
+
+public static void ReturnStatus(int R) {
+	if(R<0) {
+		System.out.println("ERROR/BOUNDS ERROR");
+	}
+	else {
+		System.out.printf("RETURN STATUS: %d\n\n\n",R);
+	}
 }
 
 }

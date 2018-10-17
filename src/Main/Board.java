@@ -17,11 +17,11 @@ public class Board extends Game {
 		
 				//*********** THIS IS RAW BOARD, NO PLAYERS IMPLEMENTED YET, SO THIS WILL REPRESENT THE BOARD WITHOUT PLAYERS
 		
-				char [] R1 = {'r','k','b','Q','K','b','k','r'};	
+				char [] R1 = {'r','N','b','Q','K','b','N','r'};	
 				char [] R2 = {'p','p','p','p','p','p','p','p'};	
 				
 				char [] R3 = {'p','p','p','p','p','p','p','p'};	
-				char [] R4 = {'r','k','b','Q','K','b','k','r'};	
+				char [] R4 = {'r','N','b','Q','K','b','N','r'};	
 				
 				char []RN1 = {' ','#',' ','#',' ','#',' ','#'};	
 				char []RN2 = {'#',' ','#',' ','#',' ','#',' '};	
@@ -54,6 +54,16 @@ public class Board extends Game {
 					}
 				}
 	
+	}
+	
+	public static void PrintBoard() {
+		for(int i=0; i<Board.length;i+=1) {
+			for(int j=0; j<Board[i].length;j+=1) {
+				System.out.printf("%c",Board[i][j]);
+			}
+				System.out.println();
+		}
+		
 	}
 	
 	//For Printing out Board
