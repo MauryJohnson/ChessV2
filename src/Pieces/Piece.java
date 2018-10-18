@@ -9,7 +9,7 @@ public abstract class Piece extends Player {
 	//Points to Player K's Pieces, in order to find other ally Pieces in board.
 	public LinkedList<Piece> Pieces = new LinkedList<Piece>();
 	//Have to know what player piece has
-	char Player;
+	public char Player;
 	//Instant access of Piece type
 	public char Piece;
 	//Have to have current position of piece
@@ -146,26 +146,29 @@ public abstract class Piece extends Player {
 		return false;
 	}
 
-	public int[] ApplyMove(int[] P2) {
+	public int[] ApplyMove(int[] NextPosition) {
 		
-		System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],P2[0],P2[1]);
+		System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],NextPosition[0],NextPosition[1]);
 		
 		int[] R = new int[6];
 		//Return status keeps track of current player
 		R[3] = Piece;
+		
 		R[4] = CurrentPosition[0];
 		R[5] = CurrentPosition[1];
-		R[1] = P2[0];
-		R[2] = P2[1];
+		
+		R[1] = NextPosition[0];
+		R[2] = NextPosition[1];
+		
 		//Bounds check
-		if(P2[0]<0||P2[0]>7||P2[1]<0||P2[1]>7) {
+		if(NextPosition[0]<0||NextPosition[0]>7||NextPosition[1]<0||NextPosition[1]>7||CurrentPosition[0]<0||CurrentPosition[1]>7||CurrentPosition[1]<0||CurrentPosition[1]>7) {
 			System.out.println("Position out of bounds");
 			R[0] = -1;
 			return R;
 		}
 		//Collision check Enemy
 		//Create function GetPiece(P2)
-		R[0] = GetPotentialPiece(CurrentPosition,P2);
+		R[0] = GetPotentialPiece(CurrentPosition,NextPosition);                                                                                                              
 		//KillPiece(R);
 		return R;
 	}

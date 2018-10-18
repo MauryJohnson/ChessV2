@@ -2,3 +2,14 @@ Game is where Game starts
 ChessXX is NOTHING
 Board Depends on Game
 Player Depends on Board
+
+Player Set Up
+Every Piece k must have created piece k-1,...1 in order to set up each piece position and type correctly.
+This only has to be worried about initializing board. Adding new players to linked list should not effect
+this.
+
+GamePlay
+Each movement is done in game.
+If invalid move, ReturnStatusMove will return -1
+If valid move to free or attacked space, ReturnStatusMove return 0
+If valid move to free or attacked space and put opponent in check, return 1
