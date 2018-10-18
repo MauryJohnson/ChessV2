@@ -9,9 +9,10 @@ public class Game {
 	public static Player Opponent;
 	
 	public Game(Player P1, Player P2) {
-		this.Me = P1;
-		this.Opponent = P2;
+		Me = P1;
+		Opponent = P2;
 	}
+	
 public static void main(String[] args) {
 	
 	//This creates a board [8][8]
@@ -53,15 +54,15 @@ public static void main(String[] args) {
 	int[] RET = {0};
 	
 	G.SwapPlayer();
-	G.PrintPlayers();
 	
 	//More advanced testing...
 	//KNIGHT TRY MOVE TESTING ALL
 	//PLAYER 2
 	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownLeft());
-	G.Me.PrintBoard();
+	//G.Me.PrintBoard();
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight());
-	G.Me.PrintBoard();
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryUpLeft());
+	//G.Me.PrintBoard();
 	//PLAYER 1
 	
 	/*ReturnStatus(((Knight<int[],int[],int[]>)P1.Pieces[1]).TryUpLeft()[0]);
@@ -134,13 +135,16 @@ public void ReturnStatusMove(int[] R) {
 			//Ally Detected, do nothing
 		}
 	}
+	Me.PrintBoard();
 }
 
 public void SwapPlayer() {
 	Player Z = Me;
 	Me = Opponent;
 	Opponent = Z;
+	this.PrintPlayers();
 }
+
 //Destroy piece in board
 private void KillPiece(int[] K) {
 	// TODO Auto-generated method stub
@@ -165,6 +169,7 @@ private void KillPiece(int[] K) {
 			char typeGot = Opponent.Board[Got.CurrentPosition[0]][Got.CurrentPosition[1]];	
 			Me.Board=Me.CopyNewBoard(K[0],K[1],typeGot);
 			Me.Board=Me.CopyNewBoard(K[3],K[4],Me.WhichBlock(K[3],K[4]));
+			Got.CurrentPosition = K;
 			}
 		
 			return;
@@ -179,6 +184,7 @@ private void KillPiece(int[] K) {
 	char typeGot = Me.Board[Got.CurrentPosition[0]][Got.CurrentPosition[1]];	
 	Me.Board=Me.CopyNewBoard(K[0],K[1],typeGot);
 	Me.Board=Me.CopyNewBoard(K[3],K[4],Me.WhichBlock(K[3],K[4]));
+	Got.CurrentPosition=K;
 	}
 	
 }

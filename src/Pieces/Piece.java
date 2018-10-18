@@ -44,7 +44,7 @@ public abstract class Piece extends Player {
 		//ALLY PIECE
 		else if(AllyPiece(P2)) {
 			//Ally Piece, return >=17
-			return 17;
+			return ComputeWisePosition(P,P2)+16;
 		}
 		//ENEMY PIECE
 		else {
