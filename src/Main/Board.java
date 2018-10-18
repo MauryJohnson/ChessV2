@@ -68,6 +68,16 @@ public class Board extends Game {
 		
 	}
 	
+	public char[][] CopyBoard(int row, int column){
+		char [][]CP = new char[8][8];
+		for(int i=0;i<Board.length;i+=1) {
+			for(int j=0; j<Board[i].length;j+=1) {
+				CP[i][j] = Board[i][j];
+			}
+		}
+		return CP;
+	}
+	
 	public char[][] CopyNewBoard(int row, int column,char type){
 		char [][]CP = new char[8][8];
 		for(int i=0;i<Board.length;i+=1) {

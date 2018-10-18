@@ -61,7 +61,10 @@ public static void main(String[] args) {
 	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownLeft());
 	//G.Me.PrintBoard();
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight());
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryUpLeft());
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight());
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight());
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryKnightLeftDown());
+	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryUpLeft());
 	//G.Me.PrintBoard();
 	//PLAYER 1
 	
@@ -73,8 +76,7 @@ public static void main(String[] args) {
 	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightLeftDown()[0]);
 	*/
 	
-	
-	P1.Board[7][7] = 'Z';
+	//P1.Board[7][7] = 'Z';
 	//ReturnStatus(((Bishop<int[],int[],int[]>)P2.Pieces[2]).TryDownLeft()[0]);
 	/////////////////////////
 	
@@ -90,8 +92,20 @@ public void ReturnStatus(int[] R) {
 		System.out.println("ERROR/BOUNDS ERROR");
 	}
 	else {
-		System.out.printf("RETURN STATUS: %d\n\n\n",R[0]);
+		System.out.printf("RETURN STATUS: %d\n",R[0]);
 	}
+}
+
+public void PrintAllPieceStatus() {
+	System.out.println("\nMy Piece Stati");
+	for(int i=0; i<Me.Pieces.size();i+=1) {
+		System.out.printf("Piece:%c My Position:[%d,%d]\n",Me.Pieces.get(i).Piece,Me.Pieces.get(i).CurrentPosition[0],Me.Pieces.get(i).CurrentPosition[1]);
+	}
+	System.out.println("\nOpponent Piece Stati");
+	for(int i=0; i< Opponent.Pieces.size();i+=1) {
+		System.out.printf("Piece:%c My Position:[%d,%d]\n",Opponent.Pieces.get(i).Piece,Opponent.Pieces.get(i).CurrentPosition[0],Opponent.Pieces.get(i).CurrentPosition[1]);
+	}
+	System.out.println("");
 }
 
 public Piece GetPiece(int[] IT){
@@ -123,7 +137,7 @@ public void ReturnStatusMove(int[] R) {
 		System.out.println("ERROR / BOUNDS ERROR");
 	}
 	else {
-		System.out.printf("RETURN STATUS: %d\n\n\n",R[0]);
+		System.out.printf("\nRETURN STATUS: %d\n",R[0]);
 		if(R[0]>=1 && R[0]<=8 || R[0]>=9 && R[0]<=16) {
 			System.out.printf("\nMove to: [%d,%d] W\\ Piece: %c\n",R[1],R[2],(char)R[3]);
 			int[] K = {R[1],R[2],R[3],R[4],R[5]};
@@ -135,6 +149,7 @@ public void ReturnStatusMove(int[] R) {
 			//Ally Detected, do nothing
 		}
 	}
+	PrintAllPieceStatus();
 	Me.PrintBoard();
 }
 
@@ -151,6 +166,7 @@ private void KillPiece(int[] K) {
 	System.out.printf("Kill Piece in Position: [%d,%d] FROM: [%d,%d]\n",K[0],K[1],K[3],K[4]);
 	
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
+		System.out.printf("IF [%d,%d] == [%d,%d]\n",K[0],K[1],Opponent.Pieces.get(i).CurrentPosition[0],Opponent.Pieces.get(i).CurrentPosition[1]);
 		if(K[0]==Opponent.Pieces.get(i).CurrentPosition[0] && K[1]==Opponent.Pieces.get(i).CurrentPosition[1]) {
 			
 			System.out.printf("Kill Opponent Piece:%c @[%d,%d]",
@@ -160,7 +176,8 @@ private void KillPiece(int[] K) {
 			
 			Opponent.Pieces.get(i).CurrentPosition[0] = -1;
 			Opponent.Pieces.get(i).CurrentPosition[1] = -1;
-			Opponent.Board[K[0]][K[1]] = (char)K[2];
+			
+			//Opponent.Board[K[0]][K[1]] = (char)K[2];
 			
 			int [] Get = {K[3],K[4]};
 			Piece Got = GetPiece(Get);

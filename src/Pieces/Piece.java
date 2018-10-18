@@ -159,7 +159,7 @@ public abstract class Piece extends Player {
 
 	public int[] ApplyMove(int[] P2) {
 		
-		System.out.printf("FROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],P2[0],P2[1]);
+		System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],P2[0],P2[1]);
 		
 		int[] R = new int[6];
 		//Return status keeps track of current player
