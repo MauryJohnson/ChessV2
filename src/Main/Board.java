@@ -6,6 +6,8 @@ public class Board extends Game {
     
 	//
 	public Board() {
+		super(Me,Opponent);
+		
 		if(Board[0][0]!='\u0000') {
 			//Board already Initialized... STATIC
 			System.out.println("Already Initialized Board, Continue");
@@ -66,6 +68,47 @@ public class Board extends Game {
 		
 	}
 	
+	public char[][] CopyNewBoard(int row, int column,char type){
+		char [][]CP = new char[8][8];
+		for(int i=0;i<Board.length;i+=1) {
+			for(int j=0; j<Board[i].length;j+=1) {
+				if(i==row && j==column) {
+					CP[i][j]=type;
+					continue;
+				}
+				CP[i][j] = Board[i][j];
+			}
+		}
+		return CP;
+	}
+	
+	//Chooses which block to insert for a free space!
+	public char WhichBlock(int i, int j) {
+		// TODO Auto-generated method stub
+		if(i%2==0) {
+			//Even row
+			if(j%2!=0) {
+				//Even row, odd column
+				return '#';
+			}
+			else {
+				//Even row, even column
+				return ' ';
+			}
+		}
+		else {
+			//Odd Row
+			if(j%2!=0) {
+				//Odd row, odd column
+				return ' ';
+			}
+			else {
+				//Odd row, even column
+				return '#';
+			}
+			
+		}
+	}
 	//For Printing out Board
 	public String toString() {
 		String s ="";

@@ -1,13 +1,17 @@
 package Pieces;
 
+import java.util.LinkedList;
+
 import Main.*;
 
 public abstract class Piece extends Player {
 
 	//Points to Player K's Pieces, in order to find other ally Pieces in board.
-	public Piece[] Pieces;
+	public LinkedList<Piece> Pieces = new LinkedList<Piece>();
 	//Have to know what player piece has
 	char Player;
+	//Instant access of Piece type
+	public char Piece;
 	//Have to have current position of piece
 	public int[] CurrentPosition = new int[2];
 
@@ -145,8 +149,8 @@ public abstract class Piece extends Player {
 	//Check if found ally piece in that position
 	public boolean AllyPiece(int [] P) {
 		
-		for(int i=0;i<Pieces.length;i+=1) {
-			if(P[0]==Pieces[i].CurrentPosition[0] && P[1]==Pieces[i].CurrentPosition[1]) {
+		for(int i=0;i<Pieces.size();i+=1) {
+			if(P[0]==Pieces.get(i).CurrentPosition[0] && P[1]==Pieces.get(i).CurrentPosition[1]) {
 				return true;
 			}
 		}
@@ -157,15 +161,11 @@ public abstract class Piece extends Player {
 		
 		System.out.printf("FROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],P2[0],P2[1]);
 		
-		int[] R = new int[4];
+		int[] R = new int[6];
 		//Return status keeps track of current player
-		if(Player=='W') {
-			R[3] = 2;
-		}
-		else {
-			R[3] = 1;
-		}
-		
+		R[3] = Piece;
+		R[4] = CurrentPosition[0];
+		R[5] = CurrentPosition[1];
 		R[1] = P2[0];
 		R[2] = P2[1];
 		//Bounds check
@@ -179,6 +179,11 @@ public abstract class Piece extends Player {
 		R[0] = GetPotentialPiece(CurrentPosition,P2);
 		//KillPiece(R);
 		return R;
+	}
+
+	public void SetPiece(char c) {
+		// TODO Auto-generated method stub
+		this.Piece = c;
 	}
 
 	

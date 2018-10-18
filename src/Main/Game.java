@@ -5,7 +5,13 @@ import Pieces.*;
 //When Game class created, game is started
 //GAME CONTROLS PLAYERS,PIECES,BOARD,..
 public class Game {
-
+	public static Player Me;
+	public static Player Opponent;
+	
+	public Game(Player P1, Player P2) {
+		this.Me = P1;
+		this.Opponent = P2;
+	}
 public static void main(String[] args) {
 	
 	//This creates a board [8][8]
@@ -19,7 +25,7 @@ public static void main(String[] args) {
 	Player P2 = new Player('W');
 	P2.INIT();
 	/////////////////
-	
+		
 	//Board Update Test BOTH PLAYERS
 	P1.Board[7][7] = 'O';
 	P2.Pieces.get(1).ApplyMove(new int[2]);
@@ -31,14 +37,33 @@ public static void main(String[] args) {
 	
 	P1.Board[7][7] = 'r';
 	
+	//NEW GAME
+	Game G = new Game(P1,P2);
+	
+	//Swap Player Test
+	/*
+	G.PrintPlayers();
+	
+	G.SwapPlayer();
+	
+	G.PrintPlayers();
+	*/
+
+	//////////
 	int[] RET = {0};
+	
+	G.SwapPlayer();
+	G.PrintPlayers();
 	
 	//More advanced testing...
 	//KNIGHT TRY MOVE TESTING ALL
 	//PLAYER 2
-	ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownLeft(),P1);
-	ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight(),P2);
+	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownLeft());
+	G.Me.PrintBoard();
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight());
+	G.Me.PrintBoard();
 	//PLAYER 1
+	
 	/*ReturnStatus(((Knight<int[],int[],int[]>)P1.Pieces[1]).TryUpLeft()[0]);
 	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryUpRight()[0]);
 	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightRightUp()[0]);
@@ -54,7 +79,12 @@ public static void main(String[] args) {
 	
 }
 
-public static void ReturnStatus(int[] R) {
+public void PrintPlayers() {
+	System.out.printf("\n###########\nME: %c\n",Me.Player);
+	System.out.printf("Opponent: %c\n#############\n\n",Opponent.Player);
+}
+
+public void ReturnStatus(int[] R) {
 	if(R[0]<0) {
 		System.out.println("ERROR/BOUNDS ERROR");
 	}
@@ -63,17 +93,41 @@ public static void ReturnStatus(int[] R) {
 	}
 }
 
-public static void ReturnStatusMove(int[] R, Player Opponent) {
+public Piece GetPiece(int[] IT){
+	
+	for(int i=0; i<Me.Pieces.size();i+=1) {
+		if(IT[0]==Me.Pieces.get(i).CurrentPosition[0] && IT[1]==Me.Pieces.get(i).CurrentPosition[1]) {
+			int c1 = Me.Pieces.get(i).CurrentPosition[0];
+			int c2 = Me.Pieces.get(i).CurrentPosition[1];
+			System.out.printf("\n***Found Piece %c @ [%d,%d]***\n",Me.Board[c1][c2],c1,c2);
+			return Me.Pieces.get(i);
+		}
+	}
+	
+	for(int i=0; i<Opponent.Pieces.size();i+=1) {
+		if(IT[0]==Opponent.Pieces.get(i).CurrentPosition[0] && IT[1]==Opponent.Pieces.get(i).CurrentPosition[1]) {
+			int c1 = Opponent.Pieces.get(i).CurrentPosition[0];
+			int c2 = Opponent.Pieces.get(i).CurrentPosition[1];
+			System.out.printf("\n***Found Piece %c @ [%d,%d]***\n",Opponent.Board[c1][c2],c1,c2);
+			return Opponent.Pieces.get(i);
+		}
+	}
+	
+	//If no player pieces found in that spot
+	return null;
+}
+
+public void ReturnStatusMove(int[] R) {
 	if(R[0]<0) {
 		System.out.println("ERROR / BOUNDS ERROR");
 	}
 	else {
 		System.out.printf("RETURN STATUS: %d\n\n\n",R[0]);
 		if(R[0]>=1 && R[0]<=8 || R[0]>=9 && R[0]<=16) {
-			System.out.printf("\nMove to: [%d,%d]\n",R[1],R[2]);
-			int[] K = {R[1],R[2]};
+			System.out.printf("\nMove to: [%d,%d] W\\ Piece: %c\n",R[1],R[2],(char)R[3]);
+			int[] K = {R[1],R[2],R[3],R[4],R[5]};
 			
-			KillPiece(K,Opponent);
+			KillPiece(K);
 		
 		}
 		else if(R[0]>=17){
@@ -82,21 +136,54 @@ public static void ReturnStatusMove(int[] R, Player Opponent) {
 	}
 }
 
+public void SwapPlayer() {
+	Player Z = Me;
+	Me = Opponent;
+	Opponent = Z;
+}
 //Destroy piece in board
-private static void KillPiece(int[] K, Player Opponent) {
+private void KillPiece(int[] K) {
 	// TODO Auto-generated method stub
-	System.out.printf("Kill Piece in Position: [%d,%d]\n",K[0],K[1]);
+	System.out.printf("Kill Piece in Position: [%d,%d] FROM: [%d,%d]\n",K[0],K[1],K[3],K[4]);
 	
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
 		if(K[0]==Opponent.Pieces.get(i).CurrentPosition[0] && K[1]==Opponent.Pieces.get(i).CurrentPosition[1]) {
+			
+			System.out.printf("Kill Opponent Piece:%c @[%d,%d]",
+					Opponent.Pieces.get(i).Piece,
+					Opponent.Pieces.get(i).CurrentPosition[0],
+					Opponent.Pieces.get(i).CurrentPosition[1]);
+			
 			Opponent.Pieces.get(i).CurrentPosition[0] = -1;
 			Opponent.Pieces.get(i).CurrentPosition[1] = -1;
+			Opponent.Board[K[0]][K[1]] = (char)K[2];
+			
+			int [] Get = {K[3],K[4]};
+			Piece Got = GetPiece(Get);
+		
+			if(Got!=null) {
+			char typeGot = Opponent.Board[Got.CurrentPosition[0]][Got.CurrentPosition[1]];	
+			Me.Board=Me.CopyNewBoard(K[0],K[1],typeGot);
+			Me.Board=Me.CopyNewBoard(K[3],K[4],Me.WhichBlock(K[3],K[4]));
+			}
+		
 			return;
 		}
 	}
-	System.out.println("Free Space #/' '");
+	System.out.println("\n Found Free Space #/' '");
+	
+	int [] Get = {K[3],K[4]};
+	Piece Got = GetPiece(Get);
+
+	if(Got!=null) {
+	char typeGot = Me.Board[Got.CurrentPosition[0]][Got.CurrentPosition[1]];	
+	Me.Board=Me.CopyNewBoard(K[0],K[1],typeGot);
+	Me.Board=Me.CopyNewBoard(K[3],K[4],Me.WhichBlock(K[3],K[4]));
+	}
 	
 }
 
 }
+
+
 
