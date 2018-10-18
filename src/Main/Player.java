@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.LinkedList;
+
 import Pieces.*;
 
 //"Piece_NAME" is part of package
@@ -7,7 +9,9 @@ import Pieces.*;
 public class Player extends Board{
 char Player;
 
-public Piece[] Pieces;
+public LinkedList<Piece> Pieces = new LinkedList<Piece>();
+
+//public Piece[] Pieces;
 
 public char[][] GetBoard(){
 	return Board;
@@ -25,12 +29,12 @@ public  void INIT() {
 	if(Player=='W') {
 	 Piece[] P2 = {new Rooke<int[],int[],int[]>(Player),
 			new Knight<int[],int[],int[]>(Player),
-			new Bishop<int[],int[],int[]>(Player)
-			//
-			//
-			//
-			//
-			//
+			new Bishop<int[],int[],int[]>(Player),
+			//new Queen <int[],int[],int[]>(Player),
+			//new King <int[],int[],int[]>(Player),
+			//new Bishop<int[],int[],int[]>(Player),
+			//new Knight<int[],int[],int[]>(Player),
+			//new Rooke<int[],int[],int[]>(Player)
 			//
 			//
 			//
@@ -48,12 +52,11 @@ public  void INIT() {
 		 Piece[] P2 = {new Rooke<int[],int[],int[]>(Player),
 					new Knight<int[],int[],int[]>(Player),
 					new Bishop<int[],int[],int[]>(Player)
-					//
-					//
-					//
-					//
-					//
-					//
+					//new Queen <int[],int[],int[]>(Player),
+					//new King <int[],int[],int[]>(Player),
+					//new Bishop<int[],int[],int[]>(Player),
+					//new Knight<int[],int[],int[]>(Player),
+					//new Rooke<int[],int[],int[]>(Player)
 					//
 					//
 					//
@@ -73,6 +76,9 @@ public  void INIT() {
 	for(int i=0;i<P.length;i+=1) {
 		P[i].SetPlayer(Player);
 		P[i].Pieces = P;
+		//////////////////////////////////// LINKED LIST OF PIECES!!! IMPORTANT!!!!!!!
+		this.Pieces.add(P[i]);
+		////////////////////////////////////
 		if(Player == 'B') {
 		if(i<=7) {
 
@@ -103,12 +109,5 @@ public  void INIT() {
 		
 		}
 	}
-	this.Pieces = P;
 }
-
-//Knight K<a,b,c>..
-//...
-//...
-
-
 }

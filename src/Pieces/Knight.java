@@ -26,7 +26,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+2;
 		
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 		
 		return (R)Ret;
 	}
@@ -40,7 +40,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+2;
 				
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 
 		return (R)Ret;
 	}
@@ -54,7 +54,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-2;
 		
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 
 		return (R)Ret;
 	}
@@ -68,7 +68,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-2;
 		
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 
 		return (R)Ret;
 	}
@@ -82,7 +82,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+1;
 		
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 
 		return (R)Ret;
 	}
@@ -96,7 +96,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-1;
 		
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 
 		return (R)Ret;
 	}
@@ -110,7 +110,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+1;
 		
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 
 		return (R)Ret;
 	}
@@ -124,7 +124,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-1;
 		
 		int[] Ret = new int[1];
-		Ret[0] = ApplyMove(P);
+		Ret = ApplyMove(P);
 
 		return (R)Ret;
 	}

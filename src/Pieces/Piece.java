@@ -153,26 +153,33 @@ public abstract class Piece extends Player {
 		return false;
 	}
 
-	public int ApplyMove(int[] P2) {
+	public int[] ApplyMove(int[] P2) {
 		
 		System.out.printf("FROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],P2[0],P2[1]);
 		
+		int[] R = new int[4];
+		//Return status keeps track of current player
+		if(Player=='W') {
+			R[3] = 2;
+		}
+		else {
+			R[3] = 1;
+		}
+		
+		R[1] = P2[0];
+		R[2] = P2[1];
 		//Bounds check
 		if(P2[0]<0||P2[0]>7||P2[1]<0||P2[1]>7) {
 			System.out.println("Position out of bounds");
-			return -1;
+			R[0] = -1;
+			return R;
 		}
 		//Collision check Enemy
 		//Create function GetPiece(P2)
-		
-		/*
-		if(this instanceof Knight<?,?,?>) {
-		int[] DummyKnightPosition = {P2[0]-1,P2[1]};
-		return GetPotentialPiece(DummyKnightPosition,P2);	
-		}
-		*/
-		
-		return GetPotentialPiece(CurrentPosition,P2);
+		R[0] = GetPotentialPiece(CurrentPosition,P2);
+		//KillPiece(R);
+		return R;
 	}
+
 	
 }
