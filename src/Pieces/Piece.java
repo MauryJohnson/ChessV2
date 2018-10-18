@@ -32,14 +32,7 @@ public abstract class Piece extends Player {
 		//Iterate through board to find something 
 		if(Board[P2[0]][P2[1]]=='#' || Board[P2[0]][P2[1]]==' ') {
 			//Free Space, return [1,...,8]
-			if(this instanceof Knight<?,?,?>) {
-			//Knight Piece, special case, can hop over anyone
-			//Means clear to move to it, not coordinate case necessary
 			return ComputeWisePosition(P,P2);
-			}
-			else {
-			return ComputeWisePosition(P,P2);
-			}
 		}
 		//ALLY PIECE
 		else if(AllyPiece(P2)) {
@@ -49,10 +42,6 @@ public abstract class Piece extends Player {
 		//ENEMY PIECE
 		else {
 			//Kill Piece!
-			if(this instanceof Knight<?,?,?>) {
-				//Meaning clear to attack, no coordinate indication necessary for knight
-				return ComputeWisePosition(P,P2);
-			}
 			//Enemy Piece!!
 			return ComputeWisePosition(P,P2)+8;
 		}
