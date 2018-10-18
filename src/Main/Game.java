@@ -271,60 +271,32 @@ private boolean MeInCheck() {
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
 		LinkedList<int[]> R = new LinkedList<int[]>();
 		System.out.printf("\n\n^^^^^^^^^^^^CHECK TEST PIECE %d^^^^^^^^^^^^\n",i);
-		//IF Rooke
-		if(Opponent.Pieces.get(i) instanceof Rooke<?,?,?>) {
-			
+		AddAllSets(R,Opponent.Pieces.get(i));
+		if(KingAttacked(R)) {
+			return true;
 		}
-		//If Knight
-		if(Opponent.Pieces.get(i) instanceof Knight<?,?,?>) {
-			
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryUpRight());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryUpLeft());	
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryDownRight());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryDownLeft());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightRightUp());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightRightDown());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightLeftUp());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightLeftDown());
-			
-			if(KingAttacked(R)) {
-				return true;
-			}
-			
-		}
-		//If Bishop
-		if(Opponent.Pieces.get(i) instanceof Bishop<?,?,?>) {
-			
-			
-			
-		}
-		//If Queen
-		//if(Opponent.Pieces.get(i) instanceof Queen<?,?,?>) {
-			
-		//}
-		//If King
-		//if(Opponent.Pieces.get(i) instanceof King<?,?,?>) {
-			
-		//}
-		//If Pawn
-		//if(Opponent.Pieces.get(i) instanceof Pawn<?,?,?>) {
-			
-		//}
-		
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
 	
 	
-	System.out.println("\n I'm Not In Check Because of this move \n");
+	System.out.printf("\n %c(Me) Not In Check Because of My move \n",Me.Player);
 return false;	
 }
 
 
 //Check if king is attacked given list of all positions that are attacked
 private boolean KingAttacked(LinkedList<int[]> R) {
+	if(R==null) {
+		return false;
+	}
 	// TODO Auto-generated method stub
 	for(int i=0;i<R.size();i+=1) {
+		if(R.get(i)==null) {
+			continue;
+		}
+		//If Return status is valid IE a free area OR attacked area
 		if(R.get(i)[0]>=1 && R.get(i)[0]<=16) {
+			
 		int[] Attack = {R.get(i)[1],R.get(i)[2]};
 		Piece Got = GetPiece(Attack);
 		int [] MyPosition = {R.get(i)[4],R.get(i)[5]};
@@ -336,17 +308,25 @@ private boolean KingAttacked(LinkedList<int[]> R) {
 				return true;
 				}
 			}
+		
 		}
+		
 		else {
 			System.out.printf("King Attacked check Invalid move: %d\n",i);
 		}
+		
 	}
 	return false;
 }
 
 private boolean MoveStillCheck(LinkedList<int[]> R) {
+	if(R==null) {
+		return true;
+	}
 	for(int i=0;i<R.size();i+=1) {
-		
+		if(R.get(i)==null) {
+			continue;
+		}
 		if(R.get(i)[0]>=1&&R.get(i)[0]<=16) {
 		
 		int[] MyPosition = {R.get(i)[4],R.get(i)[5]};
@@ -397,8 +377,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			Got.CurrentPosition = Attack;
 			//Continue
 		}
-		//Opponent.Board=Opponent.CopyNewBoard(Got.CurrentPosition[0],Got.CurrentPosition[1],Me.WhichBlock(Attack[3],Attack[4]));
-		Got.CurrentPosition=Attack;
+
 		}
 		
 		}
@@ -421,46 +400,10 @@ private boolean OpponentCheckMate() {
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
 		LinkedList<int[]> R = new LinkedList<int[]>();
 		System.out.printf("\n\n^^^^^^^^^^^^CHECK TEST PIECE %d^^^^^^^^^^^^\n",i);
-		//IF Rooke
-		if(Opponent.Pieces.get(i) instanceof Rooke<?,?,?>) {
-			
+		AddAllSets(R,Opponent.Pieces.get(i));
+		if(!MoveStillCheck(R)) {
+			return false;
 		}
-		//If Knight
-		if(Opponent.Pieces.get(i) instanceof Knight<?,?,?>) {
-			
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryUpRight());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryUpLeft());	
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryDownRight());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryDownLeft());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightRightUp());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightRightDown());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightLeftUp());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightLeftDown());
-			
-			if(!MoveStillCheck(R)) {
-				return false;
-			}
-			
-		}
-		//If Bishop
-		if(Opponent.Pieces.get(i) instanceof Bishop<?,?,?>) {
-			
-			
-			
-		}
-		//If Queen
-		//if(Opponent.Pieces.get(i) instanceof Queen<?,?,?>) {
-			
-		//}
-		//If King
-		//if(Opponent.Pieces.get(i) instanceof King<?,?,?>) {
-			
-		//}
-		//If Pawn
-		//if(Opponent.Pieces.get(i) instanceof Pawn<?,?,?>) {
-			
-		//}
-		
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
 	
@@ -469,6 +412,81 @@ private boolean OpponentCheckMate() {
 	return true;	
 }
 
+private void AddAllSets(LinkedList<int[]> R,Piece P) {
+			//IF Rooke
+			if(P instanceof Rooke<?,?,?>) {
+				R.add(((Rooke<int[],int[],int[]>)P).TryUp());
+				R.add(((Rooke<int[],int[],int[]>)P).TryDown());	
+				R.add(((Rooke<int[],int[],int[]>)P).TryLeft());
+				R.add(((Rooke<int[],int[],int[]>)P).TryRight());
+		
+			}
+			//If Knight
+			if(P instanceof Knight<?,?,?>) {
+				
+				R.add(((Knight<int[],int[],int[]>)P).TryUpRight());
+				R.add(((Knight<int[],int[],int[]>)P).TryUpLeft());	
+				R.add(((Knight<int[],int[],int[]>)P).TryDownRight());
+				R.add(((Knight<int[],int[],int[]>)P).TryDownLeft());
+				R.add(((Knight<int[],int[],int[]>)P).TryKnightRightUp());
+				R.add(((Knight<int[],int[],int[]>)P).TryKnightRightDown());
+				R.add(((Knight<int[],int[],int[]>)P).TryKnightLeftUp());
+				R.add(((Knight<int[],int[],int[]>)P).TryKnightLeftDown());
+				
+				
+			}
+			//If Bishop
+			if(P instanceof Bishop<?,?,?>) {
+				
+				R.add(((Bishop<int[],int[],int[]>)P).TryUpRight());
+				R.add(((Bishop<int[],int[],int[]>)P).TryUpLeft());	
+				R.add(((Bishop<int[],int[],int[]>)P).TryDownRight());
+				R.add(((Bishop<int[],int[],int[]>)P).TryDownLeft());
+		
+				
+			}
+			//If Queen
+			if(P instanceof Queen<?,?,?>) {
+				R.add(((Queen<int[],int[],int[]>)P).TryUp());
+				R.add(((Queen<int[],int[],int[]>)P).TryRight());	
+				R.add(((Queen<int[],int[],int[]>)P).TryDown());
+				R.add(((Queen<int[],int[],int[]>)P).TryLeft());
+
+				R.add(((Queen<int[],int[],int[]>)P).TryUpRight());
+				R.add(((Queen<int[],int[],int[]>)P).TryUpLeft());	
+				R.add(((Queen<int[],int[],int[]>)P).TryDownRight());
+				R.add(((Queen<int[],int[],int[]>)P).TryDownLeft());
+		
+			}
+			//If King
+			if(P instanceof King<?,?,?>) {
+				
+				R.add(((King<int[],int[],int[]>)P).TryUp());
+				R.add(((King<int[],int[],int[]>)P).TryRight());	
+				R.add(((King<int[],int[],int[]>)P).TryDown());
+				R.add(((King<int[],int[],int[]>)P).TryLeft());
+
+				R.add(((King<int[],int[],int[]>)P).TryUpRight());
+				R.add(((King<int[],int[],int[]>)P).TryUpLeft());	
+				R.add(((King<int[],int[],int[]>)P).TryDownRight());
+				R.add(((King<int[],int[],int[]>)P).TryDownLeft());
+		
+				
+			}
+			//If Pawn
+			if(P instanceof Pawn<?,?,?>) {
+				
+				R.add(((Pawn<int[],int[],int[]>)P).TryUp());
+				R.add(((Pawn<int[],int[],int[]>)P).TryDown());
+				R.add(((Pawn<int[],int[],int[]>)P).TryUpRight());
+				R.add(((Pawn<int[],int[],int[]>)P).TryUpLeft());	
+				
+				R.add(((Pawn<int[],int[],int[]>)P).TryDownRight());
+				R.add(((Pawn<int[],int[],int[]>)P).TryDownLeft());	
+			
+			}
+	
+}
 
 private boolean OpponentInCheck() {
 	
@@ -481,52 +499,16 @@ private boolean OpponentInCheck() {
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
 		LinkedList<int[]> R = new LinkedList<int[]>();
 		System.out.printf("\n\n^^^^^^^^^^^^CHECK TEST PIECE %d^^^^^^^^^^^^\n",i);
-		//IF Rooke
-		if(Opponent.Pieces.get(i) instanceof Rooke<?,?,?>) {
-			
+		AddAllSets(R,Opponent.Pieces.get(i));
+		if(KingAttacked(R)) {
+			SwapPlayer();
+			return true;
 		}
-		//If Knight
-		if(Opponent.Pieces.get(i) instanceof Knight<?,?,?>) {
-			
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryUpRight());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryUpLeft());	
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryDownRight());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryDownLeft());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightRightUp());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightRightDown());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightLeftUp());
-			R.add(((Knight<int[],int[],int[]>)Opponent.Pieces.get(i)).TryKnightLeftDown());
-			
-			if(KingAttacked(R)) {
-				SwapPlayer();
-				return true;
-			}
-			
-		}
-		//If Bishop
-		if(Opponent.Pieces.get(i) instanceof Bishop<?,?,?>) {
-			
-			
-			
-		}
-		//If Queen
-		//if(Opponent.Pieces.get(i) instanceof Queen<?,?,?>) {
-			
-		//}
-		//If King
-		//if(Opponent.Pieces.get(i) instanceof King<?,?,?>) {
-			
-		//}
-		//If Pawn
-		//if(Opponent.Pieces.get(i) instanceof Pawn<?,?,?>) {
-			
-		//}
-		
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
 	
 	
-	System.out.println("\n Opponent Not In Check Because of my move \n");
+	System.out.printf("\n %c Not In Check Because of %c move \n",Me.Player,Opponent.Player);
 	
 	SwapPlayer();
 	return false;	
