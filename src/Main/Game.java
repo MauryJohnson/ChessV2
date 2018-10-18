@@ -241,24 +241,39 @@ private int KillPiece(int[] K) {
 	System.out.println("\n Found Free Space #/' '");
 	
 	int [] Get = {K[3],K[4]};
-	Piece Got = GetPiece(Get);
+	Piece MyPiece = GetPiece(Get);
 
-	if(Got!=null) {
-	char typeGot = Me.Board[Got.CurrentPosition[0]][Got.CurrentPosition[1]];	
+	if(MyPiece!=null) {
+	
+	char typeGot = Me.Board[MyPiece.CurrentPosition[0]][MyPiece.CurrentPosition[1]];	
+	
 	Me.Board=Me.CopyNewBoard(K[0],K[1],typeGot);
 	Me.Board=Me.CopyNewBoard(K[3],K[4],Me.WhichBlock(K[3],K[4]));
-	Got.CurrentPosition=K;
-	//MeInCheck();
+	
+	int []NextP = {K[0],K[1]};
+	MyPiece.CurrentPosition=NextP;
+	
 	//Check if this leads to a check on your end...
 	if(MeInCheck()){
 		System.out.println("Invalid Move, puts yourself in check");
+		
+		//Restore old positions board and MyPiece
+		Me.Board=Me.CopyNewBoard(K[0], K[1], Me.WhichBlock(K[1], K[2]));
+		Me.Board=Me.CopyNewBoard(K[3], K[4], MyPiece.Piece);
+		
+		int [] OldP = {K[3],K[4]};
+		MyPiece.CurrentPosition = OldP;
+		
 		return -1;
 	}
+	
 	else if(OpponentInCheck()){
 		System.out.println("Opponent is in check");
 		return 1;
 	}
+	
 	}
+	
 	return 0;
 	
 }
