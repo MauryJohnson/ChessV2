@@ -104,6 +104,7 @@ public void PrintPlayers() {
 	System.out.printf("\n###########\nME: %c\n",Me.Player);
 	System.out.printf("Opponent: %c\n#############\n\n",Opponent.Player);
 }
+
 //Basic Return status of movement
 public void ReturnStatus(int[] R) {
 	if(R[0]<0) {
@@ -374,6 +375,9 @@ private int KillPiece(int[] K) {
 	
 }
 
+//Checks if king or rooke moved
+//If king moves, none of the pieces can castle with king
+//Otherwise, the rooke that moved will no longer be able to castle with king
 private void CastleCheck(Piece MyPiece) {
 	// TODO Auto-generated method stub
 	boolean NotMoved = true;
@@ -421,7 +425,6 @@ private boolean MeInCheck() {
 		}
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
-	
 	
 	System.out.printf("\n %c(Me) Not In Check Because of My move \n",Me.Player);
 	//Player Me is not in check
@@ -673,7 +676,6 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 				R.add(((Rooke<int[],int[],int[]>)P).TryDown());	
 				R.add(((Rooke<int[],int[],int[]>)P).TryLeft());
 				R.add(((Rooke<int[],int[],int[]>)P).TryRight());
-		
 			}
 			//If Knight
 			if(P instanceof Knight<?,?,?>) {

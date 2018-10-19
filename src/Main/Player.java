@@ -20,34 +20,34 @@ public Player(char Player) {
 }
 
 public  void INIT() {
-	LinkedList<Piece> P;
+	//LinkedList<Piece> P;
 	
-	 LinkedList<Piece> P2 = new LinkedList<Piece>();
-	    P2.add(new Rooke<int[],int[],int[]>(Player));
-	    P2.add(new Knight<int[],int[],int[]>(Player));
-	    P2.add(new Bishop<int[],int[],int[]>(Player));
-		P2.add(new Queen <int[],int[],int[]>(Player));
-		P2.add(new King <int[],int[],int[]>(Player));
+	 LinkedList<Piece> P = new LinkedList<Piece>();
+	    P.add(new Rooke<int[],int[],int[]>(Player));
+	    P.add(new Knight<int[],int[],int[]>(Player));
+	    P.add(new Bishop<int[],int[],int[]>(Player));
+		P.add(new Queen <int[],int[],int[]>(Player));
+		P.add(new King <int[],int[],int[]>(Player));
 		
 		
-		P2.add(new Bishop<int[],int[],int[]>(Player));
+		P.add(new Bishop<int[],int[],int[]>(Player));
 		
 		
-		P2.add(new Knight<int[],int[],int[]>(Player));
-		P2.add(new Rooke<int[],int[],int[]>(Player));
+		P.add(new Knight<int[],int[],int[]>(Player));
+		P.add(new Rooke<int[],int[],int[]>(Player));
 		
 		/*
-		P2.add(new Pawn<int[],int[],int[]>(Player));
-		P2.add(new Pawn<int[],int[],int[]>(Player));
-		P2.add(new Pawn<int[],int[],int[]>(Player));
-		P2.add(new Pawn<int[],int[],int[]>(Player));
-		P2.add(new Pawn<int[],int[],int[]>(Player));
-		P2.add(new Pawn<int[],int[],int[]>(Player));
-		P2.add(new Pawn<int[],int[],int[]>(Player));
-		P2.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
+		P.add(new Pawn<int[],int[],int[]>(Player));
 		*/
+		
 		/* ADD MORE PIECES LATER */
-	P = P2;
 	//Set correct player for piece
 	//P[i].Pieces = P;
 	//int k=0;
