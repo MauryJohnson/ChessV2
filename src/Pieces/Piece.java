@@ -27,8 +27,8 @@ public abstract class Piece extends Player {
 	
 	//Get Potential Piece enemy, ally, or nothing by looking at the board.
 	public int GetPotentialPiece(int[] P, int[] P2) {
-		System.out.println("\nBoard to look at\n");
-		PrintBoard();
+		//System.out.println("\nBoard to look at\n");
+		//PrintBoard();
 		//Iterate through board to find something 
 		if(Board[P2[0]][P2[1]]=='#' || Board[P2[0]][P2[1]]==' ') {
 			//Free Space, return [1,...,8]

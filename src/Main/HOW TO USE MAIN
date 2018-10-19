@@ -10,6 +10,8 @@ this.
 
 GamePlay
 Each movement is done in game.
+########################### MAKE SURE TO USE SwapPlayer(); EACH TIME YOU PERFORM A MOVE!! STARTING AT P1!! OR ELSE 
+WON't WORK!!
 If invalid move, ReturnStatusMove will return -1
 If valid move to free or attacked space, ReturnStatusMove return 0
 If valid move to free or attacked space and put opponent in check, return 1

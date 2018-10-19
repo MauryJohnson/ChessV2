@@ -63,13 +63,21 @@ public static void main(String[] args) {
 	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownLeft());
 	//G.Me.PrintBoard();
 	
+	/*
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight());
 	
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight());
 	
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightDown());
-	
+	*/
 
+	G.SwapPlayer();
+	
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight());
+	
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight());
+	
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightUp());
 	
 	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryUpRight());
 	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight());
@@ -136,7 +144,7 @@ public Piece GetPiece(int[] IT){
 		if(IT[0]==Me.Pieces.get(i).CurrentPosition[0] && IT[1]==Me.Pieces.get(i).CurrentPosition[1]) {
 			int c1 = Me.Pieces.get(i).CurrentPosition[0];
 			int c2 = Me.Pieces.get(i).CurrentPosition[1];
-			System.out.printf("\n***Found Piece %c @ [%d,%d]***\n",Me.Board[c1][c2],c1,c2);
+			//System.out.printf("\n***Found Piece %c @ [%d,%d]***\n",Me.Board[c1][c2],c1,c2);
 			return Me.Pieces.get(i);
 		}
 	}
@@ -145,7 +153,7 @@ public Piece GetPiece(int[] IT){
 		if(IT[0]==Opponent.Pieces.get(i).CurrentPosition[0] && IT[1]==Opponent.Pieces.get(i).CurrentPosition[1]) {
 			int c1 = Opponent.Pieces.get(i).CurrentPosition[0];
 			int c2 = Opponent.Pieces.get(i).CurrentPosition[1];
-			System.out.printf("\n***Found Piece %c @ [%d,%d]***\n",Opponent.Board[c1][c2],c1,c2);
+			//System.out.printf("\n***Found Piece %c @ [%d,%d]***\n",Opponent.Board[c1][c2],c1,c2);
 			return Opponent.Pieces.get(i);
 		}
 	}
@@ -210,60 +218,98 @@ private int KillPiece(int[] K) {
 			
 			//Opponent.Board[K[0]][K[1]] = (char)K[2];
 			
-			int [] Get = {K[3],K[4]};
-			Piece Got = GetPiece(Get);
+			int [] MyPosition = {K[3],K[4]};
+			Piece MyPiece = GetPiece(MyPosition);
 		
-			if(Got!=null) {
-			char MyType = Opponent.Board[Got.CurrentPosition[0]][Got.CurrentPosition[1]];	
+			char MyType = MyPiece.Piece;	
+			
+			int []Attack = {K[0],K[1]};
+			
+			Piece AttackedPiece = Opponent.Pieces.get(i);
+			
+			if(MyPiece!=null) {
+			//(Player Opponent, char OpponentType,int[] MyPosition,Piece MyPiece, Piece AttackedPiece, int[] Attack) {
+				
+			Attack(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
+			/*
+		
 			Me.Board=Me.CopyNewBoard(K[0],K[1],MyType);
 			Me.Board=Me.CopyNewBoard(K[3],K[4],Me.WhichBlock(K[3],K[4]));
-			Got.CurrentPosition = K;
+			
+			int [] NewP = {K[0],K[1]};
+			MyPiece.CurrentPosition = NewP;
+			*/
 			//Check if this leads to a check on your end...
 			if(MeInCheck()){
 				System.out.println("Invalid Move, puts yourself in check, restoring original spot");
-				//Restore Opponent piece
-				Opponent.Pieces.get(i).CurrentPosition[0] = K[1];
-				Opponent.Pieces.get(i).CurrentPosition[1] = K[2];
-				Me.Board=Me.CopyNewBoard(K[1], K[2], Opponent.Pieces.get(i).Piece);
+				
+				//Restore Opponent piece and My Piece
+				
+				Restore(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
+				
+				/*
+				Opponent.Pieces.get(i).CurrentPosition[0] = K[0];
+				Opponent.Pieces.get(i).CurrentPosition[1] = K[1];
+				
+				Me.Board=Me.CopyNewBoard(K[0], K[1], Opponent.Pieces.get(i).Piece);
 				Me.Board=Me.CopyNewBoard(K[3], K[4], MyType);
+				
 				int [] OldP = {K[3],K[4]};
-				Got.CurrentPosition = OldP;
+				MyPiece.CurrentPosition = OldP;
+				*/
+				
 				return -1;
 			}
+			
 			else if(OpponentInCheck()){
 				System.out.println("Opponent is in check");
 				return 1;
 			}
+			
 			}
 		
 		}
 	}
+	
 	System.out.println("\n Found Free Space #/' '");
 	
-	int [] Get = {K[3],K[4]};
-	Piece MyPiece = GetPiece(Get);
+	int [] MyPosition = {K[3],K[4]};
+	Piece MyPiece = GetPiece(MyPosition);
 
+	char MyType = MyPiece.Piece;
+	
+	int []Attack = {K[0],K[1]};
+		
+	Piece AttackedPiece=null;
+	
 	if(MyPiece!=null) {
 	
-	char typeGot = Me.Board[MyPiece.CurrentPosition[0]][MyPiece.CurrentPosition[1]];	
+	//char typeGot = Me.Board[MyPiece.CurrentPosition[0]][MyPiece.CurrentPosition[1]];	
 	
-	Me.Board=Me.CopyNewBoard(K[0],K[1],typeGot);
+	Attack(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
+		
+	/*	
+	Me.Board=Me.CopyNewBoard(K[0],K[1],MyType);
 	Me.Board=Me.CopyNewBoard(K[3],K[4],Me.WhichBlock(K[3],K[4]));
 	
 	int []NextP = {K[0],K[1]};
 	MyPiece.CurrentPosition=NextP;
-	
+	*/
 	//Check if this leads to a check on your end...
 	if(MeInCheck()){
 		System.out.println("Invalid Move, puts yourself in check");
 		
 		//Restore old positions board and MyPiece
+		
+		Restore(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
+		
+		/*
 		Me.Board=Me.CopyNewBoard(K[0], K[1], Me.WhichBlock(K[1], K[2]));
 		Me.Board=Me.CopyNewBoard(K[3], K[4], MyPiece.Piece);
 		
 		int [] OldP = {K[3],K[4]};
 		MyPiece.CurrentPosition = OldP;
-		
+		*/
 		return -1;
 	}
 	
@@ -301,6 +347,9 @@ return false;
 
 //Check if king is attacked given list of all positions that are attacked
 private boolean KingAttacked(LinkedList<int[]> R) {
+	
+	System.out.println("");
+	
 	if(R==null) {
 		return false;
 	}
@@ -327,7 +376,7 @@ private boolean KingAttacked(LinkedList<int[]> R) {
 		}
 		
 		else {
-			System.out.printf("King Attacked check Invalid move: %d\n",i);
+			System.out.printf("King Attacked check Invalid move: [%d,%d] , STATUS:%d\n",R.get(i)[1],R.get(i)[2],R.get(i)[0]);
 		}
 		
 	}
@@ -344,9 +393,16 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		}
 		if(R.get(i)[0]>=1&&R.get(i)[0]<=16) {
 		
+			
+			System.out.println("Board to look at");
+			Opponent.PrintBoard();	
+			
 		int[] MyPosition = {R.get(i)[4],R.get(i)[5]};
+		
 		int[] Attack = {R.get(i)[1],R.get(i)[2]};
+		
 		Piece MyPiece = GetPiece(MyPosition);
+		
 		if(MyPiece==null) {
 			return true;
 			/*System.out.println("ERROR! My Piece is MISSING");
@@ -354,11 +410,11 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			*/
 		}
 		
-		Piece Got = GetPiece(Attack);
-		
-		if(Got!=null) {
+		Piece AttackedPiece = GetPiece(Attack);
 		
 		char MyType = MyPiece.Piece;
+		
+		if(AttackedPiece!=null) {
 		
 		Opponent.Board=Opponent.CopyNewBoard(Attack[0],Attack[1],MyType);
 		
@@ -367,49 +423,100 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		MyPiece.CurrentPosition = Attack;
 		
 		int [] n = {-1,-1};
-		Got.CurrentPosition =n;
+		AttackedPiece.CurrentPosition =n;
+		
+		System.out.println("Board to look at");
+		Opponent.PrintBoard();
 		
 		if(!OpponentInCheck()) {
 			//Found solution out of check
-			Opponent.Board=Opponent.CopyNewBoard(MyPosition[0], MyPosition[1], MyType);
-			
-			Opponent.Board=Opponent.CopyNewBoard(Attack[0], Attack[1], Got.Piece);
-			
-			MyPiece.CurrentPosition = MyPosition;
-			
-			Got.CurrentPosition = Attack;
-			
+			Restore(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
+			System.out.println("Board Restored");
+			Opponent.PrintBoard();
 			return false;
 		}
 		else {
 			//Still in check
-			Opponent.Board=Opponent.CopyNewBoard(MyPosition[0], MyPosition[1], MyType);
 			
-			Opponent.Board=Opponent.CopyNewBoard(Attack[0], Attack[1], Got.Piece);
+			Restore(Opponent, MyType, MyPosition, MyPiece,AttackedPiece, Attack);
 			
-			MyPiece.CurrentPosition = MyPosition;
+			System.out.println("Board Restored");
+			Opponent.PrintBoard();
 			
-			Got.CurrentPosition = Attack;
-			//Continue
 		}
 
 		}
 		
+		else {
+			Attack(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
+			
+			System.out.println("Board to look at");
+			Opponent.PrintBoard();
+			
+			//Movement to free space succeeds
+			if(!OpponentInCheck()) {
+				//Restore(Opponent,MyType,MyPosition,A)
+				Restore(Opponent, MyType, MyPosition, MyPiece,AttackedPiece, Attack);
+				System.out.println("Board Restored");
+				Opponent.PrintBoard();
+				return false;
+			}
+			//Movement to free space fails.
+			else {
+				Restore(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
+				System.out.println("Board Restored");
+				Opponent.PrintBoard();
+			}
+		
+		}
+		
+		
 		}
 		else {
-			System.out.printf("Move Still in Check Invalid move:%d\n",i);
+			System.out.printf("Invalid return type for movement:%d\n",i);	
 		}
+	
 	}
+	
 	return true;
 }
 
+private void Attack(Player Opponent, char OpponentType,int[] MyPosition,Piece MyPiece, Piece AttackedPiece, int[] Attack) {
+	
+	Opponent.Board=Opponent.CopyNewBoard(Attack[0],Attack[1],OpponentType);
+	
+	Opponent.Board=Opponent.CopyNewBoard(MyPosition[0],MyPosition[1],Opponent.WhichBlock(MyPosition[0],MyPosition[1]));
+	
+	int [] NewP = {Attack[0],Attack[1]};
+	
+	int []Dead = {-1,-1};
+	
+	if(AttackedPiece!=null)
+	AttackedPiece.CurrentPosition = Dead;
+	
+	MyPiece.CurrentPosition = NewP;
+	
+}
+
+
+private void Restore(Player Opponent, char OpponentType,int[] MyPosition,Piece MyPiece, Piece AttackedPiece, int[] Attack) {
+	
+	Opponent.Board=Opponent.CopyNewBoard(MyPosition[0], MyPosition[1], OpponentType);
+	
+	if(AttackedPiece!=null)
+		Opponent.Board=Opponent.CopyNewBoard(Attack[0], Attack[1], AttackedPiece.Piece);
+	else
+		Opponent.Board=Opponent.CopyNewBoard(Attack[0], Attack[1], Opponent.WhichBlock(Attack[0],Attack[1]));	
+	MyPiece.CurrentPosition = MyPosition;
+	
+	if(AttackedPiece!=null)
+		AttackedPiece.CurrentPosition = Attack;
+	
+}
 //Checkmate can only occur if I make the move
 //If not exists case when there is not a check mate for all piece moves,
 //CHECKMATE!
 private boolean OpponentCheckMate() {
-	
-	//SwapPlayer();
-	
 	System.out.println("Is Opponent in checkmate?");
 	//Iterate through all opponents moves, generate the new table, and check if
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
@@ -422,7 +529,7 @@ private boolean OpponentCheckMate() {
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
 	
-	System.out.println("\n Opponent IS In CheckMate Because cannot find move to invalidate the check \n");
+	System.out.println("\nOpponent IS In CheckMate Because cannot find move to invalidate the check");
 	
 	return true;	
 }
@@ -530,6 +637,3 @@ private boolean OpponentInCheck() {
 }
 
 }
-
-
-
