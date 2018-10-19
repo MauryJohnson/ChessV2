@@ -14,25 +14,25 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	}
 
 	@Override
-	public R TryRight() {
+	public R TryRight(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryLeft() {
+	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryDown() {
+	public R TryDown(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryUp() {
+	public R TryUp(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}

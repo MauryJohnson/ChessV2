@@ -13,7 +13,7 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
-	public R TryDownRight() {
+	public R TryDownRight(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -21,13 +21,13 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1]+1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryDownLeft() {
+	public R TryDownLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -35,13 +35,13 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1]-1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryUpRight() {
+	public R TryUpRight(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -49,13 +49,13 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1]+1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryUpLeft() {
+	public R TryUpLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -63,13 +63,13 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1]-1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryRight() {
+	public R TryRight(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -77,13 +77,13 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1]+1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryLeft() {
+	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -91,13 +91,13 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1]-1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryDown() {
+	public R TryDown(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -105,13 +105,13 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1];
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryUp() {
+	public R TryUp(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -119,7 +119,7 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		P[1] = CurrentPosition[1];
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}

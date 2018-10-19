@@ -26,7 +26,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+2;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 		
 		return (R)Ret;
 	}
@@ -40,7 +40,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+2;
 				
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
@@ -54,7 +54,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-2;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
@@ -68,13 +68,13 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-2;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryDownRight() {
+	public R TryDownRight(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -82,13 +82,13 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryDownLeft() {
+	public R TryDownLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -96,13 +96,13 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryUpRight() {
+	public R TryUpRight(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -110,13 +110,13 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]+1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}
 
 	@Override
-	public R TryUpLeft() {
+	public R TryUpLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] P = new int[2];
 		
@@ -124,7 +124,7 @@ public class Knight<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 		P[1] = CurrentPosition[1]-1;
 		
 		int[] Ret;
-		Ret = ApplyMove(P);
+		Ret = ApplyMove(CurrentPosition,P);
 
 		return (R)Ret;
 	}

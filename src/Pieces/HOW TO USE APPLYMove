@@ -17,3 +17,23 @@ Of course, each piece will have to interpolate if this is valid for their movese
 ************Pieces that do more than one move need to be given a for 
 loop. If case fails while still iterating, stop there and return the fail case
 OTHERWISE, Return the position it made it to WITHIN THE BOARD
+
+for each try move, the input is an integer. If integer ==0, 
+this is the movement of 1 unit in the given function direction.
+
+[0,...,7] corresponds to can move 1,...,8 units in the function direction.
+
+If pawn, can only use integer one once, on first turn
+
+
+IterateThrough(FP,Case,i)
+i is how far to iterate
+FP is First Point, 
+Case = 0 -> Down
+Case = 1 -> Up
+Case = 2 -> Left 
+Case = 3 -> Right 
+Case = 4 -> UpLeft
+Case = 5 -> UpRight, 
+Case = 6 -> DownRight, 
+Case = 7 -> DownLeft

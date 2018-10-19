@@ -145,30 +145,189 @@ public abstract class Piece extends Player {
 		}
 		return false;
 	}
-
-	public int[] ApplyMove(int[] NextPosition) {
+	
+	protected int[] IterateThrough(int[] FP, int Case, int i) {
+		// TODO Auto-generated method stub
 		
-		//System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],NextPosition[0],NextPosition[1]);
+		int[] Ret = null;
+		
+		int[]P = new int[2];
+		
+		//Case 0 of iterateThrough, increment Down
+		if(Case==0) {
+			
+		for(int j=0;j<i+1;j+=1) {
+			P[0] = FP[0]-1;
+			P[1] = FP[1];
+			
+			Ret = ApplyMove(FP,P);
+
+			//If walks right into any piece, invalidated move
+			if(Ret[0]>8) {
+				Ret[0]=-1;
+				return Ret;
+			}
+			FP[0]-=1;
+		}
+		Ret[4]+=i;
+		}
+		//Case 1 of iterateThrough, increment Up
+		else if(Case==1) {
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0]+1;
+				P[1] = FP[1];
+				
+				Ret = ApplyMove(FP,P);
+				//If walks right into any piece, invalidated move
+				if(Ret[0]>8) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
+				FP[0]+=1;
+			}
+			Ret[4]-=i;	
+		}
+		//Case 1 of iterateThrough, increment Left
+		else if(Case==2) {
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0];
+				P[1] = FP[1]-1;
+				
+				Ret = ApplyMove(FP,P);
+				//If walks right into any piece, invalidated move
+				if(Ret[0]>8) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
+				FP[0]-=1;
+			}
+			Ret[5]+=i;	
+		}
+		//Case 3 of iterateThrough, increment Right
+		else if(Case==3) {
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0];
+				P[1] = FP[1]+1;
+				
+				Ret = ApplyMove(FP,P);
+				//If walks right into any piece, invalidated move
+				if(Ret[0]>8) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
+				FP[0]+=1;
+			}
+			Ret[5]-=i;	
+		}
+		//Case 4 of iterateThrough, increment UpLeft
+		else if(Case==4) {
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0]+1;
+				P[1] = FP[1]-1;
+				
+				Ret = ApplyMove(FP,P);
+				//If walks right into any piece, invalidated move
+				if(Ret[0]>8) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
+				FP[0]+=1;
+				FP[1]-=1;
+			}
+			Ret[4]-=i;
+			Ret[5]+=i;	
+		}
+		//Case 5 of iterateThrough, increment UpRight
+		else if(Case==5) {
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0]+1;
+				P[1] = FP[1]+1;
+				
+				Ret = ApplyMove(FP,P);
+				//If walks right into any piece, invalidated move
+				if(Ret[0]>8) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
+				FP[0]+=1;
+				FP[1]+=1;
+				
+			}
+			Ret[4]-=i;
+			Ret[5]-=i;
+		}
+		//Case 6 of iterateThrough, increment DownRight
+		else if(Case==6) {
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0]-1;
+				P[1] = FP[1]+1;
+				
+				Ret = ApplyMove(FP,P);
+				//If walks right into any piece, invalidated move
+				if(Ret[0]>8) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
+				FP[0]-=1;
+				FP[1]+=1;
+				
+			}
+			Ret[4]+=i;
+			Ret[5]-=i;
+		}
+		//Case 7 of iterateThrough, increment DownLeft
+		else if(Case==7) {
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0]-1;
+				P[1] = FP[1]-1;
+				
+				Ret = ApplyMove(FP,P);
+				//If walks right into any piece, invalidated move
+				if(Ret[0]>8) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
+				FP[0]-=1;
+				FP[1]-=1;
+				
+			}
+			Ret[4]+=i;
+			Ret[5]+=i;	
+		}
+		
+		return Ret;
+	}
+	
+	public int[] ApplyMove(int[] FirstPosition,int[] NextPosition) {
+		
+		System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",FirstPosition[0],FirstPosition[1],NextPosition[0],NextPosition[1]);
 		
 		int[] R = new int[6];
 		//Return status keeps track of current player
 		R[3] = Piece;
 		
-		R[4] = CurrentPosition[0];
-		R[5] = CurrentPosition[1];
+		R[4] = FirstPosition[0];
+		R[5] = FirstPosition[1];
 		
 		R[1] = NextPosition[0];
 		R[2] = NextPosition[1];
 		
 		//Bounds check
-		if(NextPosition[0]<0||NextPosition[0]>7||NextPosition[1]<0||NextPosition[1]>7||CurrentPosition[0]<0||CurrentPosition[1]>7||CurrentPosition[1]<0||CurrentPosition[1]>7) {
+		if(NextPosition[0]<0||NextPosition[0]>7||NextPosition[1]<0||NextPosition[1]>7||FirstPosition[0]<0||FirstPosition[1]>7||FirstPosition[1]<0||FirstPosition[1]>7) {
 			//System.out.println("Position out of bounds");
 			R[0] = -1;
 			return R;
 		}
 		//Collision check Enemy
 		//Create function GetPiece(P2)
-		R[0] = GetPotentialPiece(CurrentPosition,NextPosition);                                                                                                              
+		R[0] = GetPotentialPiece(FirstPosition,NextPosition);                                                                                                              
 		//KillPiece(R);
 		return R;
 	}

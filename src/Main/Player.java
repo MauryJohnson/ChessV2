@@ -36,7 +36,7 @@ public  void INIT() {
 		P.add(new Knight<int[],int[],int[]>(Player));
 		P.add(new Rooke<int[],int[],int[]>(Player));
 		
-		/*
+		
 		P.add(new Pawn<int[],int[],int[]>(Player));
 		P.add(new Pawn<int[],int[],int[]>(Player));
 		P.add(new Pawn<int[],int[],int[]>(Player));
@@ -45,7 +45,7 @@ public  void INIT() {
 		P.add(new Pawn<int[],int[],int[]>(Player));
 		P.add(new Pawn<int[],int[],int[]>(Player));
 		P.add(new Pawn<int[],int[],int[]>(Player));
-		*/
+		
 		
 		/* ADD MORE PIECES LATER */
 	//Set correct player for piece
@@ -68,25 +68,25 @@ public  void INIT() {
 		}
 		else {
 
-			System.out.printf("Set Piece %d Position to: [%d,%d]\n",i,1,i);	
+			System.out.printf("Set Piece %d Position to: [%d,%d]\n",i,1,Math.abs(i-P.size()+8));	
 		P.get(i).CurrentPosition[0] = 1;
-		P.get(i).CurrentPosition[1] = (i-P.size()+8);
+		P.get(i).CurrentPosition[1] = Math.abs(i-P.size()+8);
 		P.get(i).SetPiece(Board[1][(i-P.size())+8]);
 		}
 		}
 		
 		else {
 		if(i<=7) {
-			System.out.printf("Set Piece %d Position to: [%d,%d]\n",i,7,(i-P.size())+8);	
+			System.out.printf("Set Piece %d Position to: [%d,%d]\n",i,7,i);	
 		P.get(i).CurrentPosition[0] = 7;
 		P.get(i).CurrentPosition[1] = i;
 		P.get(i).SetPiece(Board[7][i]);
 		}
 		else {
 
-			System.out.printf("Set Piece %d Position to: [%d,%d]\n",i,6,(i-P.size())+8);	
+			System.out.printf("Set Piece %d Position to: [%d,%d]\n",i,6,Math.abs((i-P.size())+8));	
 		P.get(i).CurrentPosition[0] = 6;
-		P.get(i).CurrentPosition[1] = (i-P.size()+8);
+		P.get(i).CurrentPosition[1] = Math.abs(i-P.size()+8);
 		P.get(i).SetPiece(Board[6][(i-P.size())+8]);
 		}
 		

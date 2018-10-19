@@ -1,5 +1,5 @@
 package Moves;
 
 public interface UpRight<T,Q,R>{
-public R TryUpRight();
+public R TryUpRight(int i);
 }

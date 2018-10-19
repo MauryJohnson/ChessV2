@@ -10,49 +10,49 @@ public class Queen<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	}
 
 	@Override
-	public R TryDownRight() {
+	public R TryDownRight(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryDownLeft() {
+	public R TryDownLeft(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryUpRight() {
+	public R TryUpRight(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryUpLeft() {
+	public R TryUpLeft(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryRight() {
+	public R TryRight(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryLeft() {
+	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryDown() {
+	public R TryDown(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryUp() {
+	public R TryUp(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}

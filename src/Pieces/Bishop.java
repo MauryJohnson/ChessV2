@@ -11,25 +11,25 @@ public class Bishop<T,Q,R> extends Piece implements UpLeft<T,Q,R>,UpRight<T,Q,R>
 	}
 	
 	@Override
-	public R TryDownRight() {
+	public R TryDownRight(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryDownLeft() {
+	public R TryDownLeft(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryUpRight() {
+	public R TryUpRight(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public R TryUpLeft() {
+	public R TryUpLeft(int i) {
 		// TODO Auto-generated method stub
 		return null;
 	}	

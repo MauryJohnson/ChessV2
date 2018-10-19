@@ -2,6 +2,6 @@ package Moves;
 
 public interface Up<T,Q,R>{
 
-public R TryUp();
+public R TryUp(int i);
 
 }

@@ -1,5 +1,5 @@
 package Moves;
 
 public interface Down<T,Q,R>{
-	public R TryDown();
+	public R TryDown(int i);
 }
