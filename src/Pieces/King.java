@@ -4,6 +4,9 @@ import Moves.*;
 
 public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q,R>,Right<T,Q,R>,UpLeft<T,Q,R>,UpRight<T,Q,R>,DownLeft<T,Q,R>,DownRight<T,Q,R>{
 
+	//Can castle initially
+	public boolean CanCastle =  true;
+	
 	public King(char Player) {
 		super(Player);
 		// TODO Auto-generated constructor stub

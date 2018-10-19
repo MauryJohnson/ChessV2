@@ -53,7 +53,7 @@ public abstract class Piece extends Player {
 	
 	 //Returns int corresponding to where the next move is, if free space.
 	 public int ComputeWisePosition(int[] p, int[] p2) {
-		 System.out.printf("PWISE FROM: [%d,%d]\n", p[0],p[1]);
+		 //System.out.printf("PWISE FROM: [%d,%d]\n", p[0],p[1]);
 		 
 		 if(this instanceof Knight<?,?,?>) {
 			 return KnightStatus(p,p2);
@@ -148,7 +148,7 @@ public abstract class Piece extends Player {
 
 	public int[] ApplyMove(int[] NextPosition) {
 		
-		System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],NextPosition[0],NextPosition[1]);
+		//System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",CurrentPosition[0],CurrentPosition[1],NextPosition[0],NextPosition[1]);
 		
 		int[] R = new int[6];
 		//Return status keeps track of current player
@@ -162,7 +162,7 @@ public abstract class Piece extends Player {
 		
 		//Bounds check
 		if(NextPosition[0]<0||NextPosition[0]>7||NextPosition[1]<0||NextPosition[1]>7||CurrentPosition[0]<0||CurrentPosition[1]>7||CurrentPosition[1]<0||CurrentPosition[1]>7) {
-			System.out.println("Position out of bounds");
+			//System.out.println("Position out of bounds");
 			R[0] = -1;
 			return R;
 		}

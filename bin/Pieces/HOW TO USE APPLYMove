@@ -13,3 +13,7 @@ in terms of position
 apply one of these ints corresponding to the transition from pos1[] to pos2[]. 
 
 Of course, each piece will have to interpolate if this is valid for their moveset.
+
+************Pieces that do more than one move need to be given a for 
+loop. If case fails while still iterating, stop there and return the fail case
+OTHERWISE, Return the position it made it to WITHIN THE BOARD
