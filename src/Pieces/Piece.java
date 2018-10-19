@@ -146,8 +146,6 @@ public abstract class Piece extends Player {
 		return false;
 	}
 	
-	
-	
 	protected int[] IterateThrough(int[] FP, int Case,int i) {
 		// TODO Auto-generated method stub
 		
