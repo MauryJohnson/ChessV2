@@ -58,7 +58,7 @@ public static void main(String[] args) {
 	//////////
 	int[] RET = {0};
 	
-	G.SwapPlayer();
+	//G.SwapPlayer();
 	
 	//More advanced testing...
 	//KNIGHT TRY MOVE TESTING ALL
@@ -73,11 +73,20 @@ public static void main(String[] args) {
 	
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightDown());
 	*/
-
-	//G.SwapPlayer();
+	
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
+	
+	G.SwapPlayer();
 	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(1));
-	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(1));
+	
+	G.FinishMoveTwice();
+	
+	/*
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(1));
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
+	*/
+	
 	
 	//G.Me.PrintBoard();
 	
@@ -376,6 +385,8 @@ private void PawnFirstMoveCheck(Piece MyPiece) {
 	if(MyPiece instanceof Pawn<?,?,?>) {
 		((Pawn<int[],int[],int[]>) MyPiece).CanMoveUpTwice=false;
 	}
+	
+	
 }
 
 //Checks if king or rooke moved
@@ -609,6 +620,36 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 	return true;
 }
 
+//After turn of next player done, loop through and remove piece status that just moved twice
+private void FinishMoveTwice() {
+	
+	/*
+	for(int i=0;i<Me.Pieces.size();i+=1) {
+	
+		if(Me.Pieces.get(i) instanceof Pawn<?,?,?>) {
+			
+			if(((Pawn<int[],int[],int[]>)Me.Pieces.get(i)).JustMovedTwice) {
+				System.out.printf("Pawn for %c Just moved twice, revert to norm",Me.Player);
+				((Pawn<int[],int[],int[]>)Me.Pieces.get(i)).JustMovedTwice = false;
+			}
+			
+		}
+		
+	}
+	*/
+	
+	for(int i=0;i<Opponent.Pieces.size();i+=1) {
+		
+		if(Opponent.Pieces.get(i) instanceof Pawn<?,?,?>) {
+			if(((Pawn<int[],int[],int[]>)Me.Pieces.get(i)).JustMovedTwice) {
+				System.out.printf("Pawn for %c Just moved twice, revert to norm",Opponent.Player);
+			((Pawn<int[],int[],int[]>)Opponent.Pieces.get(i)).JustMovedTwice = false;
+			}
+		}
+		
+	}
+	
+}
 
 //Attack Position
 private void Attack(Player Opponent, char OpponentType,int[] MyPosition,Piece MyPiece, Piece AttackedPiece, int[] Attack) {

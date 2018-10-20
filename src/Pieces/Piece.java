@@ -170,9 +170,11 @@ public abstract class Piece extends Player {
 			FP[0]-=1;
 		}
 		Ret[4]+=i;
+		
 		}
 		//Case 1 of iterateThrough, increment Up
 		else if(Case==1) {
+			
 			for(int j=0;j<i+1;j+=1) {
 				P[0] = FP[0]+1;
 				P[1] = FP[1];
@@ -187,9 +189,11 @@ public abstract class Piece extends Player {
 				FP[0]+=1;
 			}
 			Ret[4]-=i;	
+			
 		}
 		//Case 1 of iterateThrough, increment Left
 		else if(Case==2) {
+			
 			for(int j=0;j<i+1;j+=1) {
 				P[0] = FP[0];
 				P[1] = FP[1]-1;
@@ -204,9 +208,11 @@ public abstract class Piece extends Player {
 				FP[0]-=1;
 			}
 			Ret[5]+=i;	
+			
 		}
 		//Case 3 of iterateThrough, increment Right
 		else if(Case==3) {
+			
 			for(int j=0;j<i+1;j+=1) {
 				P[0] = FP[0];
 				P[1] = FP[1]+1;
@@ -221,9 +227,11 @@ public abstract class Piece extends Player {
 				FP[0]+=1;
 			}
 			Ret[5]-=i;	
+			
 		}
 		//Case 4 of iterateThrough, increment UpLeft
 		else if(Case==4) {
+			
 			for(int j=0;j<i+1;j+=1) {
 				P[0] = FP[0]+1;
 				P[1] = FP[1]-1;
@@ -240,9 +248,11 @@ public abstract class Piece extends Player {
 			}
 			Ret[4]-=i;
 			Ret[5]+=i;	
+			
 		}
 		//Case 5 of iterateThrough, increment UpRight
 		else if(Case==5) {
+			
 			for(int j=0;j<i+1;j+=1) {
 				P[0] = FP[0]+1;
 				P[1] = FP[1]+1;
@@ -260,9 +270,11 @@ public abstract class Piece extends Player {
 			}
 			Ret[4]-=i;
 			Ret[5]-=i;
+			
 		}
 		//Case 6 of iterateThrough, increment DownRight
 		else if(Case==6) {
+			
 			for(int j=0;j<i+1;j+=1) {
 				P[0] = FP[0]-1;
 				P[1] = FP[1]+1;
@@ -280,9 +292,11 @@ public abstract class Piece extends Player {
 			}
 			Ret[4]+=i;
 			Ret[5]-=i;
+			
 		}
 		//Case 7 of iterateThrough, increment DownLeft
 		else if(Case==7) {
+			
 			for(int j=0;j<i+1;j+=1) {
 				P[0] = FP[0]-1;
 				P[1] = FP[1]-1;
@@ -300,6 +314,7 @@ public abstract class Piece extends Player {
 			}
 			Ret[4]+=i;
 			Ret[5]+=i;	
+			
 		}
 		
 		return Ret;

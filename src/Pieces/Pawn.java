@@ -2,14 +2,19 @@ package Pieces;
 
 import Moves.*;
 
-public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,UpLeft<T,Q,R>,UpRight<T,Q,R>,DownLeft<T,Q,R>,DownRight<T,Q,R>{
+public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q,R>,Right<T,Q,R>,UpLeft<T,Q,R>,UpRight<T,Q,R>,DownLeft<T,Q,R>,DownRight<T,Q,R>{
 
 	public boolean CanMoveUpTwice = true;
+	
+	public boolean JustMovedTwice = false;
+	
+	public boolean EnPassantMove = false;
 	
 	public Pawn(char Player) {
 		super(Player);
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	@Override
 	public R TryDownRight(int i) {
@@ -121,6 +126,11 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,UpLeft<T
 		
 		Ret = IterateThrough(FP,0,i);	
 	
+		//Successful just moved twice case
+		if(Ret[0]>=1&&Ret[0]<=8 && i==1) {
+				JustMovedTwice=true;
+		}
+		
 		return (R)Ret;
 		
 		}
@@ -140,30 +150,119 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,UpLeft<T
 			return null;
 		}
 		
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		if(i==0) {
-		P[0] = CurrentPosition[0]+1;
-		P[1] = CurrentPosition[1];
-		}
-		else if(i==1) {
-		P[0] = CurrentPosition[0]+2;
-		P[1] = CurrentPosition[1];	
-		}
-		else {
-			System.out.println("Invalid Parameter");
+		int[] FP = new int[2];
+		
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0||i==1) {
+			
+		if(i==1&&!CanMoveUpTwice) {
+			System.out.println("Cannot move up twice anymore");
 			return null;
 		}
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
-		//If walks right into any piece, invalidated move
-		if(Ret[0]>8) {
-			Ret[0]=-1;
+		Ret = IterateThrough(FP,1,i);	
+		
+		//Successful just moved twice case
+		if(Ret[0]>=1&&Ret[0]<=8 && i==1) {
+			JustMovedTwice=true;
 		}
 		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
+	}
+
+
+	@Override
+	public R TryRight(int i) {
+		// TODO Auto-generated method stub
+
+		int[] Ret = null;
+		
+		int[] ExtraRet = new int[8];
+		
+		int[] FP = new int[2];
+		
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+		
+		Ret = IterateThrough(FP,3,i);	
+	
+		//Piece is enemy attacked
+		if(Ret[0]>8&&Ret[0]<17) {
+			
+			int[] EnemyPiece = {Ret[1],Ret[2]};
+			Piece Enemy = GetPiece(EnemyPiece);
+			
+			if(Enemy instanceof Pawn<?,?,?>) {
+			
+			if(((Pawn<int[],int[],int[]>)Enemy).JustMovedTwice){
+				
+				EnPassantMove =  true;
+				
+				Cpy(ExtraRet,Ret);
+				ExtraRet[6] = ((Pawn<int[],int[],int[]>)Enemy).CurrentPosition[0];
+				ExtraRet[7] = ((Pawn<int[],int[],int[]>)Enemy).CurrentPosition[1];
+				
+				System.out.printf("Extra Values added (Needed for killpiece enpassant), this is position to kill ACTUALLY [%d,%d] \n",ExtraRet[6],ExtraRet[7]);
+				
+				//CAN KILL!
+				if(Player=='W') {
+					Ret[1]+=1;
+					Ret[2]+=1;
+				}
+				else {
+					Ret[1]-=1;
+					Ret[2]-=1;
+				}
+			}
+				
+			}
+			
+		}
+		else {
+			//Cannot do EnPassant
+			return null;
+		}
+		
+			return null;
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
+	}
+
+	//This is for if size of to is 8/
+	private void Cpy(int [] To, int[] From) {
+		if(To==null||From==null||To.length<8) {
+			return;
+		}
+		for(int i=0; i<From.length; i+=1) {
+			To[i]=From[i];
+		}
+	}
+
+	@Override
+	public R TryLeft(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
