@@ -58,8 +58,7 @@ public static void main(String[] args) {
 	*/
 
 	//////////
-	int[] RET = {0};
-	
+
 	//G.SwapPlayer();
 	
 	//More advanced testing...
@@ -76,54 +75,62 @@ public static void main(String[] args) {
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightDown());
 	*/
 	
-	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
+	/*
+	
+	//Black
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
+	
 	G.SwapPlayer();
-	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(1));
-	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(0));
-	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
-	G.FinishMoveTwice();
 	
-	//G.SwapPlayer();
-	
+	//White
 	//G.FinishMoveTwice();
 	
-	/*
-	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(1));
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(1));
+	
+	G.WrapUpCases();
+	
+	//Black
+	
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(11)).TryUp(1));
+	
+	G.WrapUpCases();
+	
+	//White
+	
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(0));
+	
+	G.WrapUpCases();
+	
+	//Black
+	
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
+	
+	G.WrapUpCases();
+	
+	//White
+	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
+
 	*/
 	
+	G.SwapPlayer();
 	
-	//G.Me.PrintBoard();
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(6)).TryDownRight(0));
 	
-	//G.SwapPlayer();
-	
-	
-	/*
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight());
-	
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight());
-	
+	G.SwapPlayer();
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight(0));
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight(0));
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightUp());
-	*/
 	
-	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryUpRight());
-	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownRight());
-	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryKnightLeftDown());
-	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryUpLeft());
-	//G.Me.PrintBoard();
-	//PLAYER 1
+
 	
-	/*ReturnStatus(((Knight<int[],int[],int[]>)P1.Pieces[1]).TryUpLeft()[0]);
-	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryUpRight()[0]);
-	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightRightUp()[0]);
-	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightRightDown()[0]);
-	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightLeftUp()[0]);
-	ReturnStatus(((Knight<int[],int[],int[]>)P2.Pieces[1]).TryKnightLeftDown()[0]);
-	*/
+}
+
+private void WrapUpCases() {
+	// TODO Auto-generated method stub
+	this.FinishMoveTwice();
 	
-	//P1.Board[7][7] = 'Z';
-	//ReturnStatus(((Bishop<int[],int[],int[]>)P2.Pieces[2]).TryDownLeft()[0]);
-	/////////////////////////
+	this.SwapPlayer();
 	
 }
 
@@ -292,9 +299,12 @@ private int KillPiece(int[] K) {
 			//Attack opponent piece	
 			Attack(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
 	
+			System.out.println("Board to look at KillPiece1");
+			Me.PrintBoard(this);
+			
 			//Check if this leads to a check on your end...
 			if(MeInCheck()){
-				System.out.println("Invalid Move, puts yourself in check, restoring original spot");
+				System.out.println("Invalid Move, puts yourself in check, restoring original spot KillPiece2");
 				
 				//Restore Opponent piece and My Piece
 				Restore(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
@@ -304,7 +314,7 @@ private int KillPiece(int[] K) {
 			}
 			
 			else if(OpponentInCheck()){
-				System.out.println("Opponent is in check");
+				System.out.println("Opponent is in check KillPiece3");
 				//Return status 1 indicating opponent is in check
 				
 				//If king or Rooke Moved, can no longer castle
@@ -329,6 +339,8 @@ private int KillPiece(int[] K) {
 				//EnPassent?
 				EnPassant(MyPiece,K);
 				
+				return 0;
+				
 			}//End case MyPiece Found
 			//My Piece not found
 			else {
@@ -339,11 +351,18 @@ private int KillPiece(int[] K) {
 		}//End case kill
 	}//End For
 	
-	System.out.println("\n Found Free Space #/' '");
+	System.out.println("\n Found Free Space #/' ' KillPiece4");
 	
 	//Set My Position
 	int [] MyPosition = {K[3],K[4]};
 	Piece MyPiece = GetPiece(MyPosition);
+	
+	if(MyPiece==null) {
+		System.out.printf("\nPiece Should never be null @ [%d,%d]  KillPiece 5\n",K[3],K[4]);
+		Me.PrintBoard(this);
+		System.exit(-1);	
+	}
+	
 	//My Type
 	char MyType = MyPiece.Piece;
 	//Attack this position
@@ -357,9 +376,12 @@ private int KillPiece(int[] K) {
 	//Traverse to the empty position
 	Attack(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
 	
+	System.out.println("Board to look at KillPiece5");
+	Me.PrintBoard(this);
+	
 	//Check if this leads to a check on your end...
 	if(MeInCheck()){
-		System.out.println("Invalid Move, puts yourself in check");
+		System.out.println("Invalid Move, puts yourself in check KillPiece6");
 		
 		//Restore old positions board and MyPiece
 		Restore(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
@@ -369,7 +391,7 @@ private int KillPiece(int[] K) {
 	
 	//If opponent is in check because of my move
 	else if(OpponentInCheck()){
-		System.out.println("Opponent is in check");
+		System.out.println("Opponent is in check KillPiece7");
 		//Return status 1 indicating opponent is in check
 		
 		//IF pawn moved in first turn, this invalidates its option to move twice
@@ -392,6 +414,8 @@ private int KillPiece(int[] K) {
 	
 	//EnPassant?
 	EnPassant(MyPiece,K);
+	
+	return 0;
 	
 	}
 	//My Piece not found
@@ -481,8 +505,8 @@ private void NoneCanCastle() {
 }
 
 //Check if Player Me is in check
-private boolean MeInCheck() {
-	System.out.println("Am I in check?");
+public boolean MeInCheck() {
+	System.out.println("Am I in check? MeInCheck1");
 	//Iterate through all piece moves
 	//See if ANY can attack king!
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
@@ -491,22 +515,26 @@ private boolean MeInCheck() {
 		
 		//Add all sets of possible moves to List
 		AddAllSets(R,Opponent.Pieces.get(i));
+		
 		//Check if king is attacked
 		if(KingAttacked(R)) {
 			//My King is attacked
+			System.out.printf("\n %c IS In Check MeInCheck2 \n PROOF:",Me.Player);
+			Me.PrintBoard(this);
 			return true;
 		}
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
 	
-	System.out.printf("\n %c(Me) Not In Check Because of My move \n",Me.Player);
+	System.out.printf("\n %c(Me) Not In Check Because of My move MeInCheck3 -- ctrl-f -> find next Restore\n PROOF:",Me.Player);
+	Me.PrintBoard(this);
 	//Player Me is not in check
 	return false;	
 }
 
 
-//Check if king is attacked given list of all positions that are attacked
-private boolean KingAttacked(LinkedList<int[]> R) {
+//Check if opponent king is attacked given list of all positions that are attacked
+public boolean KingAttacked(LinkedList<int[]> R) {
 	
 	System.out.println("");
 	
@@ -538,7 +566,7 @@ private boolean KingAttacked(LinkedList<int[]> R) {
 			//If king got is not the opponent's king
 			if(Attacked.Player!=Opponent.Player) {
 				//Opponent is attacking my king!
-				System.out.printf("\n%c is attacking %c king TO [%d,%d]\n",ME.Player,Attacked.Player,Attacked.CurrentPosition[0],Attacked.CurrentPosition[1]);
+				System.out.printf("\n%c%c is attacking %c king TO [%d,%d] KingAttacked1 \n",ME.Player,ME.Piece,Attacked.Player,Attacked.CurrentPosition[0],Attacked.CurrentPosition[1]);
 				return true;
 				}
 			}
@@ -546,11 +574,13 @@ private boolean KingAttacked(LinkedList<int[]> R) {
 		}
 		//Not valid move from movesets
 		else {
-			System.out.printf("King Attacked check Invalid move: [%d,%d] , STATUS:%d\n",R.get(i)[1],R.get(i)[2],R.get(i)[0]);
+			System.out.printf("King Attacked check Invalid move: [%d,%d] , STATUS:%d KingAttacked2 \n",R.get(i)[1],R.get(i)[2],R.get(i)[0]);
 		}
 		
 	}
+	
 	//Opponent's king is not attacked
+	System.out.println("Opponent King Not Attacked KingAttacked3");
 	return false;
 }
 
@@ -575,8 +605,10 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			*/
 		//My Position
 		int[] MyPosition = {R.get(i)[4],R.get(i)[5]};
+		
 		//Attacked Position
 		int[] Attack = {R.get(i)[1],R.get(i)[2]};
+		
 		//My Piece
 		Piece MyPiece = GetPiece(MyPosition);
 		
@@ -594,6 +626,8 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		//There exists a piece to attack
 		if(AttackedPiece!=null) {
 		
+		
+		/*
 		//Set Board Attacked Position to MyType of Piece
 		Opponent.Board=Opponent.CopyNewBoard(Attack[0],Attack[1],MyType);
 		
@@ -606,9 +640,12 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		//Set AttackedPiece Position to -1,-1, GONE
 		int [] n = {-1,-1};
 		AttackedPiece.CurrentPosition =n;
+		*/
+			
+		Attack(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
 		
 		//Print Board after changes made
-		System.out.println("Board to look at");
+		System.out.println("Board to look at MoveStillCheck1");
 		Opponent.PrintBoard(this);
 		
 		//If, after changes made, opponent is not in check
@@ -617,7 +654,8 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			
 			//Restore original positions for MyPiece and AttackedPiece
 			Restore(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
-			System.out.println("Board Restored");
+			
+			System.out.println("Board Restored And Can Get Out OF Check MoveStillCheck1");
 			Opponent.PrintBoard(this);
 			
 			//Found solution, king not still in check
@@ -628,7 +666,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			
 			//Restore previous board
 			Restore(Opponent, MyType, MyPosition, MyPiece,AttackedPiece, Attack);
-			System.out.println("Board Restored");
+			System.out.println("Board Restored MoveStillCheck2");
 			Opponent.PrintBoard(this);
 			
 		}
@@ -641,7 +679,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			Attack(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
 			
 			//Print the new board
-			System.out.println("Board to look at");
+			System.out.println("Board to look at MoveStillCheck2");
 			Opponent.PrintBoard(this);
 			
 			//Movement to free space succeeds
@@ -649,7 +687,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 				//Restore(Opponent,MyType,MyPosition,A)
 				//Restore previous board
 				Restore(Opponent, MyType, MyPosition, MyPiece,AttackedPiece, Attack);
-				System.out.println("Board Restored");
+				System.out.println("Board Restored And Can Get Out Of Check MoveStillCheck3");
 				Opponent.PrintBoard(this);
 				//Found case where can get out of check
 				return false;
@@ -658,7 +696,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			else {
 				//Restore previous board
 				Restore(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
-				System.out.println("Board Restored");
+				System.out.println("Board Restored MoveStillCheck4");
 				Opponent.PrintBoard(this);
 			}
 		
@@ -669,7 +707,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		//An invalid movement caught
 		else {
 			
-			System.out.printf("Invalid return type for movement:%d\n",i);	
+			System.out.printf("Invalid return type for movement:%d \n",i);	
 		}
 	
 	}
@@ -700,8 +738,8 @@ private void FinishMoveTwice() {
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
 		
 		if(Opponent.Pieces.get(i) instanceof Pawn<?,?,?>) {
-			if(((Pawn<int[],int[],int[]>)Me.Pieces.get(i)).JustMovedTwice) {
-				System.out.printf("Pawn for %c Just moved twice, revert to norm",Opponent.Player);
+			if(((Pawn<int[],int[],int[]>)Opponent.Pieces.get(i)).JustMovedTwice) {
+				System.out.printf("Pawn for %c Just moved twice @ [%d,%d], revert to norm\n",Opponent.Player,Opponent.Pieces.get(i).CurrentPosition[0],Opponent.Pieces.get(i).CurrentPosition[1]);
 			((Pawn<int[],int[],int[]>)Opponent.Pieces.get(i)).JustMovedTwice = false;
 			}
 		}
@@ -749,7 +787,7 @@ private void Restore(Player Opponent, char OpponentType,int[] MyPosition,Piece M
 
 //CHECKMATE!
 private boolean OpponentCheckMate() {
-	System.out.println("Is Opponent in checkmate?");
+	System.out.println("Is Opponent in checkmate? OpponentCheckMate1");
 	//Iterate through all opponents moves, generate the new table, and check if
 	for(int i=0;i<Opponent.Pieces.size();i+=1) {
 		LinkedList<int[]> R = new LinkedList<int[]>();
@@ -765,7 +803,7 @@ private boolean OpponentCheckMate() {
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
 	
-	System.out.println("\nOpponent IS In CheckMate Because cannot find move to invalidate the check");
+	System.out.println("\nOpponent IS In CheckMate Because cannot find move to invalidate the check Opponent CheckMate3");
 	//Checkmate if for all Pieces and moves for each of them, cannot find a case where one movement 
 	//doesn't make king in check
 	return true;	
@@ -775,10 +813,17 @@ private boolean OpponentCheckMate() {
 private void AddAllSets(LinkedList<int[]> R,Piece P) {
 			//IF Rooke
 			if(P instanceof Rooke<?,?,?>) {
-				R.add(((Rooke<int[],int[],int[]>)P).TryUp(0));
-				R.add(((Rooke<int[],int[],int[]>)P).TryDown(0));	
-				R.add(((Rooke<int[],int[],int[]>)P).TryLeft(0));
-				R.add(((Rooke<int[],int[],int[]>)P).TryRight(0));
+				for(int i=0;i<=7;i+=1)
+				R.add(((Rooke<int[],int[],int[]>)P).TryUp(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Rooke<int[],int[],int[]>)P).TryDown(i));	
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Rooke<int[],int[],int[]>)P).TryLeft(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Rooke<int[],int[],int[]>)P).TryRight(i));
 			}
 			//If Knight
 			if(P instanceof Knight<?,?,?>) {
@@ -797,24 +842,46 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 			//If Bishop
 			if(P instanceof Bishop<?,?,?>) {
 				
-				R.add(((Bishop<int[],int[],int[]>)P).TryUpRight(0));
-				R.add(((Bishop<int[],int[],int[]>)P).TryUpLeft(0));	
-				R.add(((Bishop<int[],int[],int[]>)P).TryDownRight(0));
-				R.add(((Bishop<int[],int[],int[]>)P).TryDownLeft(0));
+				for(int i=0;i<=7;i+=1)
+				R.add(((Bishop<int[],int[],int[]>)P).TryUpRight(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Bishop<int[],int[],int[]>)P).TryUpLeft(i));	
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Bishop<int[],int[],int[]>)P).TryDownRight(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Bishop<int[],int[],int[]>)P).TryDownLeft(i));
 		
 				
 			}
 			//If Queen
 			if(P instanceof Queen<?,?,?>) {
-				R.add(((Queen<int[],int[],int[]>)P).TryUp(0));
-				R.add(((Queen<int[],int[],int[]>)P).TryRight(0));	
-				R.add(((Queen<int[],int[],int[]>)P).TryDown(0));
-				R.add(((Queen<int[],int[],int[]>)P).TryLeft(0));
-
-				R.add(((Queen<int[],int[],int[]>)P).TryUpRight(0));
-				R.add(((Queen<int[],int[],int[]>)P).TryUpLeft(0));	
-				R.add(((Queen<int[],int[],int[]>)P).TryDownRight(0));
-				R.add(((Queen<int[],int[],int[]>)P).TryDownLeft(0));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryUp(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryRight(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryDown(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryLeft(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryUpRight(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryUpLeft(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryDownRight(i));
+				
+				for(int i=0;i<=7;i+=1)
+				R.add(((Queen<int[],int[],int[]>)P).TryDownLeft(i));
 		
 			}
 			//If King
@@ -836,9 +903,17 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 			if(P instanceof Pawn<?,?,?>) {
 				
 				R.add(((Pawn<int[],int[],int[]>)P).TryUp(0));
+				R.add(((Pawn<int[],int[],int[]>)P).TryUp(1));
+				
 				R.add(((Pawn<int[],int[],int[]>)P).TryDown(0));
+				R.add(((Pawn<int[],int[],int[]>)P).TryDown(1));
+				
 				R.add(((Pawn<int[],int[],int[]>)P).TryUpRight(0));
 				R.add(((Pawn<int[],int[],int[]>)P).TryUpLeft(0));	
+				
+				R.add(((Pawn<int[],int[],int[]>)P).TryLeft(0));
+				R.add(((Pawn<int[],int[],int[]>)P).TryRight(0));
+				
 				
 				R.add(((Pawn<int[],int[],int[]>)P).TryDownRight(0));
 				R.add(((Pawn<int[],int[],int[]>)P).TryDownLeft(0));	
@@ -847,36 +922,22 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 }
 
 //Check if opponent is in check
-private boolean OpponentInCheck() {
-	
-	//Swap player, opponent is now me, me is now opponent
+public boolean OpponentInCheck() {
+
+	System.out.println("Is Opponent in check? OpponentInCheck1");
+
 	SwapPlayer();
+	boolean OppInCheck = MeInCheck();
 	
-	System.out.println("Is Opponent in check?");
-	//Iterate through all piece moves
-	//See if ANY can attack king!
-	//Iterate through opponent's pieces
-	for(int i=0;i<Opponent.Pieces.size();i+=1) {
-		LinkedList<int[]> R = new LinkedList<int[]>();
-		System.out.printf("\n\n^^^^^^^^^^^^CHECK TEST PIECE %d^^^^^^^^^^^^\n",i);
-		//Add all sets of moves from piece depending on type
-		AddAllSets(R,Opponent.Pieces.get(i));
-		//Check if king is attacked given sets of moves
-		if(KingAttacked(R)) {
-			//Swap back to original players
-			SwapPlayer();
-			return true;
-		}
-		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
+	if(OppInCheck) {
+		System.out.println("Opponent in check OpponentInCheck2");
+	}
+	else {
+		System.out.println("Opponent Not in check OpponentInCheck3");
 	}
 	
-	
-	//Opponent is not n check
-	System.out.printf("\n %c Not In Check Because of %c move \n",Me.Player,Opponent.Player);
-	
-	//Swap back to original players
 	SwapPlayer();
-	return false;	
+	return OppInCheck;
 }
 
 }

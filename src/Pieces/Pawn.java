@@ -19,7 +19,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	@Override
 	public R TryDownRight(int i) {
 		// TODO Auto-generated method stub
-		if(Player!='B') {
+		if(Player!='W') {
 			return null;
 		}
 		int[] P = new int[2];
@@ -41,7 +41,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	@Override
 	public R TryDownLeft(int i) {
 		// TODO Auto-generated method stub
-		if(Player!='B') {
+		if(Player!='W') {
 			return null;
 		}
 		int[] P = new int[2];
@@ -63,7 +63,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	@Override
 	public R TryUpRight(int i) {
 		// TODO Auto-generated method stub
-		if(Player!='W') {
+		if(Player!='B') {
 			return null;
 		}
 		int[] P = new int[2];
@@ -85,7 +85,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	@Override
 	public R TryUpLeft(int i) {
 		// TODO Auto-generated method stub
-		if(Player!='W') {
+		if(Player!='B') {
 			return null;
 		}
 		

@@ -24,3 +24,20 @@ KillPiece and MoveStillCheck should be modified for enpassant/Castling movements
 Castling is easier, just add if case
 
 Practice both of these special moves in KillPiece first
+
+
+File AllOut is the output file
+
+Look for flags for check:
+
+CTRL+F - Find these key words to verify movements
+
+KillPiece - To see every movement in the game
+
+MeInCheck - To see the process to check how you're in check
+
+OpponentInCheck - To see the process to check how opponent in check
+
+MoveStillCheck - To see if opponent is in check and still in check given their options
+
+__PRINT BOARD__

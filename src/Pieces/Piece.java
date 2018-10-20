@@ -164,7 +164,12 @@ public abstract class Piece extends Player {
 			P[1] = FP[1];
 			
 			Ret = ApplyMove(FP,P);
-
+			//If collide with your ally or out of bounds, STOP
+			if(Ret[0]>16 || Ret[0]<1) {
+				Ret[0]=-1;
+				return Ret;
+			}
+			
 			FP[0]-=1;
 		}
 		Ret[4]+=i;
@@ -178,6 +183,11 @@ public abstract class Piece extends Player {
 				P[1] = FP[1];
 				
 				Ret = ApplyMove(FP,P);
+				//If collide with your ally or out of bounds, STOP
+				if(Ret[0]>16 || Ret[0]<1) {
+					Ret[0]=-1;
+					return Ret;
+				}
 				
 				FP[0]+=1;
 			}
@@ -192,6 +202,11 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]-1;
 				
 				Ret = ApplyMove(FP,P);
+				//If collide with your ally or out of bounds, STOP
+				if(Ret[0]>16 || Ret[0]<1) {
+					Ret[0]=-1;
+					return Ret;
+				}
 				
 				FP[0]-=1;
 			}
@@ -205,6 +220,11 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]+1;
 				
 				Ret = ApplyMove(FP,P);
+				//If collide with your ally or out of bounds, STOP
+				if(Ret[0]>16 || Ret[0]<1) {
+					Ret[0]=-1;
+					return Ret;
+				}
 				
 				FP[0]+=1;
 			}
@@ -219,6 +239,11 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]-1;
 				
 				Ret = ApplyMove(FP,P);
+				//If collide with your ally or out of bounds, STOP
+				if(Ret[0]>16 || Ret[0]<1) {
+					Ret[0]=-1;
+					return Ret;
+				}
 				
 				FP[0]+=1;
 				FP[1]-=1;
@@ -235,7 +260,12 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]+1;
 				
 				Ret = ApplyMove(FP,P);
-		
+				//If collide with your ally or out of bounds, STOP
+				if(Ret[0]>16 || Ret[0]<1) {
+					Ret[0]=-1;
+					return Ret;
+				}
+				
 				FP[0]+=1;
 				FP[1]+=1;
 				
@@ -252,6 +282,11 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]+1;
 				
 				Ret = ApplyMove(FP,P);
+				//If collide with your ally or out of bounds, STOP
+				if(Ret[0]>16 || Ret[0]<1) {
+					Ret[0]=-1;
+					return Ret;
+				}
 			
 				FP[0]-=1;
 				FP[1]+=1;
@@ -269,6 +304,11 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]-1;
 				
 				Ret = ApplyMove(FP,P);
+				//If collide with your ally or out of bounds, STOP
+				if(Ret[0]>16 || Ret[0]<1) {
+					Ret[0]=-1;
+					return Ret;
+				}
 				
 				FP[0]-=1;
 				FP[1]-=1;
