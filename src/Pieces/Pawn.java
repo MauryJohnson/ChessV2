@@ -200,7 +200,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		if(i==0) {
 		
 		Ret = IterateThrough(FP,3,i);	
-	
+		
 		//Piece is enemy attacked
 		if(Ret[0]>8&&Ret[0]<17) {
 			
@@ -214,20 +214,26 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 				EnPassantMove =  true;
 				
 				Cpy(ExtraRet,Ret);
+				
 				ExtraRet[6] = ((Pawn<int[],int[],int[]>)Enemy).CurrentPosition[0];
 				ExtraRet[7] = ((Pawn<int[],int[],int[]>)Enemy).CurrentPosition[1];
 				
-				System.out.printf("Extra Values added (Needed for killpiece enpassant), this is position to kill ACTUALLY [%d,%d] \n",ExtraRet[6],ExtraRet[7]);
+				Ret = ExtraRet;
 				
 				//CAN KILL!
 				if(Player=='W') {
-					Ret[1]+=1;
-					Ret[2]+=1;
+					Ret[1]-=1;
+				
 				}
 				else {
-					Ret[1]-=1;
-					Ret[2]-=1;
+					Ret[1]+=1;
+				
 				}
+	
+				System.out.printf("Extra Values added (Needed for killpiece enpassant), this is position to kill ACTUALLY [%d,%d] AND GOTO: [%d,%d] \n",Ret[6],Ret[7],Ret[1],Ret[2]);
+				
+				return (R)Ret;
+				
 			}
 				
 			}
@@ -243,7 +249,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		
 		else {
 			
-			System.out.println("Invalid Parameter");
+			System.out.println("Invalid Parameterr");
 			
 			return null;
 		}
@@ -262,7 +268,71 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	@Override
 	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
-		return null;
+int[] Ret = null;
+		
+		int[] ExtraRet = new int[8];
+		
+		int[] FP = new int[2];
+		
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+		
+		Ret = IterateThrough(FP,2,i);	
+		
+		//Piece is enemy attacked
+		if(Ret[0]>8&&Ret[0]<17) {
+			
+			int[] EnemyPiece = {Ret[1],Ret[2]};
+			Piece Enemy = GetPiece(EnemyPiece);
+			
+			if(Enemy instanceof Pawn<?,?,?>) {
+			
+			if(((Pawn<int[],int[],int[]>)Enemy).JustMovedTwice){
+				
+				EnPassantMove =  true;
+				
+				Cpy(ExtraRet,Ret);
+				ExtraRet[6] = ((Pawn<int[],int[],int[]>)Enemy).CurrentPosition[0];
+				ExtraRet[7] = ((Pawn<int[],int[],int[]>)Enemy).CurrentPosition[1];
+				
+				Ret = ExtraRet;
+				
+				//CAN KILL!
+				if(Player=='W') {
+					Ret[1]-=1;
+					
+				}
+				else {
+					Ret[1]+=1;
+				
+				}
+				
+				System.out.printf("Extra Values added (Needed for killpiece enpassant), this is position to kill ACTUALLY [%d,%d] AND GOTO: [%d,%d] \n",Ret[6],Ret[7],Ret[1],Ret[2]);
+			
+				return (R)Ret;
+				
+			}
+			
+				
+			}
+			
+		}
+		else {
+			//Cannot do EnPassant
+			return null;
+		}
+		
+			return null;
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameterr");
+			
+			return null;
+		}
 	}
 
 }

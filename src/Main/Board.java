@@ -1,5 +1,7 @@
 package Main;
 
+import Pieces.Piece;
+
 public class Board extends Game {
     
 	public static char[][] Board = new char[8][8];
@@ -19,11 +21,11 @@ public class Board extends Game {
 		
 				//*********** THIS IS RAW BOARD, NO PLAYERS IMPLEMENTED YET, SO THIS WILL REPRESENT THE BOARD WITHOUT PLAYERS
 		
-				char [] R1 = {'r','N','b','Q','K','b','N','r'};	
+				char [] R1 = {'R','N','B','Q','K','B','N','R'};	
 				char [] R2 = {'p','p','p','p','p','p','p','p'};	
 				
 				char [] R3 = {'p','p','p','p','p','p','p','p'};	
-				char [] R4 = {'r','N','b','Q','K','b','N','r'};	
+				char [] R4 = {'R','N','B','Q','K','B','N','R'};	
 				
 				char []RN1 = {' ','#',' ','#',' ','#',' ','#'};	
 				char []RN2 = {'#',' ','#',' ','#',' ','#',' '};	
@@ -58,14 +60,26 @@ public class Board extends Game {
 	
 	}
 	
-	public static void PrintBoard() {
+	public static void PrintBoard(Game G) {
 		for(int i=0; i<Board.length;i+=1) {
 			for(int j=0; j<Board[i].length;j+=1) {
-				System.out.printf("%c",Board[i][j]);
+				int [] Pose = {i,j};
+				Piece p = G.GetPiece(Pose);
+				if(p!=null)
+				System.out.printf("%c%c ",Character.toLowerCase(p.Player),Board[i][j]);
+				else
+				System.out.printf("%c%c ", Board[i][j],Board[i][j]);
 			}
+				System.out.printf("%d",Board.length-i);
 				System.out.println();
 		}
 		
+		char[] abc = {'a','b','c','d','e','f','g','h'};
+		
+		for(int i=0; i<Board.length;i+=1) {
+			System.out.printf(" %c ",abc[i]);
+		}
+		System.out.println();
 	}
 	
 	public char[][] CopyBoard(int row, int column){

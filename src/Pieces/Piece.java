@@ -65,14 +65,16 @@ public abstract class Piece extends Player {
 		 
 		 for(int i=-1; i<=1;i+=1) {
 			 for(int j=-1; j<=1; j+=1) {
-			 if((i!=p[0] || j!=p[1])) {
+				 
+			 if((i!=0 || j!=0 )) {
 				 //Do check
 				 p3[0] = p[0]+i;
 				 p3[1] = p[1]+j;
+				 System.out.printf("Check this pose: %d @  [%d,%d]\n",Pose,p3[0],p3[1]);
 				 if(p3[0]==p2[0]&&p3[1]==p2[1]) {
 					 return Pose;
 				 }
-				 System.out.printf("Next Pose: [%d,%d]\n",p3[0],p3[1]);
+				 //System.out.printf("Next Pose: %d @ [%d,%d]\n",Pose+1,p3[0],p3[1]);
 			 }
 			 //Next Possible Pose
 			 Pose+=1;
@@ -162,11 +164,6 @@ public abstract class Piece extends Player {
 			
 			Ret = ApplyMove(FP,P);
 
-			//If walks right into any piece, invalidated move
-			if(Ret[0]>8) {
-				Ret[0]=-1;
-				return Ret;
-			}
 			FP[0]-=1;
 		}
 		Ret[4]+=i;
@@ -180,11 +177,6 @@ public abstract class Piece extends Player {
 				P[1] = FP[1];
 				
 				Ret = ApplyMove(FP,P);
-				//If walks right into any piece, invalidated move
-				if(Ret[0]>8) {
-					Ret[0]=-1;
-					return Ret;
-				}
 				
 				FP[0]+=1;
 			}
@@ -199,16 +191,10 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]-1;
 				
 				Ret = ApplyMove(FP,P);
-				//If walks right into any piece, invalidated move
-				if(Ret[0]>8) {
-					Ret[0]=-1;
-					return Ret;
-				}
 				
 				FP[0]-=1;
 			}
-			Ret[5]+=i;	
-			
+			Ret[5]+=i;		
 		}
 		//Case 3 of iterateThrough, increment Right
 		else if(Case==3) {
@@ -218,11 +204,6 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]+1;
 				
 				Ret = ApplyMove(FP,P);
-				//If walks right into any piece, invalidated move
-				if(Ret[0]>8) {
-					Ret[0]=-1;
-					return Ret;
-				}
 				
 				FP[0]+=1;
 			}
@@ -237,11 +218,6 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]-1;
 				
 				Ret = ApplyMove(FP,P);
-				//If walks right into any piece, invalidated move
-				if(Ret[0]>8) {
-					Ret[0]=-1;
-					return Ret;
-				}
 				
 				FP[0]+=1;
 				FP[1]-=1;
@@ -258,12 +234,7 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]+1;
 				
 				Ret = ApplyMove(FP,P);
-				//If walks right into any piece, invalidated move
-				if(Ret[0]>8) {
-					Ret[0]=-1;
-					return Ret;
-				}
-				
+		
 				FP[0]+=1;
 				FP[1]+=1;
 				
@@ -280,12 +251,7 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]+1;
 				
 				Ret = ApplyMove(FP,P);
-				//If walks right into any piece, invalidated move
-				if(Ret[0]>8) {
-					Ret[0]=-1;
-					return Ret;
-				}
-				
+			
 				FP[0]-=1;
 				FP[1]+=1;
 				
@@ -302,11 +268,6 @@ public abstract class Piece extends Player {
 				P[1] = FP[1]-1;
 				
 				Ret = ApplyMove(FP,P);
-				//If walks right into any piece, invalidated move
-				if(Ret[0]>8) {
-					Ret[0]=-1;
-					return Ret;
-				}
 				
 				FP[0]-=1;
 				FP[1]-=1;
@@ -316,6 +277,10 @@ public abstract class Piece extends Player {
 			Ret[5]+=i;	
 			
 		}
+		
+		
+		System.out.printf("Iterate Through Case:%d Return Status: %d TO:[%d,%d] Piece:%c FROM:[%d,%d]   \n",Case,Ret[0],Ret[1],Ret[2],Ret[3],Ret[4],Ret[5]);
+
 		
 		return Ret;
 	}

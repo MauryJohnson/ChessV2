@@ -37,3 +37,6 @@ Case = 4 -> UpLeft
 Case = 5 -> UpRight, 
 Case = 6 -> DownRight, 
 Case = 7 -> DownLeft
+
+
+For Pawn, special cases Try Right,Try Left is en passant check

@@ -15,3 +15,7 @@ WON't WORK!!
 If invalid move, ReturnStatusMove will return -1
 If valid move to free or attacked space, ReturnStatusMove return 0
 If valid move to free or attacked space and put opponent in check, return 1
+
+
+Always swap player each move, also every two moves, call FinishMoveTwice() 
+to check if opponent pawns moved twice set their MovedTwice Flag to false then

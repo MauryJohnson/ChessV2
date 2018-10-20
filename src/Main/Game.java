@@ -41,10 +41,12 @@ public static void main(String[] args) {
 	
 	P1.Board[7][7] = 'r';
 	*/
-	P1.PrintBoard();
+	//P1.PrintBoard();
 	
 	//NEW GAME
 	Game G = new Game(P1,P2);
+	
+	P1.PrintBoard(G);
 	
 	//Swap Player Test
 	/*
@@ -75,12 +77,15 @@ public static void main(String[] args) {
 	*/
 	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
-	
 	G.SwapPlayer();
-	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(1));
-	
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryDown(0));
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
 	G.FinishMoveTwice();
+	
+	//G.SwapPlayer();
+	
+	//G.FinishMoveTwice();
 	
 	/*
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(1));
@@ -147,7 +152,7 @@ public void ReturnStatus(int[] R) {
 		}
 	}
 	PrintAllPieceStatus();
-	Me.PrintBoard();
+	Me.PrintBoard(this);
 }
 
 //PRint all the stati of pieces
@@ -197,7 +202,7 @@ public int ReturnStatusMove(int[] R) {
 	
 	//Print Board before moving
 	System.out.println("\nBoard");
-	Me.PrintBoard();
+	Me.PrintBoard(this);
 	
 	//Initialize return status
 	int ret = -1;
@@ -221,7 +226,7 @@ public int ReturnStatusMove(int[] R) {
 			
 			if(ret==1&&OpponentCheckMate()) {
 				System.out.printf("\nOpponent:%c is in CHECKMATE! %c WINS!\n",Opponent.Player,Me.Player);
-				Me.PrintBoard();
+				Me.PrintBoard(this);
 				System.exit(-1);
 			}
 			
@@ -238,7 +243,7 @@ public int ReturnStatusMove(int[] R) {
 	
 	//Print status of all pieces after every move
 	PrintAllPieceStatus();
-	Me.PrintBoard();
+	Me.PrintBoard(this);
 	
 	return ret;
 }
@@ -550,7 +555,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		
 		//Print Board after changes made
 		System.out.println("Board to look at");
-		Opponent.PrintBoard();
+		Opponent.PrintBoard(this);
 		
 		//If, after changes made, opponent is not in check
 		if(!OpponentInCheck()) {
@@ -559,7 +564,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			//Restore original positions for MyPiece and AttackedPiece
 			Restore(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
 			System.out.println("Board Restored");
-			Opponent.PrintBoard();
+			Opponent.PrintBoard(this);
 			
 			//Found solution, king not still in check
 			return false;
@@ -570,7 +575,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			//Restore previous board
 			Restore(Opponent, MyType, MyPosition, MyPiece,AttackedPiece, Attack);
 			System.out.println("Board Restored");
-			Opponent.PrintBoard();
+			Opponent.PrintBoard(this);
 			
 		}
 
@@ -583,7 +588,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			
 			//Print the new board
 			System.out.println("Board to look at");
-			Opponent.PrintBoard();
+			Opponent.PrintBoard(this);
 			
 			//Movement to free space succeeds
 			if(!OpponentInCheck()) {
@@ -591,7 +596,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 				//Restore previous board
 				Restore(Opponent, MyType, MyPosition, MyPiece,AttackedPiece, Attack);
 				System.out.println("Board Restored");
-				Opponent.PrintBoard();
+				Opponent.PrintBoard(this);
 				//Found case where can get out of check
 				return false;
 			}
@@ -600,7 +605,7 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 				//Restore previous board
 				Restore(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
 				System.out.println("Board Restored");
-				Opponent.PrintBoard();
+				Opponent.PrintBoard(this);
 			}
 		
 		}
