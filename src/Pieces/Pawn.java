@@ -119,6 +119,8 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		FP[1] = CurrentPosition[1];
 		
 		if(i==0||i==1) {
+			
+		//IF try to move up twice again
 		if(i==1&&!CanMoveUpTwice) {
 			System.out.println("Cannot move up twice anymore");
 			return null;
@@ -159,6 +161,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		
 		if(i==0||i==1) {
 			
+		//If try to move up twice again
 		if(i==1&&!CanMoveUpTwice) {
 			System.out.println("Cannot move up twice anymore");
 			return null;
@@ -231,6 +234,8 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 				}
 	
 				System.out.printf("Extra Values added (Needed for killpiece enpassant), this is position to kill ACTUALLY [%d,%d] AND GOTO: [%d,%d] \n",Ret[6],Ret[7],Ret[1],Ret[2]);
+				
+				EnPassantMove = true;
 				
 				return (R)Ret;
 				
@@ -311,6 +316,8 @@ int[] Ret = null;
 				
 				System.out.printf("Extra Values added (Needed for killpiece enpassant), this is position to kill ACTUALLY [%d,%d] AND GOTO: [%d,%d] \n",Ret[6],Ret[7],Ret[1],Ret[2]);
 			
+				EnPassantMove = true;
+				
 				return (R)Ret;
 				
 			}

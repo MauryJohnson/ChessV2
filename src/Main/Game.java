@@ -314,6 +314,7 @@ private int KillPiece(int[] K) {
 			
 				//IF pawn moved in first turn, this invalidates its option to move twice
 				PawnFirstMoveCheck(MyPiece);
+				
 				//If king or Rooke Moved, can no longer castle
 				CastleCheck(MyPiece);
 				
@@ -362,6 +363,7 @@ private int KillPiece(int[] K) {
 		
 		//IF pawn moved in first turn, this invalidates its option to move twice
 		PawnFirstMoveCheck(MyPiece);
+		
 		//If king or Rooke Moved, can no longer castle
 		CastleCheck(MyPiece);
 		
@@ -370,6 +372,7 @@ private int KillPiece(int[] K) {
 	
 	//IF pawn moved in first turn, this invalidates its option to move twice
 	PawnFirstMoveCheck(MyPiece);
+	
 	//If king or Rooke Moved, can no longer castle
 	CastleCheck(MyPiece);
 	

@@ -59,6 +59,7 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 			return null;
 		}
 		
+		
 		return null;
 	}
 

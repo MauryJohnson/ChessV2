@@ -75,9 +75,10 @@ public abstract class Piece extends Player {
 					 return Pose;
 				 }
 				 //System.out.printf("Next Pose: %d @ [%d,%d]\n",Pose+1,p3[0],p3[1]);
+				 //Next Possible Pose
+				 Pose+=1;
 			 }
-			 //Next Possible Pose
-			 Pose+=1;
+			
 			 }
 		 }
 		 //Impossible
