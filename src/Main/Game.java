@@ -217,7 +217,11 @@ public int ReturnStatusMove(int[] R) {
 		//If return type is valid move
 		if(R[0]>=1 && R[0]<=8 || R[0]>=9 && R[0]<=16) {
 			System.out.printf("\nMove to: [%d,%d] W\\ Piece: %c\n",R[1],R[2],(char)R[3]);
-			int[] K = {R[1],R[2],R[3],R[4],R[5]};
+			int[] K = new int[R.length-1];
+			
+			for(int i=1; i<R.length;i+=1) {
+				K[i-1] = R[i];
+			}
 			
 			ret = KillPiece(K);			
 				
@@ -309,6 +313,10 @@ private int KillPiece(int[] K) {
 				//IF pawn moved in first turn, this invalidates its option to move twice
 				PawnFirstMoveCheck(MyPiece);
 				
+				//EnPassent?
+				EnPassant(MyPiece,K);
+				
+				
 				return 1;
 			}
 			
@@ -317,6 +325,9 @@ private int KillPiece(int[] K) {
 				
 				//If king or Rooke Moved, can no longer castle
 				CastleCheck(MyPiece);
+				
+				//EnPassent?
+				EnPassant(MyPiece,K);
 				
 			}//End case MyPiece Found
 			//My Piece not found
@@ -367,6 +378,9 @@ private int KillPiece(int[] K) {
 		//If king or Rooke Moved, can no longer castle
 		CastleCheck(MyPiece);
 		
+		//EnPassent?
+		EnPassant(MyPiece,K);
+		
 		return 1;
 	}
 	
@@ -376,6 +390,9 @@ private int KillPiece(int[] K) {
 	//If king or Rooke Moved, can no longer castle
 	CastleCheck(MyPiece);
 	
+	//EnPassant?
+	EnPassant(MyPiece,K);
+	
 	}
 	//My Piece not found
 	else {
@@ -384,6 +401,40 @@ private int KillPiece(int[] K) {
 	}
 	
 	return 0;
+	
+}
+
+//For Kill/Attack Enemy functions
+//Check if it's pawn and also if EnPassent is active, then continue with EnPassent move
+private void EnPassant(Piece MyPiece,int[] Attack) {
+	
+	//Kill Piece @ [5,6]
+	
+	if(Attack.length>=7) {
+	
+	if(MyPiece instanceof Pawn<?,?,?> || MyPiece.Piece=='p') {
+		
+		if(((Pawn<int[],int[],int[]>)MyPiece).EnPassantMove) {
+			
+			System.out.printf("ENPASSANT FROM: [%d,%d] TO: [%d,%d], KILL PIECE @ [%d,%d]",Attack[3],Attack[4],Attack[0],Attack[1],Attack[5],Attack[6]);
+			
+			int[] MyPosition = {Attack[3],Attack[4]};
+			char MyType = MyPiece.Piece;
+			int[] Attck = {Attack[5],Attack[6]};
+			Piece AttackedPiece = GetPiece(Attck);
+			
+			Attack(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attck);
+			Attck[0] = Attack[0];
+			Attck[1] = Attack[1];
+			Attack(Me,MyType,MyPiece.CurrentPosition,MyPiece,null,Attck);
+			
+			//After move validated, enpassant is false now
+			((Pawn<int[],int[],int[]>)MyPiece).EnPassantMove = false;
+		}
+		
+	}
+	
+	}
 	
 }
 

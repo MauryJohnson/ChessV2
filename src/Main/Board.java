@@ -61,6 +61,7 @@ public class Board extends Game {
 	}
 	
 	public static void PrintBoard(Game G) {
+		System.out.println("___PRINT BOARD___");
 		for(int i=0; i<Board.length;i+=1) {
 			for(int j=0; j<Board[i].length;j+=1) {
 				int [] Pose = {i,j};

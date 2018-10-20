@@ -19,3 +19,8 @@ If valid move to free or attacked space and put opponent in check, return 1
 
 Always swap player each move, also every two moves, call FinishMoveTwice() 
 to check if opponent pawns moved twice set their MovedTwice Flag to false then
+
+KillPiece and MoveStillCheck should be modified for enpassant/Castling movements...
+Castling is easier, just add if case
+
+Practice both of these special moves in KillPiece first
