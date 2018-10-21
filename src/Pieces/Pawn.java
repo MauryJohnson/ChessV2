@@ -10,6 +10,8 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	
 	public boolean EnPassantMove = false;
 	
+	public boolean PawnPromotion = false;
+	
 	public Pawn(char Player) {
 		super(Player);
 		// TODO Auto-generated constructor stub
@@ -133,6 +135,10 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 				JustMovedTwice=true;
 		}
 		
+		if(Ret[0] >8 || Ret[0] <1) {
+			return null;
+		}
+		
 		return (R)Ret;
 		
 		}
@@ -172,6 +178,10 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		//Successful just moved twice case
 		if(Ret[0]>=1&&Ret[0]<=8 && i==1) {
 			JustMovedTwice=true;
+		}
+		
+		if(Ret[0] >8 || Ret[0] <1) {
+			return null;
 		}
 		
 		return (R)Ret;

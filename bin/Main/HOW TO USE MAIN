@@ -59,5 +59,7 @@ for castling function
 
 *************__PRINT BOARD__ - To see every time board is printed for any of these steps
 
-Stalemate - After move, call  SwapPlayer, and call StaleMate(), Check if ME cannot do any moves w/o getting in check
-//Just a while cannot move, try move if one case where can do a valid move, return false ->outside loop, return true 
+Stalemate - After move, call  SwapPlayer, and call StaleMate(), 
+WHICH just calls checkmate for the opponent, but without them being in check.
+
+***********Only my move can determine if opponent will be in check, checkmate, or stalemate

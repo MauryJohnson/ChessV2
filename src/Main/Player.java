@@ -28,6 +28,7 @@ public  void INIT() {
 	    P.add(new Bishop<int[],int[],int[]>(Player));
 		P.add(new Queen <int[],int[],int[]>(Player));
 		P.add(new King <int[],int[],int[]>(Player));
+		
 		P.add(new Bishop<int[],int[],int[]>(Player));
 		P.add(new Knight<int[],int[],int[]>(Player));
 		P.add(new Rooke<int[],int[],int[]>(Player));
@@ -41,6 +42,7 @@ public  void INIT() {
 		P.add(new Pawn<int[],int[],int[]>(Player));
 		P.add(new Pawn<int[],int[],int[]>(Player));
 		P.add(new Pawn<int[],int[],int[]>(Player));
+		
 		
 		
 		/* ADD MORE PIECES LATER */

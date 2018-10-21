@@ -1,7 +1,5 @@
 package Pieces;
 
-import java.util.LinkedList;
-
 import Main.*;
 
 public abstract class Piece extends Player {
@@ -71,7 +69,7 @@ public abstract class Piece extends Player {
 				 //Do check
 				 p3[0] = p[0]+i;
 				 p3[1] = p[1]+j;
-				 System.out.printf("Check this pose: %d @  [%d,%d]\n",Pose,p3[0],p3[1]);
+				 //System.out.printf("Check this pose: %d @  [%d,%d]\n",Pose,p3[0],p3[1]);
 				 if(p3[0]==p2[0]&&p3[1]==p2[1]) {
 					 return Pose;
 				 }
@@ -221,7 +219,7 @@ public abstract class Piece extends Player {
 					break;
 				}
 				
-				FP[0]-=1;
+				FP[1]-=1;
 			}
 			Ret[5]+=i;		
 		}
@@ -243,7 +241,7 @@ public abstract class Piece extends Player {
 					break;
 				}
 				
-				FP[0]+=1;
+				FP[1]+=1;
 			}
 			Ret[5]-=i;	
 			
@@ -349,7 +347,6 @@ public abstract class Piece extends Player {
 			}
 			Ret[4]+=i;
 			Ret[5]+=i;	
-			
 		}
 		//Case 8 of iterateThrough, increment Left For RookeCastleLeft
 		else if(Case==8) {

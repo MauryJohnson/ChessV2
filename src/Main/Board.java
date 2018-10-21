@@ -40,12 +40,15 @@ public class Board extends Game {
 					if(i==0) {
 						Board[i]=R1;
 					}
+					
 					else if(i==1) {
 						Board[i]=R2;
 					}
+					
 					else if(i==6) {
 						Board[i]=R3;
 					}
+					
 					else if(i==7) {
 						Board[i]=R4;
 					}else {

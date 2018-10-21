@@ -151,6 +151,11 @@ public static void main(String[] args) {
 	//			END				ENPASSANT				CASE
 	
 	boolean End = false;
+	
+	boolean P1Draw = false;
+	
+	boolean P2Draw = false;
+	
 	System.out.println("\nSTART_____GAME\n");
 	Scanner s = new Scanner(System.in);
 	int Status =-1;
@@ -159,6 +164,8 @@ public static void main(String[] args) {
 	//Switch First Player to white
 	G.SwapPlayer();
 	
+	boolean FirstTurn = true;
+	
 	while(!End){
 		Status = -1;
 		
@@ -166,23 +173,94 @@ public static void main(String[] args) {
 		P2.PrintBoard(G);
 		input = s.nextLine();
 		System.out.printf("Input: %s\n", input);
+		
+		if(input.contains("resign")) {
+			System.out.printf("resign\nPlayer 2 wins");
+			System.exit(0);
+		}
+		
+		P1Draw = input.contains("draw?");
+		if(P1Draw&&P2Draw) {
+			System.out.println("draw");
+			System.exit(0);
+		}
+		else {
+			//P1Draw = false;
+			P2Draw = false;
+		}
+		
 		Status = G.TryMoveFromInput(input);
 		}
 		
+		if(FirstTurn) {
 		G.SwapPlayer();
+		FirstTurn = false;
+		}
+		else {
+		
+		//Set opponent pawn JustMovedTwice booolean to false if it moved their pawn last turn
+		G.FinishMoveTwice();
+		
+		//Perform stalemate check for Opponent's state
+		if(G.StaleMate())
+		{
+			System.out.println("Stalemate");
+			System.exit(0);
+		}
+		
+		//Swap players to player 2
+		G.SwapPlayer();
+		}
+		
 		Status = -1;
 		
 		while(Status==-1) {
 			P1.PrintBoard(G);
 			input = s.nextLine();
 			System.out.printf("Input: %s\n", input);
+			
+			if(input.contains("resign")) {
+				System.out.printf("resign\nPlayer 1 wins");
+				System.exit(0);
+			}
+			
+			P2Draw = input.contains("draw?");
+			if(P1Draw&&P2Draw) {
+				System.out.println("draw");
+				System.exit(0);
+			}
+			else {
+				P1Draw = false;
+				//P2Draw = false;
+			}
+			
+			
 			Status = G.TryMoveFromInput(input);
 		}
 		
+			//Perform stalemate check for Opponent state, after performed movement
+				if(G.StaleMate())
+				{
+					System.out.println("Stalemate");
+					System.exit(0);
+				}
+				
+		//Opponent set pawn justmoved twice to false and swap player
 		G.WrapUpCases();
 		
 	}
 	
+}
+
+//Determine if anymove Opponent does for any piece puts Opponent in check
+private boolean StaleMate() {
+	// TODO Auto-generated method stub
+	
+	boolean Stalemate = false;
+	
+	Stalemate = OpponentCheckMate();
+	
+	return Stalemate;
 }
 
 private void WrapUpCases() {
@@ -358,31 +436,61 @@ public int ToInt(char c) {
 
 public int[] ParseInput(String s) {
 	System.out.printf("String Size: %d",s.length());
-	if(s.length()!=5) {
+	
+	/*if(s.length()!=5 && s.length()!=7) {
 		//e4 e5\0, the max len is 5
 		return null;
 	}
+	*/
+	if(s.length()<5) {
+		return null;
+	}
 	
-	int i = ToInt(s.charAt(0));
+	int i,j,k,l;
+	
+	try {
+		i = ToInt(s.charAt(0));
+	}
+	catch (Exception e){
+		return null;
+	}
+			
 	System.out.printf("i:%d\n",i);
 	if(i<0) {
 		return null;
 	}
 	String s1 = "" + s.charAt(1);
-	int j = 8-Integer.parseInt(s1);
+	 
+	try {j = 8-Integer.parseInt(s1);
+	}
+	catch(Exception f){
+		return null;
+	}
+	
 	System.out.printf("j:%d\n",j);
 	if(j<0||j>7) {
 		return null;
 	}
 	
-	int k = ToInt(s.charAt(3));
+	try{ k = ToInt(s.charAt(3));
+	}
+	catch(Exception h) {
+		return null;
+	}
+	
 	System.out.printf("k:%d\n",k);
 	if(k<0) {
 		return null;
 	}
 	s1 = "" + s.charAt(4);
-	int l = 8-Integer.parseInt(s1);
-	System.out.printf("l:%d\n",l);
+	 
+	try{l = 8-Integer.parseInt(s1);
+	}
+	catch(Exception o) {
+		return null;
+	}
+	
+	 System.out.printf("l:%d\n",l);
 	if(l<0||l>7) {
 		return null;
 	}
@@ -460,7 +568,90 @@ public int TryMoveFromInput(String s) {
 	
 	int[] To = {TrueIn[2],TrueIn[3]};
 	
-	return GetMatchingMove(MyPiece, To);
+	int Ret = GetMatchingMove(MyPiece, To);
+	
+	//If Pawn
+	if(MyPiece instanceof Pawn<?,?,?> )  {
+		if(MyPiece.CurrentPosition[0]==0||MyPiece.CurrentPosition[0]==7) {
+			//Promote to the last character involved
+			System.out.printf("Promotion!!! @ [%d,%d]\n",MyPiece.CurrentPosition[0],MyPiece.CurrentPosition[1]);
+			if(s.length()==7) {
+			Piece NewP = NewPiece(s.charAt(s.length()-1));	
+			if(NewP!=null) {
+				
+				ReplacePiece(NewP,MyPiece);
+				
+			}
+			else {
+				
+				//Invalid argument?!?!
+				
+			}
+			}
+			else {
+			Queen<int[],int[],int[]> Q = new Queen<int[],int[],int[]>(Me.Player);
+			Q.Piece = 'Q';
+			ReplacePiece(Q,MyPiece);
+			}
+		}
+	}
+	
+	return Ret;
+}
+
+private Piece NewPiece(char s) {
+	// TODO Auto-generated method stub
+	if(s=='R') {
+		Piece R = new Rooke<int[],int[],int[]>(Me.Player);
+		R.Piece = 'R';
+		return R;
+	}
+	else if(s=='N') {
+		Piece N = new Knight<int[],int[],int[]>(Me.Player);
+		N.Piece = 'N';
+		return N;
+	}
+	else if(s=='B') {
+		Piece B = new Bishop<int[],int[],int[]>(Me.Player);	
+		B.Piece = 'B';
+		return 	B;
+	}
+	
+	/*else if(s=='K') {
+		Piece K = new King<int[],int[],int[]>(Me.Player);
+		K.Piece = 'K';
+		return K;
+	}
+	*/
+	else if(s=='Q') {
+		Piece Q = new Queen<int[],int[],int[]>(Me.Player);
+		Q.Piece = 'Q';
+		return Q;
+	}
+	/*
+	else if(s=='p') {
+		
+		
+	}
+	*/
+	
+	return null;
+}
+
+private void ReplacePiece(Piece NewPiece,Piece OldPiece) {
+	//Set new pose
+	NewPiece.CurrentPosition[0] = OldPiece.CurrentPosition[0];
+	NewPiece.CurrentPosition[1] = OldPiece.CurrentPosition[1];
+	
+	//Completely remove data of old piece from ll
+	Me.Pieces.remove(OldPiece);
+	
+	//New Board
+	Me.Board = Me.CopyNewBoard(NewPiece.CurrentPosition[0], NewPiece.CurrentPosition[1], NewPiece.Piece);
+	//Set player
+	NewPiece.SetPlayer(Me.Player);
+	
+	Me.Pieces.add(NewPiece);
 }
 
 //Destroy piece in board
@@ -498,8 +689,6 @@ private int KillPiece(int[] K) {
 			
 			System.out.println("Enpass Test:");
 			Me.PrintBoard(this);
-			
-			//System.exit(-1);
 			
 			}
 			else {
@@ -831,8 +1020,6 @@ private void RestoreEnPassant(Piece MyPiece,Piece AttackedPiece,int[] Attack) {
 	
 				Me.PrintBoard(this);
 				
-				//System.exit(-1);
-				
 			}
 		}
 	}
@@ -944,7 +1131,7 @@ public boolean KingAttacked(LinkedList<int[]> R) {
 		MyPosition[0]=R.get(i)[4];
 		MyPosition[1]=R.get(i)[5];
 		
-		System.out.printf("Curr POSE AGAINN [%d,%d]", MyPosition[0],MyPosition[1]);
+		//System.out.printf("Curr POSE AGAINN [%d,%d]", MyPosition[0],MyPosition[1]);
 		
 		//My Piece
 		Piece ME = GetPiece(MyPosition);
@@ -968,7 +1155,7 @@ public boolean KingAttacked(LinkedList<int[]> R) {
 		}
 		//Not valid move from movesets
 		else {
-			System.out.printf("King Attacked check Invalid move: [%d,%d] , STATUS:%d KingAttacked2 \n",R.get(i)[1],R.get(i)[2],R.get(i)[0]);
+			//System.out.printf("King Attacked check Invalid move: [%d,%d] , STATUS:%d KingAttacked2 \n",R.get(i)[1],R.get(i)[2],R.get(i)[0]);
 		}
 		
 	}
@@ -1184,6 +1371,23 @@ private void FinishMoveTwice() {
 		
 	}
 	
+	//Set CanMoveTwice back to true for all pawns in appropriate positions
+	for(int i=0;i<Opponent.Pieces.size();i+=1) {
+		
+		if(Opponent.Pieces.get(i) instanceof Pawn<?,?,?>) {
+			
+			if(Opponent.Player=='W'&&Opponent.Pieces.get(i).CurrentPosition[0]==6||Opponent.Player=='B'&&Opponent.Pieces.get(i).CurrentPosition[0]==1) {
+				System.out.printf("Set Pawn for %c, CanMoveTwice @ [%d,%d], revert to norm\n",Opponent.Player,Opponent.Pieces.get(i).CurrentPosition[0],Opponent.Pieces.get(i).CurrentPosition[1]);
+				if(Opponent.Player=='W'&&Opponent.Pieces.get(i).CurrentPosition[0]==6)
+				((Pawn<int[],int[],int[]>)Opponent.Pieces.get(i)).CanMoveUpTwice = true;
+				else if(Opponent.Player=='B'&&Opponent.Pieces.get(i).CurrentPosition[0]==1)
+				((Pawn<int[],int[],int[]>)Opponent.Pieces.get(i)).CanMoveUpTwice = true;
+				}
+			
+		}
+		
+	}
+	
 }
 
 //Attack Position
@@ -1374,7 +1578,7 @@ private void AddAllSets(LinkedList<int[]> R,Piece P,boolean InnerStack) {
 				System.out.println("\nPAWN");
 			}
 			
-			System.out.printf("\nCurr Pose again: [%d,%d]\n",P.CurrentPosition[0], P.CurrentPosition[1]);
+			//System.out.printf("\nCurr Pose again: [%d,%d]\n",P.CurrentPosition[0], P.CurrentPosition[1]);
 			System.out.println("Ends Adding All Possible Movesets2");
 }
 
