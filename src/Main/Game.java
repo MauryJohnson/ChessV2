@@ -51,9 +51,7 @@ public static void main(String[] args) {
 	//NEW GAME
 	Game G = new Game(P1,P2);
 	
-	P1.PrintBoard(G);
-	
-	G.TryMoveFromInput("a2 a4");
+	//G.TryMoveFromInput("a2 a4");
 	
 	//Swap Player Test
 	/*
@@ -155,9 +153,33 @@ public static void main(String[] args) {
 	boolean End = false;
 	System.out.println("\nSTART_____GAME\n");
 	Scanner s = new Scanner(System.in);
+	int Status =-1;
+	String input;
+	
+	//Switch First Player to white
+	G.SwapPlayer();
+	
 	while(!End){
-		String input = s.nextLine();
+		Status = -1;
+		
+		while(Status==-1) {
+		P2.PrintBoard(G);
+		input = s.nextLine();
 		System.out.printf("Input: %s\n", input);
+		Status = G.TryMoveFromInput(input);
+		}
+		
+		G.SwapPlayer();
+		Status = -1;
+		
+		while(Status==-1) {
+			P1.PrintBoard(G);
+			input = s.nextLine();
+			System.out.printf("Input: %s\n", input);
+			Status = G.TryMoveFromInput(input);
+		}
+		
+		G.WrapUpCases();
 		
 	}
 	
@@ -395,7 +417,7 @@ public int GetMatchingMove(Piece MyPiece, int[] To) {
 	
 	LinkedList<int[]> R = new LinkedList<int[]>();
 	
-	AddAllSets(R,MyPiece);
+	AddAllSets(R,MyPiece,true);
 		
 	//For all sets of movements, find the one which coordinates [1][2]-TO match
 	for(int i=0;i<R.size();i+=1) {
@@ -405,7 +427,7 @@ public int GetMatchingMove(Piece MyPiece, int[] To) {
 		//If they match!! ReturnStatusMove of that int ARRAY
 		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2]) {
 			System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
-			System.exit(-1);
+			//System.exit(-1);
 			return ReturnStatusMove(R.get(i));
 		}
 		
@@ -428,7 +450,8 @@ public int TryMoveFromInput(String s) {
 	//Get from Position and verify it's piece
 	int[] MyPose = {TrueIn[0],TrueIn[1]};
 	Piece MyPiece = GetPiece(MyPose);
-	if(MyPiece==null) {
+	
+	if(MyPiece==null||MyPiece.Player!=Me.Player) {
 		return -1;
 	}
 	
@@ -867,7 +890,7 @@ public boolean MeInCheck() {
 		System.out.printf("\n\n^^^^^^^^^^^^CHECK TEST PIECE %c^^^^^^^^^^^^\n",Opponent.Pieces.get(i).Piece);
 		
 		//Add all sets of possible moves to List
-		AddAllSets(R,Opponent.Pieces.get(i));
+		AddAllSets(R,Opponent.Pieces.get(i),false);
 		
 		//Check if king is attacked
 		if(KingAttacked(R)) {
@@ -902,6 +925,11 @@ public boolean KingAttacked(LinkedList<int[]> R) {
 		if(R.get(i)==null) {
 			continue;
 		}
+		/*
+		if(R.get(i).length>=9) {
+			continue;
+		}
+		*/
 		//If Return status is valid IE a free area OR attacked area
 		if(R.get(i)[0]>=1 && R.get(i)[0]<=16) {
 		
@@ -912,9 +940,20 @@ public boolean KingAttacked(LinkedList<int[]> R) {
 		Piece Attacked = GetPiece(Attack);
 		
 		//My Position
-		int [] MyPosition = {R.get(i)[4],R.get(i)[5]};
+		int [] MyPosition = new int[2];
+		MyPosition[0]=R.get(i)[4];
+		MyPosition[1]=R.get(i)[5];
+		
+		System.out.printf("Curr POSE AGAINN [%d,%d]", MyPosition[0],MyPosition[1]);
+		
 		//My Piece
 		Piece ME = GetPiece(MyPosition);
+		
+		//Given a poor entry.. Nothing to worry about!!
+		if(ME==null) {
+			System.out.printf("Error, my piece cannot be located @ [%d,%d]\n",MyPosition[0],MyPosition[1]);
+			continue;
+		}
 		
 		//IF Piece got is a king piece
 		if(Attacked instanceof King<?,?,?>) {
@@ -952,6 +991,12 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		if(R.get(i)==null) {
 			continue;
 		}
+		//Don't want to include castling case, because ALREADY IN CHECK!
+		if(R.get(i).length>=9) {
+			System.out.println("Already Checked");
+			continue;
+		}
+		
 		//If move is valid
 		if(R.get(i)[0]>=1&&R.get(i)[0]<=16) {
 			/*
@@ -1188,7 +1233,7 @@ private boolean OpponentCheckMate() {
 		System.out.printf("\n\n^^^^^^^^^^^^CHECK TEST PIECE %c^^^^^^^^^^^^\n",Opponent.Pieces.get(i).Piece);
 		
 		//Add the movements of all moves for piece
-		AddAllSets(R,Opponent.Pieces.get(i));
+		AddAllSets(R,Opponent.Pieces.get(i),false);
 		
 		//If movements gets out of check, found case, return false.
 		if(!MoveStillCheck(R)) {
@@ -1204,7 +1249,7 @@ private boolean OpponentCheckMate() {
 }
 
 //Add all possible movements for each piece
-private void AddAllSets(LinkedList<int[]> R,Piece P) {
+private void AddAllSets(LinkedList<int[]> R,Piece P,boolean InnerStack) {
 			System.out.println("Add All Possible Movesets1");
 	
 			//IF Rooke
@@ -1221,10 +1266,19 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 				for(int i=0;i<=7;i+=1)
 				R.add(((Rooke<int[],int[],int[]>)P).TryRight(i));
 				
+				//Only run this if you are in inner stack, MeInCheck calls AddAllSets but so does function ApplyMove
+				//If both ran, infinite loop occurs
+				//In Piece abstract class
+				if(InnerStack) {
+				R.add(((Rooke<int[],int[],int[]>)P).TryRookeLeftCastle());
+				
+				R.add(((Rooke<int[],int[],int[]>)P).TryRookeRightCastle());
+				}
+				
 				System.out.println("\nROOKE");
 			}
 			//If Knight
-			if(P instanceof Knight<?,?,?>) {
+			else if(P instanceof Knight<?,?,?>) {
 				
 				R.add(((Knight<int[],int[],int[]>)P).TryUpRight(0));
 				R.add(((Knight<int[],int[],int[]>)P).TryUpLeft(0));	
@@ -1238,7 +1292,7 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 				System.out.println("\nKNIGHT");
 			}
 			//If Bishop
-			if(P instanceof Bishop<?,?,?>) {
+			else if(P instanceof Bishop<?,?,?>) {
 				
 				for(int i=0;i<=7;i+=1)
 				R.add(((Bishop<int[],int[],int[]>)P).TryUpRight(i));
@@ -1255,7 +1309,7 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 				System.out.println("\nBISHOP");
 			}
 			//If Queen
-			if(P instanceof Queen<?,?,?>) {
+			else if(P instanceof Queen<?,?,?>) {
 				
 				for(int i=0;i<=7;i+=1)
 				R.add(((Queen<int[],int[],int[]>)P).TryUp(i));
@@ -1269,22 +1323,23 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 				for(int i=0;i<=7;i+=1)
 				R.add(((Queen<int[],int[],int[]>)P).TryLeft(i));
 				
-				for(int i=0;i<=7;i+=1)
+				
+				for(int i=0;i<=7;i+=1) {
+				
 				R.add(((Queen<int[],int[],int[]>)P).TryUpRight(i));
 				
-				for(int i=0;i<=7;i+=1)
 				R.add(((Queen<int[],int[],int[]>)P).TryUpLeft(i));
 				
-				for(int i=0;i<=7;i+=1)
 				R.add(((Queen<int[],int[],int[]>)P).TryDownRight(i));
 				
-				for(int i=0;i<=7;i+=1)
 				R.add(((Queen<int[],int[],int[]>)P).TryDownLeft(i));
+				}
+				
 		
 				System.out.println("\nQUEEN");
 			}
 			//If King
-			if(P instanceof King<?,?,?>) {
+			else if(P instanceof King<?,?,?>) {
 				
 				R.add(((King<int[],int[],int[]>)P).TryUp(0));
 				R.add(((King<int[],int[],int[]>)P).TryRight(0));	
@@ -1299,7 +1354,7 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 				System.out.println("\nKING");
 			}
 			//If Pawn
-			if(P instanceof Pawn<?,?,?>) {
+			else if(P instanceof Pawn<?,?,?>) {
 				
 				R.add(((Pawn<int[],int[],int[]>)P).TryUp(0));
 				R.add(((Pawn<int[],int[],int[]>)P).TryUp(1));
@@ -1307,18 +1362,19 @@ private void AddAllSets(LinkedList<int[]> R,Piece P) {
 				R.add(((Pawn<int[],int[],int[]>)P).TryDown(0));
 				R.add(((Pawn<int[],int[],int[]>)P).TryDown(1));
 				
-				R.add(((Pawn<int[],int[],int[]>)P).TryUpRight(0));
-				R.add(((Pawn<int[],int[],int[]>)P).TryUpLeft(0));	
-				
 				R.add(((Pawn<int[],int[],int[]>)P).TryLeft(0));
 				R.add(((Pawn<int[],int[],int[]>)P).TryRight(0));
 				
+				R.add(((Pawn<int[],int[],int[]>)P).TryUpRight(0));
+				R.add(((Pawn<int[],int[],int[]>)P).TryUpLeft(0));	
 				
 				R.add(((Pawn<int[],int[],int[]>)P).TryDownRight(0));
 				R.add(((Pawn<int[],int[],int[]>)P).TryDownLeft(0));	
 			
 				System.out.println("\nPAWN");
 			}
+			
+			System.out.printf("\nCurr Pose again: [%d,%d]\n",P.CurrentPosition[0], P.CurrentPosition[1]);
 			System.out.println("Ends Adding All Possible Movesets2");
 }
 

@@ -13,11 +13,12 @@ public abstract class Piece extends Player {
 	//Instant access of Piece type
 	public char Piece;
 	//Have to have current position of piece
-	public int[] CurrentPosition = new int[2];
+	public int[] CurrentPosition;
 
 	//Constructs Player IF YOU EVER CREATED PIECE W/O PLAYER
 	public Piece(char Player) {
 		super(Player);
+		CurrentPosition = new int[2];
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -169,6 +170,10 @@ public abstract class Piece extends Player {
 				Ret[0]=-1;
 				return Ret;
 			}
+			//Collide with enemy, break from loop.
+			else if(Ret[0]>=9 && Ret[0]<=16) {
+				break;
+			}
 			
 			FP[0]-=1;
 		}
@@ -187,6 +192,10 @@ public abstract class Piece extends Player {
 				if(Ret[0]>16 || Ret[0]<1) {
 					Ret[0]=-1;
 					return Ret;
+				}
+				//Collide with enemy, break from loop.
+				else if(Ret[0]>=9 && Ret[0]<=16) {
+					break;
 				}
 				
 				FP[0]+=1;
@@ -207,6 +216,10 @@ public abstract class Piece extends Player {
 					Ret[0]=-1;
 					return Ret;
 				}
+				//Collide with enemy, break from loop.
+				else if(Ret[0]>=9 && Ret[0]<=16) {
+					break;
+				}
 				
 				FP[0]-=1;
 			}
@@ -224,6 +237,10 @@ public abstract class Piece extends Player {
 				if(Ret[0]>16 || Ret[0]<1) {
 					Ret[0]=-1;
 					return Ret;
+				}
+				//Collide with enemy, break from loop.
+				else if(Ret[0]>=9 && Ret[0]<=16) {
+					break;
 				}
 				
 				FP[0]+=1;
@@ -243,6 +260,10 @@ public abstract class Piece extends Player {
 				if(Ret[0]>16 || Ret[0]<1) {
 					Ret[0]=-1;
 					return Ret;
+				}
+				//Collide with enemy, break from loop.
+				else if(Ret[0]>=9 && Ret[0]<=16) {
+					break;
 				}
 				
 				FP[0]+=1;
@@ -264,6 +285,10 @@ public abstract class Piece extends Player {
 				if(Ret[0]>16 || Ret[0]<1) {
 					Ret[0]=-1;
 					return Ret;
+				}
+				//Collide with enemy, break from loop.
+				else if(Ret[0]>=9 && Ret[0]<=16) {
+					break;
 				}
 				
 				FP[0]+=1;
@@ -287,7 +312,11 @@ public abstract class Piece extends Player {
 					Ret[0]=-1;
 					return Ret;
 				}
-			
+				//Collide with enemy, break from loop.
+				else if(Ret[0]>=9 && Ret[0]<=16) {
+					break;
+				}
+				
 				FP[0]-=1;
 				FP[1]+=1;
 				
@@ -308,6 +337,10 @@ public abstract class Piece extends Player {
 				if(Ret[0]>16 || Ret[0]<1) {
 					Ret[0]=-1;
 					return Ret;
+				}
+				//Collide with enemy, break from loop.
+				else if(Ret[0]>=9 && Ret[0]<=16) {
+					break;
 				}
 				
 				FP[0]-=1;
@@ -340,8 +373,8 @@ public abstract class Piece extends Player {
 						
 						King.CurrentPosition[1] = King_Original_Pose[1];
 						
-						Ret = ApplyMove(FP,P);
-						Ret[0]=-1;
+						//Ret = ApplyMove(FP,P);
+						//Ret[0]=-1;
 						return Ret;
 					}
 				}
@@ -382,8 +415,8 @@ public abstract class Piece extends Player {
 						
 						King.CurrentPosition[1] = King_Original_Pose[1];
 						
-						Ret = ApplyMove(FP,P);
-						Ret[0]=-1;
+						//Ret = ApplyMove(FP,P);
+						//Ret[0]=-1;
 						return Ret;
 					}
 				}
@@ -407,7 +440,6 @@ public abstract class Piece extends Player {
 		
 		System.out.printf("Iterate Through Case:%d Return Status: %d TO:[%d,%d] Piece:%c FROM:[%d,%d]   \n",Case,Ret[0],Ret[1],Ret[2],Ret[3],Ret[4],Ret[5]);
 
-		
 		return Ret;
 	}
 	
@@ -415,27 +447,29 @@ public abstract class Piece extends Player {
 		
 		System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",FirstPosition[0],FirstPosition[1],NextPosition[0],NextPosition[1]);
 		
-		int[] R = new int[6];
+		int[] Ret = new int[6];
 		//Return status keeps track of current player
-		R[3] = Piece;
+		Ret[3] = Piece;
 		
-		R[4] = FirstPosition[0];
-		R[5] = FirstPosition[1];
+		Ret[4] = FirstPosition[0];
+		Ret[5] = FirstPosition[1];
 		
-		R[1] = NextPosition[0];
-		R[2] = NextPosition[1];
+		Ret[1] = NextPosition[0];
+		Ret[2] = NextPosition[1];
 		
 		//Bounds check
 		if(NextPosition[0]<0||NextPosition[0]>7||NextPosition[1]<0||NextPosition[1]>7||FirstPosition[0]<0||FirstPosition[1]>7||FirstPosition[1]<0||FirstPosition[1]>7) {
-			//System.out.println("Position out of bounds");
-			R[0] = -1;
-			return R;
+			System.out.println("Position out of bounds ApplyMove2");
+			Ret[0] = -1;
+			//Ret = new int[6];
+			//Ret[0]=-1;
+			return Ret;
 		}
 		//Collision check Enemy
 		//Create function GetPiece(P2)
-		R[0] = GetPotentialPiece(FirstPosition,NextPosition);                                                                                                              
+		Ret[0] = GetPotentialPiece(FirstPosition,NextPosition);                                                                                                              
 		//KillPiece(R);
-		return R;
+		return Ret;
 	}
 
 	public void SetPiece(char c) {
@@ -446,13 +480,13 @@ public abstract class Piece extends Player {
 	//Given type character, get piece from current player of piece
 	public Piece GetPieceFromType(char c) {
 		
-		for(int i=0;i<Pieces.size();i+=1) {
+		for(int i=0;i<super.Pieces.size();i+=1) {
 		
-		if(Pieces.get(i).Piece==c) {
+		if(super.Pieces.get(i).Piece==c) {
 		
 			System.out.printf("\nGot %c @[%d,%d] FROM Player: %c\n",Pieces.get(i).Piece,Pieces.get(i).CurrentPosition[0],Pieces.get(i).CurrentPosition[1],Player);
 			
-			return Pieces.get(i);
+			return super.Pieces.get(i);
 		}
 		
 		}

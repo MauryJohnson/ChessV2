@@ -139,17 +139,37 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 		Ret = IterateThrough(FP,8,1);	
 		
 		if(Ret[0]>0 && Ret[0]<9) {
-			
-			
+			//Can Move twice, get king now
+			Piece King = GetPieceFromType('K');
+			if(King!=null) {
+	
+				//Add king information here
+				int[] ExtraRet = new int[Ret.length+4];
+				for(int i=0;i<Ret.length;i+=1) {
+					ExtraRet[i]=Ret[i];
+				}
+				
+				//Set Where King will go
+				ExtraRet[6] = Ret[1];
+				ExtraRet[7] = Ret[2]+1;
+				
+				//Set Where king is coming from
+				ExtraRet[8] = King.CurrentPosition[0];
+				ExtraRet[9] = King.CurrentPosition[1];
+				
+				return (R)ExtraRet;
+				
+			}
+			else {
+			Ret[0]=-1;
+			return (R)Ret;
+			}
 		}
 		else {
-				
-			GoingToCastle=true;
 			
+			Ret[0] = -1;
 			return (R)Ret;
 		}
-		
-		return (R)Ret;
 	}
 
 	@Override

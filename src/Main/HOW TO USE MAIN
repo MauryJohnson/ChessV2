@@ -50,8 +50,14 @@ IterateThrough8
 IterateThrough9
 --These are to look for outputs where it cals MeInCheck for castling move on king temporary positions.
 
+GetMatchingMove1,...,3
+For parsing input, and performing movement using returnstatus move..
+
 ########################   In debugging If you ever see something like w# KK or b# RR, that means that w# or b# is
 a temporary position placed for that piece, until it's permanently placed at w# or b#, this is typical
 for castling function
 
 *************__PRINT BOARD__ - To see every time board is printed for any of these steps
+
+Stalemate - After move, call  SwapPlayer, and call StaleMate(), Check if ME cannot do any moves w/o getting in check
+//Just a while cannot move, try move if one case where can do a valid move, return false ->outside loop, return true 

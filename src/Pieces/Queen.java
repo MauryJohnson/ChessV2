@@ -49,6 +49,8 @@ public class Queen<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	
 		Ret = IterateThrough(FP,7,i);	
 		
+		System.out.printf("Curr Pose: [%d,%d]", CurrentPosition[0],CurrentPosition[1]);
+		
 		return (R)Ret;
 		
 		}
