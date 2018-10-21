@@ -136,21 +136,18 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 		FP[0] = CurrentPosition[0];
 		FP[1] = CurrentPosition[1];
 		
-		Ret = IterateThrough(FP,2,7);	
+		Ret = IterateThrough(FP,8,1);	
 		
-		int[] MightBeKing = {Ret[1],Ret[2]};
-		Piece King = super.GetPiece(MightBeKing);
-		
-		if(King instanceof King<?,?,?> && King.Player==this.Player) {
-			//King and player match
-			System.out.printf("\nMy Piece: [%d,%d], My King: [%d,%d]",CurrentPosition[0],CurrentPosition[1],MightBeKing[0],MightBeKing[1]);	
+		if(Ret[0]>0 && Ret[0]<9) {
+			
+			
 		}
 		else {
-			System.out.printf("\nThis Rooke TRIED, but cannot castle @ [%d,%d]\n",super.CurrentPosition[0],super.CurrentPosition[1]);
-			return null;
+				
+			GoingToCastle=true;
+			
+			return (R)Ret;
 		}
-		
-		GoingToCastle=true;
 		
 		return (R)Ret;
 	}
@@ -171,23 +168,41 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 		FP[0] = CurrentPosition[0];
 		FP[1] = CurrentPosition[1];
 		
-		Ret = IterateThrough(FP,3,7);	
+		Ret = IterateThrough(FP,9,2);	
 		
-		int[] MightBeKing = {Ret[1],Ret[2]};
-		Piece King =super.GetPiece(MightBeKing);
-		
-		if(King instanceof King<?,?,?> && King.Player==this.Player) {
-			//King and player match
-			System.out.printf("\nMy Piece: [%d,%d], My King: [%d,%d]",CurrentPosition[0],CurrentPosition[1],MightBeKing[0],MightBeKing[1]);	
+		if(Ret[0]>0 && Ret[0]<9) {
+			//Can Move twice, get king now
+			Piece King = GetPieceFromType('K');
+			if(King!=null) {
+	
+				//Add king information here
+				int[] ExtraRet = new int[Ret.length+4];
+				for(int i=0;i<Ret.length;i+=1) {
+					ExtraRet[i]=Ret[i];
+				}
+				
+				//Set Where King will go
+				ExtraRet[6] = Ret[1];
+				ExtraRet[7] = Ret[2]-1;
+				
+				//Set Where king is coming from
+				ExtraRet[8] = King.CurrentPosition[0];
+				ExtraRet[9] = King.CurrentPosition[1];
+				
+				return (R)ExtraRet;
+				
+			}
+			else {
+			Ret[0]=-1;
+			return (R)Ret;
+			}
 		}
 		else {
-			System.out.printf("\nThis Rooke TRIED, but cannot castle @ [%d,%d]\n",super.CurrentPosition[0],super.CurrentPosition[1]);
-			return null;
+			
+			Ret[0] = -1;
+			return (R)Ret;
 		}
 		
-		GoingToCastle=true;
-		
-		return (R)Ret;
 	}
-
+	
 }

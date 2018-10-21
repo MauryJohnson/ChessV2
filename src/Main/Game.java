@@ -2,6 +2,7 @@ package Main;
 
 import java.io.Console;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import Pieces.*;
 
@@ -12,17 +13,7 @@ public class Game {
 	public static Player Me;
 	
 	public static Player Opponent;
-	
-	public static final String ANSI_RESET = "\u001B[0m";
-	public static final String ANSI_BLACK = "\u001B[30m";
-	public static final String ANSI_RED = "\u001B[31m";
-	public static final String ANSI_GREEN = "\u001B[32m";
-	public static final String ANSI_YELLOW = "\u001B[33m";
-	public static final String ANSI_BLUE = "\u001B[34m";
-	public static final String ANSI_PURPLE = "\u001B[35m";
-	public static final String ANSI_CYAN = "\u001B[36m";
-	public static final String ANSI_WHITE = "\u001B[37m";
-	
+
 	public Game(Player P1, Player P2) {
 		Me = P1;
 		Opponent = P2;
@@ -54,12 +45,15 @@ public static void main(String[] args) {
 	
 	P1.Board[7][7] = 'r';
 	*/
+	
 	//P1.PrintBoard();
 	
 	//NEW GAME
 	Game G = new Game(P1,P2);
 	
 	P1.PrintBoard(G);
+	
+	G.TryMoveFromInput("a2 a4");
 	
 	//Swap Player Test
 	/*
@@ -80,16 +74,48 @@ public static void main(String[] args) {
 	//G.ReturnStatusMove(((Knight<int[],int[],int[]>)P2.Pieces.get(1)).TryDownLeft());
 	//G.Me.PrintBoard();
 	
-	/*
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight());
 	
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight());
+	//White Knight Checks Black
+
+	/*
+	G.SwapPlayer();
+	
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight(0));
+	
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight(0));
 	
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightDown());
+	
 	*/
 	
 	
+	/*
+	//						CASTLING 		CASE
+	//Black
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
 	
+	G.SwapPlayer();
+	
+	//White
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryDown(1));
+	
+	G.ReturnStatusMove(((Bishop<int[],int[],int[]>)G.Me.Pieces.get(2)).TryDownLeft(1));
+	
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight(0));
+	
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(11)).TryDown(1));
+	
+	G.ReturnStatusMove(((Queen<int[],int[],int[]>)G.Me.Pieces.get(3)).TryDown(1));
+	
+	G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
+	
+	G.WrapUpCases();
+	//			END		CASTLING			CASE
+	*/
+	
+	
+	/*
+	//			ENPASSANT 					CASE    USE Ctrl+F   Find __PRINT BOARD__
 	//Black
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
 	
@@ -123,20 +149,17 @@ public static void main(String[] args) {
 	//White
 	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
-
-	
-	
-	/*
-	G.SwapPlayer();
-	
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(6)).TryDownRight(0));
-	
-	G.SwapPlayer();
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight(0));
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight(0));
-	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightUp());
 	*/
-
+	//			END				ENPASSANT				CASE
+	
+	boolean End = false;
+	System.out.println("\nSTART_____GAME\n");
+	Scanner s = new Scanner(System.in);
+	while(!End){
+		String input = s.nextLine();
+		System.out.printf("Input: %s\n", input);
+		
+	}
 	
 }
 
@@ -281,6 +304,142 @@ public void SwapPlayer() {
 	this.PrintPlayers();
 }
 
+public int ToInt(char c) {
+	if(c=='a') {
+		return 0;
+	}
+	if(c=='b') {
+		return 1;
+	}
+	if(c=='c') {
+		return 2;
+	}
+	if(c=='d') {
+		return 3;
+	}
+	if(c=='e') {
+		return 4;
+	}
+	if(c=='f') {
+		return 5;
+	}
+	if(c=='g') {
+		return 6;
+	}
+	if(c=='h') {
+		return 7;
+	}
+	
+	return -1;
+}
+
+
+public int[] ParseInput(String s) {
+	System.out.printf("String Size: %d",s.length());
+	if(s.length()!=5) {
+		//e4 e5\0, the max len is 5
+		return null;
+	}
+	
+	int i = ToInt(s.charAt(0));
+	System.out.printf("i:%d\n",i);
+	if(i<0) {
+		return null;
+	}
+	String s1 = "" + s.charAt(1);
+	int j = 8-Integer.parseInt(s1);
+	System.out.printf("j:%d\n",j);
+	if(j<0||j>7) {
+		return null;
+	}
+	
+	int k = ToInt(s.charAt(3));
+	System.out.printf("k:%d\n",k);
+	if(k<0) {
+		return null;
+	}
+	s1 = "" + s.charAt(4);
+	int l = 8-Integer.parseInt(s1);
+	System.out.printf("l:%d\n",l);
+	if(l<0||l>7) {
+		return null;
+	}
+	
+	int [] All = {j,i,l,k};
+	
+	System.out.printf("Parsed From:[%d,%d] To:[%d,%d]\n", All[0],All[1],All[2],All[3]);
+	
+	return All;
+}
+
+//Get Movement which matches the movement there
+public int GetMatchingMove(Piece MyPiece, int[] To) {
+	//Read from all cases in that list
+	//Case 1 - Up
+	//Case 2 - Right
+	//Case 3 - Down
+	//Case 4 - Left
+	//Case 5 - UpLeft
+	//Case 6 - UpRight
+	//Case 7 - DownRight
+	//Case 8 - DownLeft
+	//Case 9 - KnightLeftUp
+	//Case 10 - KnightLeftDown
+	//Case 11 - KnightRightUp
+	//Case 12 - KnightRightDown
+	//Case 13 - RookeLeftCastle
+	//Case 14 - RookeRightCastle
+	//Handle cases for bish
+	
+	System.out.println("Try to GetMatchingMove1");
+	
+	LinkedList<int[]> R = new LinkedList<int[]>();
+	
+	AddAllSets(R,MyPiece);
+		
+	//For all sets of movements, find the one which coordinates [1][2]-TO match
+	for(int i=0;i<R.size();i+=1) {
+		if(R.get(i)==null) {
+			continue;
+		}
+		//If they match!! ReturnStatusMove of that int ARRAY
+		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2]) {
+			System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
+			System.exit(-1);
+			return ReturnStatusMove(R.get(i));
+		}
+		
+	}
+	
+	
+	System.out.println("Failed to GetMatchingMove3");
+	//IF failed to find matching TO [1][2] FROM START
+	
+	return -1;
+}
+
+//Try Move From Input, return 0 success, -1 fail, 1 Check
+public int TryMoveFromInput(String s) {
+	//Parse String Input
+	int [] TrueIn = ParseInput(s);
+	if(TrueIn==null) {
+		return -1;
+	}
+	//Get from Position and verify it's piece
+	int[] MyPose = {TrueIn[0],TrueIn[1]};
+	Piece MyPiece = GetPiece(MyPose);
+	if(MyPiece==null) {
+		return -1;
+	}
+	
+	// For each type piece, cast it to that 
+	//Get To position and perform returnstatusmove on it
+	
+	int[] To = {TrueIn[2],TrueIn[3]};
+	
+	return GetMatchingMove(MyPiece, To);
+}
+
 //Destroy piece in board
 private int KillPiece(int[] K) {
 	// TODO Auto-generated method stub
@@ -423,7 +582,15 @@ private int KillPiece(int[] K) {
 		int [] GetAtt = {K[5],K[6]};
 		AttackedPiece=GetPiece(GetAtt);
 	}
+	else if(MyPiece instanceof Rooke<?,?,?> && K.length>=9) {
 	
+		int[] KingPose = {K[7],K[8]};
+		Piece MyKing = GetPiece(KingPose);
+		int[] KingTo = {K[5],K[6]};
+		
+		//Castling Case
+		Castle(MyPiece,MyKing,KingTo,Attack);
+	}
 	else {
 	//No Piece to attack, no piece found to attack in that position
 	AttackedPiece=null;
@@ -441,7 +608,10 @@ private int KillPiece(int[] K) {
 			
 		//System.exit(-1);
 			
-	}		
+	}	
+	else if(MyPiece instanceof Rooke<?,?,?> && K.length>=9) {
+		
+	}
 	else {
 	//Traverse to the empty position
 	
@@ -463,6 +633,11 @@ private int KillPiece(int[] K) {
 		RestoreEnPassant(MyPiece,AttackedPiece,K);
 		}
 		///////////////////////////////////////////////////////
+		
+		else if(MyPiece instanceof Rooke<?,?,?> && K.length>=9) {
+			
+			
+		}
 		
 		else {
 		//Restore old positions board and MyPiece
@@ -527,6 +702,33 @@ private int KillPiece(int[] K) {
 	
 }
 
+//Perform Castling move **ONly can be performed when not in check
+private void Castle(Piece MyPiece, Piece MyKing, int[] KingTo, int[] Attack) {
+	if(!(MyKing instanceof King<?,?,?>) || !(MyPiece instanceof Rooke<?,?,?>)) {
+		System.out.println("Piece is neither king nor a rooke Castle1");
+		return;
+	}
+	
+	//Move Rooke
+	Me.Board = 	Me.CopyNewBoard(MyPiece.CurrentPosition[0], MyPiece.CurrentPosition[1],Me.WhichBlock(MyPiece.CurrentPosition[0], MyPiece.CurrentPosition[1]));
+	MyPiece.CurrentPosition[0] = Attack[0];
+	MyPiece.CurrentPosition[1] = Attack[1];
+	Me.Board = 	Me.CopyNewBoard(Attack[0], Attack[1],MyPiece.Piece);
+	
+	//Move King
+	Me.Board = 	Me.CopyNewBoard(MyKing.CurrentPosition[0], MyKing.CurrentPosition[1],Me.WhichBlock(MyKing.CurrentPosition[0], MyKing.CurrentPosition[1]));
+	MyKing.CurrentPosition[0] = KingTo[0];
+	MyKing.CurrentPosition[1] = KingTo[1];
+	Me.Board = 	Me.CopyNewBoard(KingTo[0], KingTo[1],MyKing.Piece);
+
+	System.out.println("FINISHING Castle2...");
+	
+	Me.PrintBoard(this);
+	
+	//System.exit(-1);
+	
+}
+
 //For Kill/Attack Enemy functions
 //Check if it's pawn and also if EnPassent is active, then continue with EnPassent move
 private void EnPassant(Piece MyPiece,int[] Attack, boolean Try) {
@@ -581,7 +783,7 @@ private void RestoreEnPassant(Piece MyPiece,Piece AttackedPiece,int[] Attack) {
 	if(Attack.length>=7) {	
 		if(MyPiece instanceof Pawn<?,?,?> || MyPiece.Piece=='p') {
 			if(((Pawn<int[],int[],int[]>)MyPiece).EnPassantMove) {
-				System.out.printf("RESTORE BEFORE ENPASSANT TO: [%d,%d] FROM: [%d,%d], RESTORE KILLED PIECE @ [%d,%d] -->SEE ctrl+ KillPiece Previous",Attack[3],Attack[4],Attack[0],Attack[1],Attack[5],Attack[6]);
+				System.out.printf("RESTORE BEFORE ENPASSANT TO: [%d,%d] FROM: [%d,%d], RESTORE KILLED PIECE @ [%d,%d] -->SEE ctrl+ KillPiece Previous\n",Attack[3],Attack[4],Attack[0],Attack[1],Attack[5],Attack[6]);
 				
 				int[] MyPosition = {Attack[3],Attack[4]};
 				char MyType = MyPiece.Piece;
@@ -670,15 +872,17 @@ public boolean MeInCheck() {
 		//Check if king is attacked
 		if(KingAttacked(R)) {
 			//My King is attacked
-			System.err.printf("\n %c IS In Check MeInCheck2 \n PROOF:",Me.Player);
+			System.err.printf("\n %c IS In Check MeInCheck2 \n PROOF:\n\n",Me.Player);
 			Me.PrintBoard(this);
+			//Opponent.PrintBoard(this);
 			return true;
 		}
 		//THEN HANDLE EVERY TRY MOVE FOR EACH, see if they hit king's Position
 	}
 	
-	System.err.printf("\n %c(Me) Not In Check Because of My move MeInCheck3 -- ctrl-f -> find next Restore\n PROOF:",Me.Player);
+	System.err.printf("\n %c(Me) Not In Check Because of My move MeInCheck3 -- ctrl-f -> find next Restore\n PROOF:\n\n",Me.Player);
 	Me.PrintBoard(this);
+	//Opponent.PrintBoard(this);
 	//Player Me is not in check
 	return false;	
 }

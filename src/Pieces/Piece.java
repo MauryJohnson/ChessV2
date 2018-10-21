@@ -7,7 +7,7 @@ import Main.*;
 public abstract class Piece extends Player {
 
 	//Points to Player K's Pieces, in order to find other ally Pieces in board.
-	public LinkedList<Piece> Pieces = new LinkedList<Piece>();
+	//public LinkedList<Piece> Pieces = new LinkedList<Piece>();
 	//Have to know what player piece has
 	public char Player;
 	//Instant access of Piece type
@@ -318,7 +318,92 @@ public abstract class Piece extends Player {
 			Ret[5]+=i;	
 			
 		}
+		//Case 8 of iterateThrough, increment Left For RookeCastleLeft
+		else if(Case==8) {
+					
+			//This Position will be restored after checking for check w/ temp king poses
+			int[] King_Original_Pose = new int[2];
+			Piece King = GetPieceFromType('K');
+			King_Original_Pose[0] = King.CurrentPosition[0];
+			King_Original_Pose[1] = King.CurrentPosition[1];
+			
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0];
+				P[1] = FP[1]-1;
+						
+				
+				if(j>=0) {
+					//Check for checks in these positions
+					King.CurrentPosition[1]=P[1];
+					System.out.printf("\nIterateThrough8 Case8 King Pose: [%d,%d]\n",King.CurrentPosition[0],King.CurrentPosition[1]);
+					if(MeInCheck()) {
+						
+						King.CurrentPosition[1] = King_Original_Pose[1];
+						
+						Ret = ApplyMove(FP,P);
+						Ret[0]=-1;
+						return Ret;
+					}
+				}
+				
+				Ret = ApplyMove(FP,P);
+				//If collide with your ally,enemy, or out of bounds, STOP
+				if(Ret[0]>8 || Ret[0]<1) {
+					Ret[0]=-1;
+					King.CurrentPosition[1] = King_Original_Pose[1];
+					return Ret;
+				}
+						
+				FP[1]-=1;
+						
+			}
+			
+			Ret[5]+=i;	
+			King.CurrentPosition[1] = King_Original_Pose[1];
+		}
+		//Case 9 of iterateThrough, increment Right for RookeCastleRight
+		else if(Case==9) {
+			
+			//This Position will be restored after checking for check w/ temp king poses
+			int[] King_Original_Pose = new int[2];
+			Piece King = GetPieceFromType('K');
+			King_Original_Pose[0] = King.CurrentPosition[0];
+			King_Original_Pose[1] = King.CurrentPosition[1];
+			
+			for(int j=0;j<i+1;j+=1) {
+				P[0] = FP[0];
+				P[1] = FP[1]+1;
+				
+				if(j>=1) {
+					//Check for checks in these positions
+					King.CurrentPosition[1]=P[1];
+					System.out.printf("\nIterateThrough9 Case9 King Pose: [%d,%d]\n",King.CurrentPosition[0],King.CurrentPosition[1]);
+					if(MeInCheck()) {
+						
+						King.CurrentPosition[1] = King_Original_Pose[1];
+						
+						Ret = ApplyMove(FP,P);
+						Ret[0]=-1;
+						return Ret;
+					}
+				}
+				
+				Ret = ApplyMove(FP,P);
+				
+				//If collide with your ally,enemy, or out of bounds, STOP
+				if(Ret[0]>8 || Ret[0]<1) {
+					Ret[0]=-1;
+					King.CurrentPosition[1] = King_Original_Pose[1];
+					return Ret;
+				}
+				
+				FP[1]+=1;
+				
+			}
 		
+			Ret[5]-=i;	
+			King.CurrentPosition[1] = King_Original_Pose[1];
+		}
 		
 		System.out.printf("Iterate Through Case:%d Return Status: %d TO:[%d,%d] Piece:%c FROM:[%d,%d]   \n",Case,Ret[0],Ret[1],Ret[2],Ret[3],Ret[4],Ret[5]);
 
@@ -357,6 +442,22 @@ public abstract class Piece extends Player {
 		// TODO Auto-generated method stub
 		this.Piece = c;
 	}
-
+	
+	//Given type character, get piece from current player of piece
+	public Piece GetPieceFromType(char c) {
+		
+		for(int i=0;i<Pieces.size();i+=1) {
+		
+		if(Pieces.get(i).Piece==c) {
+		
+			System.out.printf("\nGot %c @[%d,%d] FROM Player: %c\n",Pieces.get(i).Piece,Pieces.get(i).CurrentPosition[0],Pieces.get(i).CurrentPosition[1],Player);
+			
+			return Pieces.get(i);
+		}
+		
+		}
+		
+		return null;
+	}
 	
 }

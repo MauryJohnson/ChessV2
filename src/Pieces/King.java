@@ -12,116 +12,212 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 		// TODO Auto-generated constructor stub
 	}
 
+
 	@Override
 	public R TryDownRight(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0]-1;
-		P[1] = CurrentPosition[1]+1;
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+	
+		Ret = IterateThrough(FP,6,i);	
+		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
 	}
 
 	@Override
 	public R TryDownLeft(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0]-1;
-		P[1] = CurrentPosition[1]-1;
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+	
+		Ret = IterateThrough(FP,7,i);	
+		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
 	}
 
 	@Override
 	public R TryUpRight(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0]+1;
-		P[1] = CurrentPosition[1]+1;
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+	
+		Ret = IterateThrough(FP,5,i);	
+		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
 	}
 
 	@Override
 	public R TryUpLeft(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0]+1;
-		P[1] = CurrentPosition[1]-1;
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+	
+		Ret = IterateThrough(FP,4,i);	
+		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
 	}
 
 	@Override
 	public R TryRight(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0];
-		P[1] = CurrentPosition[1]+1;
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+	
+		Ret = IterateThrough(FP,3,i);	
+		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
 	}
 
 	@Override
 	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0];
-		P[1] = CurrentPosition[1]-1;
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+	
+		Ret = IterateThrough(FP,2,i);	
+		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
 	}
 
 	@Override
 	public R TryDown(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0]-1;
-		P[1] = CurrentPosition[1];
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
+	
+		Ret = IterateThrough(FP,0,i);	
+		
 		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
 	}
 
 	@Override
 	public R TryUp(int i) {
 		// TODO Auto-generated method stub
-		int[] P = new int[2];
+		int[] Ret = null;
 		
-		P[0] = CurrentPosition[0]+1;
-		P[1] = CurrentPosition[1];
+		int[] FP = new int[2];
 		
-		int[] Ret;
-		Ret = ApplyMove(CurrentPosition,P);
-
-		return (R)Ret;
-	}
+		FP[0] = CurrentPosition[0];
+		FP[1] = CurrentPosition[1];
+		
+		if(i==0) {
 	
+		Ret = IterateThrough(FP,1,i);	
+		
+		return (R)Ret;
+		
+		}
+		
+		else {
+			
+			System.out.println("Invalid Parameter");
+			
+			return null;
+		}
+	}
 }

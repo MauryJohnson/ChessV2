@@ -26,18 +26,32 @@ Castling is easier, just add if case
 Practice both of these special moves in KillPiece first
 
 
-File AllOut is the output file
+*********File AllOut is the output file, output too large to get all output on console
 
 Look for flags for check:
 
 CTRL+F - Find these key words to verify movements
 
-KillPiece - To see every movement in the game
+KillPiece1,KillPiece2,.. - To see the backend for every movement in the game
+KillPiece1 - To look at each movement
+KillPiece2,..,KillPiece7 - look at the backend details like board generation to check for a bad move
 
-MeInCheck - To see the process to check how you're in check
+MeInCheck1,MeInCheck2,... - To see the process to check how you're in check
+MeInCheck - Look at all details about checking if player in check
 
-OpponentInCheck - To see the process to check how opponent in check
+OpponentInCheck1,OpponentInCheck2,... - To see the process to check how opponent in check
+OpponentInCheck - same as MeInCheck, function actually swaps player ID and calls MeInCheck
 
-MoveStillCheck - To see if opponent is in check and still in check given their options
+MoveStillCheck1,MoveStillCheck2,... - To see if opponent is in check and still in check given their options
+MoveStillCheck - Look at all details about checking if a generated environment given a unique 
+move can get king out of check.
 
-__PRINT BOARD__
+IterateThrough8
+IterateThrough9
+--These are to look for outputs where it cals MeInCheck for castling move on king temporary positions.
+
+########################   In debugging If you ever see something like w# KK or b# RR, that means that w# or b# is
+a temporary position placed for that piece, until it's permanently placed at w# or b#, this is typical
+for castling function
+
+*************__PRINT BOARD__ - To see every time board is printed for any of these steps

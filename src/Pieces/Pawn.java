@@ -273,7 +273,7 @@ public class Pawn<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	@Override
 	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
-int[] Ret = null;
+		int[] Ret = null;
 		
 		int[] ExtraRet = new int[8];
 		
