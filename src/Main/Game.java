@@ -137,6 +137,7 @@ public static void main(String[] args) {
 	//			END				CASTLING			LEFT
 	*/
 		
+		
 		/*
 		//						CASTLING 	BLACK	CASE  RIGHT
 		//Black
@@ -146,21 +147,22 @@ public static void main(String[] args) {
 		
 		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
 		
-		G.ReturnStatusMove(((Bishop<int[],int[],int[]>)G.Me.Pieces.get(2)).TryUpLeft(1));
-		
 		G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight(0));
 		
 		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(11)).TryUp(1));
 		
 		G.ReturnStatusMove(((Queen<int[],int[],int[]>)G.Me.Pieces.get(3)).TryUp(1));
 		
+		G.ReturnStatusMove(((Bishop<int[],int[],int[]>)G.Me.Pieces.get(2)).TryUpRight(1));
+		
 		//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
 		
-		//G.WrapUpCases();
+		G.WrapUpCases();
 		//			END		CASTLING			CASE
 		*/
 			
 	//	CASTLING     BLACK   CASE		LEFT
+	
 	
 	//Black
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(12)).TryUp(1));
@@ -175,7 +177,9 @@ public static void main(String[] args) {
 
 	//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
 
-	//G.WrapUpCases();
+	G.WrapUpCases();
+	
+	
 	//			END				CASTLING			LEFT
 		
 	/*
@@ -616,7 +620,7 @@ public int GetMatchingMove(Piece MyPiece, int[] To) {
 		}
 		
 		//If they match!! ReturnStatusMove of that int ARRAY
-		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2] /*&& MyPiece.CurrentPosition[0]==R.get(i)[4] && MyPiece.CurrentPosition[1]==R.get(i)[5]*/) {
+		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2] && MyPiece.CurrentPosition[0]==R.get(i)[4] && MyPiece.CurrentPosition[1]==R.get(i)[5]) {
 			
 			
 			System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
@@ -656,6 +660,51 @@ public int TryMoveFromInput(String s) {
 	//Get To position and perform returnstatusmove on it
 	
 	int[] To = {TrueIn[2],TrueIn[3]};
+	
+	Piece ToPiece = GetPiece(To);
+	
+	if(MyPiece instanceof King<?,?,?>) {
+	
+	//King wants to castle a rooke, King -> Rooke click
+	if(ToPiece instanceof Rooke<?,?,?>) {
+		//Just switch piece
+
+		To[0] = MyPiece.CurrentPosition[0];
+		To[1] = MyPiece.CurrentPosition[1];
+		
+		MyPiece = ToPiece;
+		
+	}
+	//Check if king wants to move twice over.. then another castling attempt
+	else if(Math.abs(MyPiece.CurrentPosition[1]-To[1])==2) {
+		//If negative dist, then rooke is to right side
+		if(MyPiece.CurrentPosition[1]-To[1]==-2) {
+			int [] getR = {MyPiece.CurrentPosition[0],7};
+			
+			To[0]=MyPiece.CurrentPosition[0];
+			To[1]=MyPiece.CurrentPosition[1];
+			
+			MyPiece = GetPiece(getR);
+			if(MyPiece==null) {
+				return -1;
+			}
+		}
+		//If positive dist, then rooke is to left side
+		else if(MyPiece.CurrentPosition[1]-To[1]==2) {
+			int [] getR = {MyPiece.CurrentPosition[0],0};
+			
+			To[0]=MyPiece.CurrentPosition[0];
+			To[1]=MyPiece.CurrentPosition[1];
+			
+			MyPiece = GetPiece(getR);
+			if(MyPiece==null) {
+				return -1;
+			}
+		}
+	}
+	
+	}
+	
 	
 	int Ret = GetMatchingMove(MyPiece, To);
 	
