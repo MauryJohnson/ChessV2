@@ -86,9 +86,8 @@ public static void main(String[] args) {
 	
 	*/
 	
-	
 	/*
-	//						CASTLING 		CASE
+	//						CASTLING 	WHITE	CASE  RIGHT
 	//Black
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
 	
@@ -105,13 +104,80 @@ public static void main(String[] args) {
 	
 	G.ReturnStatusMove(((Queen<int[],int[],int[]>)G.Me.Pieces.get(3)).TryDown(1));
 	
-	G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
+	//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
 	
 	G.WrapUpCases();
 	//			END		CASTLING			CASE
 	*/
 	
 	
+	/*
+	//			CASTLING     WHITE   CASE		LEFT
+	
+		//Black
+	
+		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
+		
+		G.SwapPlayer();
+		
+		//White
+		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(12)).TryDown(1));
+		
+		G.ReturnStatusMove(((Bishop<int[],int[],int[]>)G.Me.Pieces.get(5)).TryDownLeft(1));
+		
+		G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(6)).TryDownRight(0));
+		
+		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(11)).TryDown(1));
+		
+		G.ReturnStatusMove(((Queen<int[],int[],int[]>)G.Me.Pieces.get(3)).TryDown(1));
+		
+		//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
+		
+		G.WrapUpCases();
+	//			END				CASTLING			LEFT
+	*/
+		
+		/*
+		//						CASTLING 	BLACK	CASE  RIGHT
+		//Black
+		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
+		
+		//G.SwapPlayer();
+		
+		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
+		
+		G.ReturnStatusMove(((Bishop<int[],int[],int[]>)G.Me.Pieces.get(2)).TryUpLeft(1));
+		
+		G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryUpRight(0));
+		
+		G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(11)).TryUp(1));
+		
+		G.ReturnStatusMove(((Queen<int[],int[],int[]>)G.Me.Pieces.get(3)).TryUp(1));
+		
+		//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
+		
+		//G.WrapUpCases();
+		//			END		CASTLING			CASE
+		*/
+			
+	//	CASTLING     BLACK   CASE		LEFT
+	
+	//Black
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(12)).TryUp(1));
+
+	G.ReturnStatusMove(((Bishop<int[],int[],int[]>)G.Me.Pieces.get(5)).TryUpLeft(1));
+
+	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(6)).TryUpRight(0));
+
+	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(11)).TryUp(1));
+
+	G.ReturnStatusMove(((Queen<int[],int[],int[]>)G.Me.Pieces.get(3)).TryUp(1));
+
+	//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
+
+	//G.WrapUpCases();
+	//			END				CASTLING			LEFT
+		
 	/*
 	//			ENPASSANT 					CASE    USE Ctrl+F   Find __PRINT BOARD__
 	//Black
@@ -148,7 +214,8 @@ public static void main(String[] args) {
 	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
 	*/
-	//			END				ENPASSANT				CASE
+	//			END		ENPASSANT				CASE
+	
 	
 	boolean End = false;
 	
@@ -156,7 +223,7 @@ public static void main(String[] args) {
 	
 	boolean P2Draw = false;
 	
-	System.out.println("\nSTART_____GAME\n");
+	//System.out.println("\nSTART_____GAME\n");
 	Scanner s = new Scanner(System.in);
 	int Status =-1;
 	String input;
@@ -169,8 +236,10 @@ public static void main(String[] args) {
 	while(!End){
 		Status = -1;
 		
-		while(Status==-1) {
 		P2.PrintBoard(G);
+		
+		while(Status==-1) {
+		
 		input = s.nextLine();
 		System.out.printf("Input: %s\n", input);
 		
@@ -214,8 +283,10 @@ public static void main(String[] args) {
 		
 		Status = -1;
 		
+		P1.PrintBoard(G);
+		
 		while(Status==-1) {
-			P1.PrintBoard(G);
+			
 			input = s.nextLine();
 			System.out.printf("Input: %s\n", input);
 			
@@ -249,6 +320,7 @@ public static void main(String[] args) {
 		G.WrapUpCases();
 		
 	}
+	
 	
 }
 
@@ -532,17 +604,32 @@ public int GetMatchingMove(Piece MyPiece, int[] To) {
 		if(R.get(i)==null) {
 			continue;
 		}
+		
+		if(R.get(i).length>=9) {
+			if(GetPiece(To) instanceof King<?,?,?>) {
+			//Fix pose for castling move 
+			return ReturnStatusMove(R.get(i));
+			}
+			else {
+				continue;
+			}
+		}
+		
 		//If they match!! ReturnStatusMove of that int ARRAY
-		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2]) {
+		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2] /*&& MyPiece.CurrentPosition[0]==R.get(i)[4] && MyPiece.CurrentPosition[1]==R.get(i)[5]*/) {
+			
+			
 			System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
-			//System.exit(-1);
+			
+			
 			return ReturnStatusMove(R.get(i));
 		}
 		
 	}
 	
 	
-	System.out.println("Failed to GetMatchingMove3");
+	//System.out.println("Failed to GetMatchingMove3");
+	//System.out.println("Illegal move, try again");
 	//IF failed to find matching TO [1][2] FROM START
 	
 	return -1;
@@ -553,6 +640,7 @@ public int TryMoveFromInput(String s) {
 	//Parse String Input
 	int [] TrueIn = ParseInput(s);
 	if(TrueIn==null) {
+		
 		return -1;
 	}
 	//Get from Position and verify it's piece
@@ -560,6 +648,7 @@ public int TryMoveFromInput(String s) {
 	Piece MyPiece = GetPiece(MyPose);
 	
 	if(MyPiece==null||MyPiece.Player!=Me.Player) {
+		System.out.println("Illegal move, try again");
 		return -1;
 	}
 	
@@ -594,6 +683,10 @@ public int TryMoveFromInput(String s) {
 			ReplacePiece(Q,MyPiece);
 			}
 		}
+	}
+	
+	if(Ret<0) {
+		System.out.println("Illegal move, try again");
 	}
 	
 	return Ret;
@@ -1458,6 +1551,16 @@ private void AddAllSets(LinkedList<int[]> R,Piece P,boolean InnerStack) {
 	
 			//IF Rooke
 			if(P instanceof Rooke<?,?,?>) {
+				
+				//Only run this if you are in inner stack, MeInCheck calls AddAllSets but so does function ApplyMove
+				//If both ran, infinite loop occurs
+				//In Piece abstract class
+				if(InnerStack) {
+				R.add(((Rooke<int[],int[],int[]>)P).TryRookeLeftCastle());
+				
+				R.add(((Rooke<int[],int[],int[]>)P).TryRookeRightCastle());
+				}
+				
 				for(int i=0;i<=7;i+=1)
 				R.add(((Rooke<int[],int[],int[]>)P).TryUp(i));
 				
@@ -1469,15 +1572,6 @@ private void AddAllSets(LinkedList<int[]> R,Piece P,boolean InnerStack) {
 				
 				for(int i=0;i<=7;i+=1)
 				R.add(((Rooke<int[],int[],int[]>)P).TryRight(i));
-				
-				//Only run this if you are in inner stack, MeInCheck calls AddAllSets but so does function ApplyMove
-				//If both ran, infinite loop occurs
-				//In Piece abstract class
-				if(InnerStack) {
-				R.add(((Rooke<int[],int[],int[]>)P).TryRookeLeftCastle());
-				
-				R.add(((Rooke<int[],int[],int[]>)P).TryRookeRightCastle());
-				}
 				
 				System.out.println("\nROOKE");
 			}

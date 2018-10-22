@@ -8,7 +8,7 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	public boolean CanCastle=true;
 	
 	//Indicate if Rooke is going to castle w/ king
-	public boolean GoingToCastle = false;
+	//public boolean GoingToCastle = false;
 	
 	//IF EVER IF EVER THAT THIS IS CREATED WITHOUT PIECE CREATED, INITIALIZE PIECE CLASS
 	public Rooke(char Player) {
