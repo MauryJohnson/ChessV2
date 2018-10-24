@@ -75,6 +75,7 @@ public static void main(String[] args) {
 	
 	//White Knight Checks Black
 
+	/*
 	
 	G.SwapPlayer();
 	
@@ -86,6 +87,7 @@ public static void main(String[] args) {
 	
 	G.WrapUpCases();
 	
+	*/
 	
 	/*
 	//						CASTLING 	WHITE	CASE  RIGHT
@@ -138,6 +140,7 @@ public static void main(String[] args) {
 	//			END				CASTLING			LEFT
 	*/
 		
+	//////////////////////////////////
 		
 		/*
 		//						CASTLING 	BLACK	CASE  RIGHT
@@ -183,7 +186,7 @@ public static void main(String[] args) {
 	
 	//			END				CASTLING			LEFT
 		
-	
+	/*
 	//			ENPASSANT 					CASE    USE Ctrl+F   Find __PRINT BOARD__
 	//Black
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
@@ -212,6 +215,8 @@ public static void main(String[] args) {
 	//Black
 	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
+	
+	*/
 	
 	//G.WrapUpCases();
 	
@@ -250,13 +255,13 @@ public static void main(String[] args) {
 		
 		if(input.contains("resign")) {
 			System.out.printf("resign\nPlayer 2 wins");
-			System.exit(0);
+			return;
 		}
 		
 		P1Draw = input.contains("draw?");
 		if(P1Draw&&P2Draw) {
 			System.out.println("draw");
-			System.exit(0);
+			return;
 		}
 		else {
 			P2Draw = false;
@@ -300,13 +305,13 @@ public static void main(String[] args) {
 			
 			if(input.contains("resign")) {
 				System.out.printf("resign\nPlayer 1 wins");
-				System.exit(0);
+				return;
 			}
 			
 			P2Draw = input.contains("draw?");
 			if(P1Draw&&P2Draw) {
 				System.out.println("draw");
-				System.exit(0);
+				return;
 			}
 			else {
 				P1Draw = false;
