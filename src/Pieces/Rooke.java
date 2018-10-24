@@ -124,7 +124,7 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	public R TryRookeLeftCastle() {
 		// TODO Auto-generated method stub
 		//Check if this piece can castle
-		if(!CanCastle) {
+		if(!CanCastle||super.MeInCheck()) {
 			System.out.printf("\nThis Rooke cannot castle @ [%d,%d]\n",super.CurrentPosition[0],super.CurrentPosition[1]);
 			return null;
 		}
@@ -176,7 +176,7 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	public R TryRookeRightCastle() {
 		// TODO Auto-generated method stub
 		//Check if this piece can castle
-		if(!CanCastle) {
+		if(!CanCastle||super.MeInCheck()) {
 			System.out.printf("\nThis Rooke cannot castle @ [%d,%d]\n",super.CurrentPosition[0],super.CurrentPosition[1]);
 			return null;
 		}

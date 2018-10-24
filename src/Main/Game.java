@@ -75,7 +75,7 @@ public static void main(String[] args) {
 	
 	//White Knight Checks Black
 
-	/*
+	
 	G.SwapPlayer();
 	
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryDownRight(0));
@@ -84,7 +84,8 @@ public static void main(String[] args) {
 	
 	G.ReturnStatusMove(((Knight<int[],int[],int[]>)G.Me.Pieces.get(1)).TryKnightRightDown());
 	
-	*/
+	G.WrapUpCases();
+	
 	
 	/*
 	//						CASTLING 	WHITE	CASE  RIGHT
@@ -163,7 +164,7 @@ public static void main(String[] args) {
 			
 	//	CASTLING     BLACK   CASE		LEFT
 	
-	
+	/*
 	//Black
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(12)).TryUp(1));
 
@@ -178,11 +179,11 @@ public static void main(String[] args) {
 	//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
 
 	G.WrapUpCases();
-	
+	*/
 	
 	//			END				CASTLING			LEFT
 		
-	/*
+	
 	//			ENPASSANT 					CASE    USE Ctrl+F   Find __PRINT BOARD__
 	//Black
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
@@ -212,12 +213,12 @@ public static void main(String[] args) {
 	
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(9)).TryUp(1));
 	
-	G.WrapUpCases();
+	//G.WrapUpCases();
 	
 	//White
 	
-	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
-	*/
+	//G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryRight(0));
+	
 	//			END		ENPASSANT				CASE
 	
 	
@@ -258,11 +259,14 @@ public static void main(String[] args) {
 			System.exit(0);
 		}
 		else {
-			//P1Draw = false;
 			P2Draw = false;
 		}
 		
 		Status = G.TryMoveFromInput(input);
+		if(Status==-2) {
+			System.out.println("Player 1 wins");
+			return;
+		}
 		}
 		
 		if(FirstTurn) {
@@ -278,7 +282,7 @@ public static void main(String[] args) {
 		if(G.StaleMate())
 		{
 			System.out.println("Stalemate");
-			System.exit(0);
+			return;
 		}
 		
 		//Swap players to player 2
@@ -306,18 +310,21 @@ public static void main(String[] args) {
 			}
 			else {
 				P1Draw = false;
-				//P2Draw = false;
 			}
 			
 			
 			Status = G.TryMoveFromInput(input);
+			if(Status==-2) {
+				System.out.println("Player 1 wins");
+				return;
+			}
 		}
 		
 			//Perform stalemate check for Opponent state, after performed movement
 				if(G.StaleMate())
 				{
 					System.out.println("Stalemate");
-					System.exit(0);
+					return;
 				}
 				
 		//Opponent set pawn justmoved twice to false and swap player
@@ -451,7 +458,7 @@ public int ReturnStatusMove(int[] R) {
 			if(ret==1&&OpponentCheckMate()) {
 				System.out.printf("\nOpponent:%c is in CHECKMATE! %c WINS!\n",Opponent.Player,Me.Player);
 				Me.PrintBoard(this);
-				System.exit(-1);
+				return -2;
 			}
 			
 						
@@ -734,7 +741,7 @@ public int TryMoveFromInput(String s) {
 		}
 	}
 	
-	if(Ret<0) {
+	if(Ret==-1) {
 		System.out.println("Illegal move, try again");
 	}
 	
@@ -849,12 +856,15 @@ private int KillPiece(int[] K) {
 				if(MyPiece instanceof Pawn<?,?,?> && K.length>=7) {
 				//Restore state before an attempted EnPassant move
 				RestoreEnPassant(MyPiece,AttackedPiece,K);
+				//Cannot perform enpassant here w/o check, so this is false
+				((Pawn<int[],int[],int[]>)MyPiece).EnPassantMove = false;
 				}
 				///////////////////////////////////////////////////////
 				
 				else {
 				//Restore Opponent piece and My Piece
 				Restore(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
+				//MyPiece.
 				}
 				
 				//Return status -1 indicating invalid movement
@@ -985,6 +995,8 @@ private int KillPiece(int[] K) {
 		if(MyPiece instanceof Pawn<?,?,?> && K.length>=7) {
 		//Restore state before an attempted EnPassant move
 		RestoreEnPassant(MyPiece,AttackedPiece,K);
+		//Cannot perform enpassant here w/o check, so this is false
+		((Pawn<int[],int[],int[]>)MyPiece).EnPassantMove = false;
 		}
 		///////////////////////////////////////////////////////
 		
@@ -1182,10 +1194,9 @@ private void PawnFirstMoveCheck(Piece MyPiece) {
 //Otherwise, the rooke that moved will no longer be able to castle with king
 private void CastleCheck(Piece MyPiece) {
 	// TODO Auto-generated method stub
-	boolean NotMoved = true;
 	if(MyPiece instanceof King<?,?,?>) {	
 		//King Moved 
-		NotMoved = ((King<int[],int[],int[]>)(MyPiece)).CanCastle = false;
+		((King<int[],int[],int[]>)(MyPiece)).CanCastle = false;
 		//Set all rookes CanCastle to false
 		NoneCanCastle();
 	}
