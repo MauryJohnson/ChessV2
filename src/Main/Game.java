@@ -89,8 +89,10 @@ public static void main(String[] args) {
 	
 	*/
 	
-	/*
+	
 	//						CASTLING 	WHITE	CASE  RIGHT
+	
+	/*
 	//Black
 	G.ReturnStatusMove(((Pawn<int[],int[],int[]>)G.Me.Pieces.get(8)).TryUp(0));
 	
@@ -110,11 +112,13 @@ public static void main(String[] args) {
 	//G.ReturnStatusMove(((Rooke<int[],int[],int[]>)G.Me.Pieces.get(0)).TryRookeRightCastle());
 	
 	G.WrapUpCases();
-	//			END		CASTLING			CASE
 	*/
 	
+	//			END		CASTLING			CASE
 	
-	/*
+	
+	
+	
 	//			CASTLING     WHITE   CASE		LEFT
 	
 		//Black
@@ -138,7 +142,7 @@ public static void main(String[] args) {
 		
 		G.WrapUpCases();
 	//			END				CASTLING			LEFT
-	*/
+	
 		
 	//////////////////////////////////
 		
@@ -272,6 +276,9 @@ public static void main(String[] args) {
 			System.out.println("Player 1 wins");
 			return;
 		}
+		else if(Status==-1) {
+			System.out.print("Illegal move, try again");
+		}
 		}
 		
 		if(FirstTurn) {
@@ -320,8 +327,11 @@ public static void main(String[] args) {
 			
 			Status = G.TryMoveFromInput(input);
 			if(Status==-2) {
-				System.out.println("Player 1 wins");
+				System.out.println("Player 2 wins");
 				return;
+			}
+			else if(Status==-1) {
+				System.out.print("Illegal move, try again");
 			}
 		}
 		
@@ -621,9 +631,13 @@ public int GetMatchingMove(Piece MyPiece, int[] To) {
 			continue;
 		}
 		
+		
 		if(R.get(i).length>=9) {
 			if(GetPiece(To) instanceof King<?,?,?>) {
 			//Fix pose for castling move 
+			
+			//System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
+			
 			return ReturnStatusMove(R.get(i));
 			}
 			else {
@@ -631,11 +645,12 @@ public int GetMatchingMove(Piece MyPiece, int[] To) {
 			}
 		}
 		
+		
 		//If they match!! ReturnStatusMove of that int ARRAY
 		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2] && MyPiece.CurrentPosition[0]==R.get(i)[4] && MyPiece.CurrentPosition[1]==R.get(i)[5]) {
 			
 			
-			System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
+			//System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
 			
 			
 			return ReturnStatusMove(R.get(i));
@@ -664,7 +679,7 @@ public int TryMoveFromInput(String s) {
 	Piece MyPiece = GetPiece(MyPose);
 	
 	if(MyPiece==null||MyPiece.Player!=Me.Player) {
-		System.out.println("Illegal move, try again");
+		//System.out.println("Illegal move, try again");
 		return -1;
 	}
 	
@@ -688,7 +703,7 @@ public int TryMoveFromInput(String s) {
 		
 	}
 	//Check if king wants to move twice over.. then another castling attempt
-	else if(Math.abs(MyPiece.CurrentPosition[1]-To[1])==2) {
+	else if(Math.abs(MyPiece.CurrentPosition[1]-To[1])==2 && MyPiece instanceof King<?,?,?>) {
 		//If negative dist, then rooke is to right side
 		if(MyPiece.CurrentPosition[1]-To[1]==-2) {
 			int [] getR = {MyPiece.CurrentPosition[0],7};
@@ -700,9 +715,13 @@ public int TryMoveFromInput(String s) {
 			if(MyPiece==null) {
 				return -1;
 			}
+		
+			//Pass some array
+			return this.ReturnStatusMove(((Rooke<int[],int[],int[]>)this.Me.Pieces.get(7)).TryRookeLeftCastle());
+		
 		}
 		//If positive dist, then rooke is to left side
-		else if(MyPiece.CurrentPosition[1]-To[1]==2) {
+		else if(MyPiece.CurrentPosition[1]-To[1]==2 && MyPiece instanceof King<?,?,?>) {
 			int [] getR = {MyPiece.CurrentPosition[0],0};
 			
 			To[0]=MyPiece.CurrentPosition[0];
@@ -710,9 +729,15 @@ public int TryMoveFromInput(String s) {
 			
 			MyPiece = GetPiece(getR);
 			if(MyPiece==null) {
+				//System.out.println("Illegal move, try again");
 				return -1;
 			}
+			
+			//pass some array
+			return this.ReturnStatusMove(((Rooke<int[],int[],int[]>)this.Me.Pieces.get(0)).TryRookeRightCastle());
+	
 		}
+		
 	}
 	
 	}
@@ -747,7 +772,7 @@ public int TryMoveFromInput(String s) {
 	}
 	
 	if(Ret==-1) {
-		System.out.println("Illegal move, try again");
+		//System.out.println("Illegal move, try again");
 	}
 	
 	return Ret;
@@ -953,6 +978,11 @@ private int KillPiece(int[] K) {
 	}
 	else if(MyPiece instanceof Rooke<?,?,?> && K.length>=9) {
 	
+		if(K[0]<=0) {
+			//System.out.println("Illegal move, try again");
+			return -1;
+		}
+		
 		int[] KingPose = {K[7],K[8]};
 		Piece MyKing = GetPiece(KingPose);
 		int[] KingTo = {K[5],K[6]};
@@ -1095,8 +1125,6 @@ private void Castle(Piece MyPiece, Piece MyKing, int[] KingTo, int[] Attack) {
 	System.out.println("FINISHING Castle2...");
 	
 	Me.PrintBoard(this);
-	
-	//System.exit(-1);
 	
 }
 

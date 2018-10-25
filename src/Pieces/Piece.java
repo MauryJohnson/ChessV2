@@ -357,21 +357,22 @@ public abstract class Piece extends Player {
 			King_Original_Pose[0] = King.CurrentPosition[0];
 			King_Original_Pose[1] = King.CurrentPosition[1];
 			
-			for(int j=0;j<i+1;j+=1) {
+			int j=0;
+			
+			for(j=0;j<i+1;j+=1) {
 				P[0] = FP[0];
 				P[1] = FP[1]-1;
 						
 				
-				if(j>=0) {
+				if(j>=1) {
 					//Check for checks in these positions
 					King.CurrentPosition[1]=P[1];
 					System.out.printf("\nIterateThrough8 Case8 King Pose: [%d,%d]\n",King.CurrentPosition[0],King.CurrentPosition[1]);
 					if(MeInCheck()) {
 						
 						King.CurrentPosition[1] = King_Original_Pose[1];
-						
-						//Ret = ApplyMove(FP,P);
-						//Ret[0]=-1;
+				
+						Ret[0]=-1;
 						return Ret;
 					}
 				}
@@ -400,7 +401,9 @@ public abstract class Piece extends Player {
 			King_Original_Pose[0] = King.CurrentPosition[0];
 			King_Original_Pose[1] = King.CurrentPosition[1];
 			
-			for(int j=0;j<i+1;j+=1) {
+			int j;
+		
+			for(j=0;j<i+1;j+=1) {
 				P[0] = FP[0];
 				P[1] = FP[1]+1;
 				
@@ -412,8 +415,7 @@ public abstract class Piece extends Player {
 						
 						King.CurrentPosition[1] = King_Original_Pose[1];
 						
-						//Ret = ApplyMove(FP,P);
-						//Ret[0]=-1;
+						Ret[0]=-1;
 						return Ret;
 					}
 				}
@@ -436,7 +438,7 @@ public abstract class Piece extends Player {
 		}
 		
 		System.out.printf("Iterate Through Case:%d Return Status: %d TO:[%d,%d] Piece:%c FROM:[%d,%d]   \n",Case,Ret[0],Ret[1],Ret[2],Ret[3],Ret[4],Ret[5]);
-
+		
 		return Ret;
 	}
 	
