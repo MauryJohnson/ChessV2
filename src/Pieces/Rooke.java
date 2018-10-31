@@ -2,21 +2,46 @@ package Pieces;
 
 import Moves.*;
 
+/**
+ * 
+ * Rooke piece
+ * 
+ * @author Maury Johnson
+ *
+ * @param <T>
+ * Any type that can describe the coordinates
+ * @param <Q>
+ * Any type that can describe the coordinates
+ * @param <R>
+ * Any type to return special properties about the movement
+ */
 public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q,R>,Right<T,Q,R>,RookeRightCastle<T,Q,R>,RookeLeftCastle<T,Q,R> {
 	
-	//Can castle initially
+	/**
+	 * Indicates if rooke can castle, can castle initially
+	 * @author Maury Johnson
+	 */
 	public boolean CanCastle=true;
 	
-	//Indicate if Rooke is going to castle w/ king
-	//public boolean GoingToCastle = false;
-	
-	//IF EVER IF EVER THAT THIS IS CREATED WITHOUT PIECE CREATED, INITIALIZE PIECE CLASS
+	/**
+	 * IF EVER IF EVER THAT THIS IS CREATED WITHOUT PIECE CREATED, INITIALIZE PIECE CLASS
+	 * @param Player
+	 * Player that piece is assigned to
+	 */
 	public Rooke(char Player) {
 		super(Player);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
+	/**
+	 * Tries to do rooke attack move right
+	 * @param
+	 * int
+	 * @return
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryRight(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -43,6 +68,14 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	}
 
 	@Override
+	/**
+	 * Tries to do rooke attack move left
+	 * @param
+	 * int
+	 * @return
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -69,6 +102,14 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	}
 
 	@Override
+	/**
+	 * Tries to do rooke attack move down
+	 * @param
+	 * int
+	 * @return
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryDown(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -95,6 +136,14 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	}
 
 	@Override
+	/**
+	 * Tries to do rooke attack move up
+	 * @param
+	 * int
+	 * @return
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryUp(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -121,6 +170,14 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	}
 
 	@Override
+	/**
+	 * Tries to do rooke attack move left castle
+	 * @param
+	 * int
+	 * @return
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryRookeLeftCastle() {
 		// TODO Auto-generated method stub
 		//Check if this piece can castle
@@ -173,6 +230,14 @@ public class Rooke<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,
 	}
 
 	@Override
+	/**
+	 * Tries to do rooke attack move right castle
+	 * @param
+	 * int
+	 * @return
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryRookeRightCastle() {
 		// TODO Auto-generated method stub
 		//Check if this piece can castle

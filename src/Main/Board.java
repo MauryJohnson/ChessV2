@@ -2,11 +2,20 @@ package Main;
 
 import Pieces.Piece;
 
+/**
+ * Class For Board
+ * @author Maury Johnson
+ *
+ */
 public class Board extends Game {
-    
+    /**
+     *8 by 8 char board
+     */
 	public static char[][] Board = new char[8][8];
     
-	//
+	/**
+	 * Create the board
+	 */
 	public Board() {
 		super(Me,Opponent);
 		
@@ -62,7 +71,11 @@ public class Board extends Game {
 				}
 	
 	}
-	
+	/**
+	 * Print the board
+	 * @param G
+	 * Given object game
+	 */
 	public static void PrintBoard(Game G) {
 		System.out.println("___PRINT BOARD___");
 		for(int i=0; i<Board.length;i+=1) {
@@ -85,7 +98,15 @@ public class Board extends Game {
 		}
 		System.out.println();
 	}
-	
+	/**
+	 * Copy the board
+	 * @param row
+	 * ...
+	 * @param column
+	 * ...
+	 * @return
+	 * char[][]
+	 */
 	public char[][] CopyBoard(int row, int column){
 		char [][]CP = new char[8][8];
 		for(int i=0;i<Board.length;i+=1) {
@@ -95,7 +116,17 @@ public class Board extends Game {
 		}
 		return CP;
 	}
-	
+	/**
+	 * Copies new board with new position for type
+	 * @param row
+	 * Which row will receive the type
+	 * @param column
+	 * Which column will receive the type
+	 * @param type
+	 * Type to place on board
+	 * @return
+	 * new board char[][]
+	 */
 	public char[][] CopyNewBoard(int row, int column,char type){
 		char [][]CP = new char[8][8];
 		for(int i=0;i<Board.length;i+=1) {
@@ -110,7 +141,15 @@ public class Board extends Game {
 		return CP;
 	}
 	
-	//Chooses which block to insert for a free space!
+	/**
+	 * Chooses which block to insert for a free space!
+	 * @param i
+	 * row
+	 * @param j
+	 * column
+	 * @return
+	 * char corresponding to the block on board
+	 */
 	public char WhichBlock(int i, int j) {
 		// TODO Auto-generated method stub
 		if(i%2==0) {
@@ -137,7 +176,11 @@ public class Board extends Game {
 			
 		}
 	}
-	//For Printing out Board
+	/**
+	 * For Printing out Board
+	 * @return
+	 * String
+	 */
 	public String toString() {
 		String s ="";
 		int i = 0;

@@ -1,30 +1,61 @@
 package Pieces;
 
 import Main.*;
-
+/**
+ * Abstract class piece, extended by all pieces
+ * @author Maury Johnson
+ *
+ */
 public abstract class Piece extends Player {
 
-	//Points to Player K's Pieces, in order to find other ally Pieces in board.
-	//public LinkedList<Piece> Pieces = new LinkedList<Piece>();
-	//Have to know what player piece has
+	/**
+	 * Have to know what player piece has
+	 * @author Maury Johnson
+	 */
 	public char Player;
-	//Instant access of Piece type
+	/**
+	 * Instant access of Piece type
+	 * @author Maury Johnson
+	 */
 	public char Piece;
-	//Have to have current position of piece
+	/**
+	 * integer array indicating current position of piece on boars
+	 * Have to have current position of piece
+	 * @author Maury Johnson
+	 */
 	public int[] CurrentPosition;
 
-	//Constructs Player IF YOU EVER CREATED PIECE W/O PLAYER
+	/**
+	 * Constructs Player IF YOU EVER CREATED PIECE W/O PLAYER
+	 * @param Player
+	 * The type of player
+	 * @author Maury Johnson
+	 */
 	public Piece(char Player) {
 		super(Player);
 		CurrentPosition = new int[2];
 		// TODO Auto-generated constructor stub
 	}
-	
+	/**
+	 * Sets player color that piece has
+	 * @param c
+	 * The type of player to set to piece
+	 * @author Maury Johnson
+	 */
 	public void SetPlayer(char c) {
 		this.Player = c;
 	}
 	
-	//Get Potential Piece enemy, ally, or nothing by looking at the board.
+	/**
+	 * Get Potential Piece enemy, ally, or nothing by looking at the board.
+	 * @param P
+	 * Start Coordinates
+	 * @param P2
+	 * End Coordinates
+	 * @return
+	 * int
+	 * @author Maury Johnson
+	 */
 	public int GetPotentialPiece(int[] P, int[] P2) {
 		//System.out.println("\nBoard to look at\n");
 		//PrintBoard();
@@ -45,12 +76,28 @@ public abstract class Piece extends Player {
 			return ComputeWisePosition(P,P2)+8;
 		}
 	}
-	
+	/**
+	 * Determines if coordinate 1 is equal to coordinate 2
+	 * @param p1
+	 * Coordinate 1
+	 * @param p2
+	 * Coordinate 2
+	 * @return
+	 * boolean
+	 */
 	 public boolean IntEquals(int[] p1, int[] p2) {
 		 return p2[0]==p1[0] && p2[1]==p1[1];
 	 }
 	
-	 //Returns int corresponding to where the next move is, if free space.
+	 /**
+	  * Returns int corresponding to where the next move is, if free space.
+	  * @param p
+	  * Coordinate 1
+	  * @param p2
+	  * Coordinate 2
+	  * @return
+	  * int
+	  */
 	 public int ComputeWisePosition(int[] p, int[] p2) {
 		 //System.out.printf("PWISE FROM: [%d,%d]\n", p[0],p[1]);
 		 
@@ -84,6 +131,16 @@ public abstract class Piece extends Player {
 		 return -1;
 	 }
 
+	 /**
+	  * Returns special status for knight
+	  * @param p
+	  * Knight Coordinate
+	  * @param p2
+	  * Goal Coordinate
+	  * @return
+	  * int
+	  * @author Maury Johnson
+	  */
 	public int KnightStatus(int[] p, int[] p2) {
 		
 		if(p2[1]-p[1]==1) {
@@ -137,7 +194,14 @@ public abstract class Piece extends Player {
 		return -1;
 	}
 
-	//Check if found ally piece in that position
+	/**
+	 * Check if found ally piece in that position
+	 * @param P
+	 * Potential Ally Coordinate
+	 * @return
+	 * boolean
+	 * @author Maury Johnson
+	 */
 	public boolean AllyPiece(int [] P) {
 		
 		for(int i=0;i<Pieces.size();i+=1) {
@@ -148,6 +212,17 @@ public abstract class Piece extends Player {
 		return false;
 	}
 	
+	/**
+	 * @param FP
+	 * First Position
+	 * @param Case
+	 * Indicates Type of move
+	 * @param i
+	 * How far to go for more
+	 * @return
+	 * int[]
+	 * @author Maury Johnson
+	 */
 	protected int[] IterateThrough(int[] FP, int Case,int i) {
 		// TODO Auto-generated method stub
 		
@@ -410,7 +485,7 @@ public abstract class Piece extends Player {
 				if(j>=1) {
 					//Check for checks in these positions
 					King.CurrentPosition[1]=P[1];
-					System.out.printf("\nIterateThrough9 Case9 King Pose: [%d,%d]\n",King.CurrentPosition[0],King.CurrentPosition[1]);
+					//System.out.printf("\nIterateThrough9 Case9 King Pose: [%d,%d]\n",King.CurrentPosition[0],King.CurrentPosition[1]);
 					if(MeInCheck()) {
 						
 						King.CurrentPosition[1] = King_Original_Pose[1];
@@ -437,14 +512,24 @@ public abstract class Piece extends Player {
 			King.CurrentPosition[1] = King_Original_Pose[1];
 		}
 		
-		System.out.printf("Iterate Through Case:%d Return Status: %d TO:[%d,%d] Piece:%c FROM:[%d,%d]   \n",Case,Ret[0],Ret[1],Ret[2],Ret[3],Ret[4],Ret[5]);
+		//System.out.printf("Iterate Through Case:%d Return Status: %d TO:[%d,%d] Piece:%c FROM:[%d,%d]   \n",Case,Ret[0],Ret[1],Ret[2],Ret[3],Ret[4],Ret[5]);
 		
 		return Ret;
 	}
 	
+	/**
+	 * Apply move to nearest edge, returns status of trying to move to that edge
+	 * @param FirstPosition
+	 * The First Position
+	 * @param NextPosition
+	 * The Next Position
+	 * @return
+	 * int[]
+	 * @author Maury Johnson
+	 */
 	public int[] ApplyMove(int[] FirstPosition,int[] NextPosition) {
 		
-		System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",FirstPosition[0],FirstPosition[1],NextPosition[0],NextPosition[1]);
+		//System.out.printf("\n-------------NEXT MOVE-------------\n\nFROM:[%d,%d] TO: [%d,%d]\n",FirstPosition[0],FirstPosition[1],NextPosition[0],NextPosition[1]);
 		
 		int[] Ret = new int[6];
 		//Return status keeps track of current player
@@ -458,7 +543,7 @@ public abstract class Piece extends Player {
 		
 		//Bounds check
 		if(NextPosition[0]<0||NextPosition[0]>7||NextPosition[1]<0||NextPosition[1]>7||FirstPosition[0]<0||FirstPosition[1]>7||FirstPosition[1]<0||FirstPosition[1]>7) {
-			System.out.println("Position out of bounds ApplyMove2");
+			//System.out.println("Position out of bounds ApplyMove2");
 			Ret[0] = -1;
 			//Ret = new int[6];
 			//Ret[0]=-1;
@@ -470,20 +555,33 @@ public abstract class Piece extends Player {
 		//KillPiece(R);
 		return Ret;
 	}
-
+	
+	/**
+	 * Sets the field piece to the type given
+	 * @param c
+	 * Piece type to set to
+	 * @author Maury Johnson
+	 */
 	public void SetPiece(char c) {
 		// TODO Auto-generated method stub
 		this.Piece = c;
 	}
 	
-	//Given type character, get piece from current player of piece
+	/**
+	 * Given type character, get piece from current player of piece
+	 * @param c
+	 * the type of piece
+	 * @return
+	 * Piece
+	 * @author Maury Johnson
+	 */
 	public Piece GetPieceFromType(char c) {
 		
 		for(int i=0;i<super.Pieces.size();i+=1) {
 		
 		if(super.Pieces.get(i).Piece==c) {
 		
-			System.out.printf("\nGot %c @[%d,%d] FROM Player: %c\n",Pieces.get(i).Piece,Pieces.get(i).CurrentPosition[0],Pieces.get(i).CurrentPosition[1],Player);
+			//System.out.printf("\nGot %c @[%d,%d] FROM Player: %c\n",Pieces.get(i).Piece,Pieces.get(i).CurrentPosition[0],Pieces.get(i).CurrentPosition[1],Player);
 			
 			return super.Pieces.get(i);
 		}

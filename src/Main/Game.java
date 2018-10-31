@@ -12,31 +12,22 @@ import Pieces.*;
  *
  */
 /**
- *
- * @class Game
  * Game is class used to play the game chess
  * @author Maury Johnson
  *
  */
 public class Game {
 	/**
-	 * @field Me
 	 * Me is object Player used in game and it stores info about current player
 	 * @author Maury Johnson
 	 */
 	public static Player Me;
 	/**
-	 * @field Opponent
 	 * Opponent is object Player used in game and it stored info about the current opponent
 	 * @author Maury Johnson
 	 */
 	public static Player Opponent;
 	/**
-	 * {@link Game#Opponent}
-	 * Hello
-	 */
-	/**
-	 * @contructor Game
 	 * Game constructor takes Player objects and then stores it to its
 	 * fields Me and Opponent
 	 * @param P1
@@ -51,11 +42,9 @@ public class Game {
 	}
 	
 /**
- * @main
  * Main is where game is started
- * @return 
- * void
  * @param args
+ * Arguments given to main
  * @author Maury Johnson
  */
 public static void main(String[] args) {
@@ -63,14 +52,13 @@ public static void main(String[] args) {
 
 	
 	/**
-	 * @method Board
 	 * This creates a board [8][8]
 	 * @author Maury Johnson
 	 */
 	new Board();
 	
 	/**
-	 * @constructor Player
+	 *  Player
 	 * CREATE PLAYER 1
 	 * @author Maury Johnson
     */
@@ -82,7 +70,7 @@ public static void main(String[] args) {
 	 */
 	P1.INIT();
 	System.out.println();
-	/**@constructor Player
+	/** Player
 	 * CREATE PLAYER 2
 	 * @author Maury Johnson
 	 */
@@ -110,7 +98,7 @@ public static void main(String[] args) {
 	*/
 	
 	/**
-	 * @constructor Game
+	 *  Game
 	 * Start New Game
 	 * @author Maury Johnson
 	 */
@@ -342,17 +330,22 @@ public static void main(String[] args) {
 	 * While game has not ended
 	 */
 	while(!End){
-		/**
-		 * Set status of input to -1
-		 * @author Maury Johnson
-		 */
-		Status = -1;
 		
 		/**
 		 * Print board for player 1
 		 * @author Maury Johnson
 		 */
 		P2.PrintBoard(G);
+		
+		if(Status==1) {
+			System.out.println("check");
+		}
+		
+		/**
+		 * Follow same procedure for status for player 2
+		 * @author Maury Johnson
+		 */
+		Status = -1;
 		
 		/**
 		 * while invalid input/move
@@ -414,7 +407,10 @@ public static void main(String[] args) {
 		 * @author Maury Johnson
 		 */
 		else if(Status==-1) {
-			System.out.print("Illegal move, try again");
+			System.out.println("Illegal move, try again");
+		}
+		else if(Status==1) {
+			System.out.println("check");
 		}
 		}
 		/**
@@ -457,17 +453,23 @@ public static void main(String[] args) {
 		G.SwapPlayer();
 		}
 		
-		/**
-		 * Follow same procedure for status for player 2
-		 * @author Maury Johnson
-		 */
-		Status = -1;
 		
 		/**
 		 * Print the board out for player 2
 		 * @author Maury Johnson
 		 */
 		P1.PrintBoard(G);
+		
+		if(Status==1) {
+			System.out.println("check");
+		}
+		
+		/**
+		 * Follow same procedure for status for player 2
+		 * @author Maury Johnson
+		 */
+		Status = -1;
+		
 		
 		/**
 		 * While invalid move or bad input
@@ -525,7 +527,10 @@ public static void main(String[] args) {
 			 * @author Maury Johnson
 			 */
 			else if(Status==-1) {
-				System.out.print("Illegal move, try again");
+				System.out.println("Illegal move, try again");
+			}
+			else if(Status==1) {
+				System.out.println("check");
 			}
 		}
 			
@@ -572,8 +577,6 @@ private boolean StaleMate() {
  * Of the new state that's generated,
  * So this is a precaution in order to not lose information that the pawn can move twice,
  * as long as it's located in the correct position
- * @return 
- * void
  * @author Maury Johnson
  */
 private void WrapUpCases() {
@@ -586,8 +589,6 @@ private void WrapUpCases() {
 
 /**
  * Print the players me and opponent
- * @return 
- * void
  * @author Maury Johnson
  */
 public void PrintPlayers() {
@@ -601,8 +602,6 @@ public void PrintPlayers() {
  * as a parameter 
  * @param R
  * Int[] Array returned from trymove
- * @return 
- * void
  * @author Maury Johnson
  */
 public void ReturnStatus(int[] R) {
@@ -642,10 +641,7 @@ public void ReturnStatus(int[] R) {
 }
 
 /**
- *@method PrintAllPieceStatus 
  * PRint all the statuses of pieces
- *@return 
- *void
  *@author Maury Johnson
  */
 public void PrintAllPieceStatus() {
@@ -665,7 +661,7 @@ public void PrintAllPieceStatus() {
  * @param IT
  * Position to get piece object
  * @return 
- * Piece
+ * Piece Object
  * @author Maury Johnson
  */
 public Piece GetPiece(int[] IT){
@@ -696,7 +692,6 @@ public Piece GetPiece(int[] IT){
 }
 
 /**
- * @method ReturnStatusMove
  * Returns status of movement tried, including check/checkmate, requires
  * method Trymove as parameter, which is implemented from a piece
  * @param R
@@ -797,10 +792,7 @@ public int ReturnStatusMove(int[] R) {
 }
 
 /**
- * @method SwapPlayer
  * Swap field Player Me with field Opponent, Player1->Player2
- *@return 
- *void
  *@author Maury Johnson
  */
 public void SwapPlayer() {
@@ -811,7 +803,6 @@ public void SwapPlayer() {
 }
 
 /**
- * @method ToInt
  * Convert character for board coordinate to integer
  * @param c
  * Character to be parsed
@@ -849,12 +840,11 @@ public int ToInt(char c) {
 }
 
 /**
- * @method ParseInput
  * Parse input from player and return appropriate coordinates, if it is a valid input
  * @param s
  * String to be parsed
  * @return
- * int[]
+ * int []
  * @author Maury Johnson
  */
 public int[] ParseInput(String s) {
@@ -996,7 +986,6 @@ public int[] ParseInput(String s) {
 }
 
 /**
- * @method GetMatchingMove
  * Get Movement which matches the movement of piece to the coordinate in row,col format
  * @param MyPiece
  * Object Piece
@@ -1356,12 +1345,11 @@ public int TryMoveFromInput(String s) {
 }
 
 /**
- * @method NewPiece
  * Created new piece for current player, given character
  * @param s
  * Piece type
- * @return 
- * Piece
+ * @return
+ * Piece object
  * @author Maury Johnson
 */
 private Piece NewPiece(char s) {
@@ -1403,14 +1391,11 @@ private Piece NewPiece(char s) {
 	return null;
 }
 /**
- * @method ReplacePiece
  * Replaces one piece with another piece, preferrably a pawn with another piece
  * @param NewPiece
  * Piece object to replace old piece
  * @param OldPiece
  * Piece object to be replaced 
- * @return 
- * void
  * @author Maury Johnson
  */
 private void ReplacePiece(Piece NewPiece,Piece OldPiece) {
@@ -1442,7 +1427,6 @@ private void ReplacePiece(Piece NewPiece,Piece OldPiece) {
 }
 
 /**
- * @method KillPiece
  * Destroy piece in board
  * @param K
  * int[] Contains information about current piece position and final piece position
@@ -1512,11 +1496,11 @@ private int KillPiece(int[] K) {
 			 */
 			EnPassant(MyPiece,K,true);	
 			
-			/**
+			
 			System.out.println("Enpass Test:");
 			Me.PrintBoard(this);
-			* @author Maury Johnson
-			*/
+			// @author Maury Johnson
+			
 			
 			}
 			else {
@@ -1527,11 +1511,11 @@ private int KillPiece(int[] K) {
 			Attack(Me,MyType,MyPosition,MyPiece,AttackedPiece,Attack);
 			}
 			
-			/**
+			
 			System.out.println("Board to look at KillPiece1");
 			Me.PrintBoard(this);
-			@author Maury Johnson
-			*/
+			//@author Maury Johnson
+			//*/
 			
 			/**
 			 * Check if this leads to a check on your end...
@@ -1617,6 +1601,9 @@ private int KillPiece(int[] K) {
 				 * return 1 indicating opponent is in check
 				 * @author Maury Johnson
 				 */
+				
+					//System.out.println("check");
+				
 				return 1;
 			}
 				/**
@@ -1758,11 +1745,11 @@ private int KillPiece(int[] K) {
 		 * @author Maury Johnson
 		 */
 		EnPassant(MyPiece,K,true);	
-		/**	
+		
 		System.out.println("Enpass Test:");
 		Me.PrintBoard(this);
-		@author Maury Johnson
-		*/	
+		//@author Maury Johnson
+		//*/	
 	}	
 	else if(MyPiece instanceof Rooke<?,?,?> && K.length>=9) {
 		
@@ -1777,11 +1764,11 @@ private int KillPiece(int[] K) {
 	
 	}
 	
-	/**
+	
 	System.err.println("Board to look at KillPiece5");
 	Me.PrintBoard(this);
-	@author Maury Johnson
-	*/
+	//@author Maury Johnson
+	//*/
 	
 	/**
 	 * Check if this leads to a check on your end...
@@ -1878,6 +1865,7 @@ private int KillPiece(int[] K) {
 		 * return status indicating opponent is in check
 		 * @author Maury Johnson
 		 */
+		//System.out.println("check");
 		return 1;
 	}
 	
@@ -1929,7 +1917,6 @@ private int KillPiece(int[] K) {
 }
 
 /**
- * @method Castle
  * Perform Castling move **ONly can be performed when not in check
  * @param MyPiece
  * Piece that I will use for castle
@@ -1939,8 +1926,6 @@ private int KillPiece(int[] K) {
  * Piece that king will travel to
  * @param Attack
  * Position for rooke to attack
- * @return 
- * void
  * @author Maury Johnson
  */
 private void Castle(Piece MyPiece, Piece MyKing, int[] KingTo, int[] Attack) {
@@ -1967,17 +1952,16 @@ private void Castle(Piece MyPiece, Piece MyKing, int[] KingTo, int[] Attack) {
 	MyKing.CurrentPosition[1] = KingTo[1];
 	Me.Board = 	Me.CopyNewBoard(KingTo[0], KingTo[1],MyKing.Piece);
 
-	/**
-	 * Finish Castle move
-	 * System.out.println("FINISHING Castle2...");
-	 * @author Maury Johnson
+
+	 // Finish Castle move
+	  System.out.println("FINISHING Castle2...");
+	 // @author Maury Johnson
 	
 	Me.PrintBoard(this);
-	*/
+	//*/
 }
 
 /**
- * @method EnPassant
  * For Kill/Attack Enemy functions
  * Check if it's pawn and also if EnPassent is active, then continue with EnPassent move
  * @param MyPiece
@@ -1986,8 +1970,6 @@ private void Castle(Piece MyPiece, Piece MyKing, int[] KingTo, int[] Attack) {
  * Position to go to
  * @param Try
  * If this is a try move or not
- * @return 
- * void
 @author Maury Johnson
 */
 private void EnPassant(Piece MyPiece,int[] Attack, boolean Try) {
@@ -2050,7 +2032,6 @@ private void EnPassant(Piece MyPiece,int[] Attack, boolean Try) {
 }
 
 /**
- * @method RestoreEnPassant
  * Restore state before enpassant movement, good for checking if this puts you in check
  * @param MyPiece
  * Piece to restore position before enpassant was done
@@ -2110,8 +2091,6 @@ private void RestoreEnPassant(Piece MyPiece,Piece AttackedPiece,int[] Attack) {
  * If Pawn already moved, pawn cannot move two units any more
  * @param MyPiece
  * Piece that should be pawn
- * @return 
- * void
  * @author Maury Johnson
  */
 private void PawnFirstMoveCheck(Piece MyPiece) {
@@ -2123,7 +2102,7 @@ private void PawnFirstMoveCheck(Piece MyPiece) {
 	
 }
 
-/** @method CastleCheck
+/** 
  * Checks if king or rooke moved
  * If king moves, none of the pieces can castle with king
  *	Otherwise, the rooke that moved will no longer be able to castle with king
@@ -2148,7 +2127,6 @@ private void CastleCheck(Piece MyPiece) {
 }
 
 /**
- * @method NoneCanCastle
  * Set all of my rooke's CanCastle to false, because king moved
  * @author Maury Johnson
  */
@@ -2165,7 +2143,7 @@ private void NoneCanCastle() {
 
 /**
  * Check if Player Me is in check
- * @return 
+ * @return
  * boolean
  */
 public boolean MeInCheck() {
@@ -2194,12 +2172,12 @@ public boolean MeInCheck() {
 		if(KingAttacked(R)) {
 			/**My King is attacked
 			 * 
-			 
+			 */
 			System.err.printf("\n %c IS In Check MeInCheck2 \n PROOF:\n\n",Me.Player);
 			Me.PrintBoard(this);
 			//Opponent.PrintBoard(this);
-			 * * @author Maury Johnson
-			 */			 
+			 //* * @author Maury Johnson
+			 //*/			 
 			return true;
 		}
 		/**
@@ -2209,22 +2187,22 @@ public boolean MeInCheck() {
 	}
 	
 	/**
+	*/
 	System.err.printf("\n %c(Me) Not In Check Because of My move MeInCheck3 -- ctrl-f -> find next Restore\n PROOF:\n\n",Me.Player);
 	Me.PrintBoard(this);
 	//Opponent.PrintBoard(this);
 	//Player Me is not in check, return false
-	 * @author Maury Johnson
-	 */
+	 // @author Maury Johnson
+	 ///
 	return false;	
 }
 
 
 /**
- * @method KingAttacked
  * Check if opponent king is attacked given list of all positions that are attacked
  * @param R
  * Linked List of all moves
- * @return 
+ * @return
  * boolean
  * @author Maury Johnson
  */
@@ -2341,7 +2319,6 @@ public boolean KingAttacked(LinkedList<int[]> R) {
 }
 
 /**
- * @method MoveStillCheck
  * Check if movement doesn't change check
  * @param R
  * Linked list of all returned status of tried moves
@@ -2381,10 +2358,10 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		 * @author Maury Johnson
 		 */
 		if(R.get(i)[0]>=1&&R.get(i)[0]<=16) {
-			/**
+			
 			System.out.println("Board to look at");
-			Opponent.PrintBoard();	
-			*/
+			Opponent.PrintBoard(this);	
+			
 		/**
 		 * My Position
 		 */
@@ -2398,7 +2375,10 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 			Attack[k-1]=R.get(i)[k];
 		}
 		
-		//My Piece
+		/**My Piece
+		 * 
+		 * @author Maury Johnson
+		 */
 		Piece MyPiece = GetPiece(MyPosition);
 		
 		if(MyPiece==null) {
@@ -2412,11 +2392,15 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		//My Type
 		char MyType = MyPiece.Piece;
 		
-		//There exists a piece to attack
+		/**
+		 * There exists a piece to attack
+		 * @author Maury Johnson
+		 */
 		if(AttackedPiece!=null) {
 		
 		
-		/*
+		/**
+		 * Previous version
 		//Set Board Attacked Position to MyType of Piece
 		Opponent.Board=Opponent.CopyNewBoard(Attack[0],Attack[1],MyType);
 		
@@ -2429,31 +2413,53 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 		//Set AttackedPiece Position to -1,-1, GONE
 		int [] n = {-1,-1};
 		AttackedPiece.CurrentPosition =n;
+		@author Maury Johnson
 		*/
 			
 		Attack(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
 		
-		//Print Board after changes made
+		/**
+		 * Print Board after changes made
+		 * @author Maury Johnson
+		 */
 		System.err.println("Board to look at MoveStillCheck1");
 		Opponent.PrintBoard(this);
 		
-		//If, after changes made, opponent is not in check
+		/**
+		 * IF after move opponent not in check
+		 * @author Maury Johnson
+		 */
 		if(!OpponentInCheck()) {
-			//Found solution to get out of check
+			/**
+			 * Found solution to get out of check
+			 * @author Maury Johnson
+			 */
 			
-			//Restore original positions for MyPiece and AttackedPiece
+			/**
+			 * Restore original positions for MyPiece and AttackedPiece
+			 * @author Maury Johnson
+			 */
 			Restore(Opponent, MyType, MyPosition, MyPiece, AttackedPiece, Attack);
 			
 			System.err.println("Board Restored And Can Get Out OF Check MoveStillCheck1");
 			Opponent.PrintBoard(this);
 			
-			//Found solution, king not still in check
+			/**
+			 * Found solution, king not still in check
+			 * @author Maury Johnson
+			 */
 			return false;
 		}
 		else {
-			//Still in check, keep looking at each moveset for each piece
+			/**
+			 * Still in check, keep looking at each moveset for each piece
+			 * @author Maury Johnson
+			 */
 			
-			//Restore previous board
+			/**
+			 * Restore previous board
+			 * @author Maury Johnson
+			 */
 			Restore(Opponent, MyType, MyPosition, MyPiece,AttackedPiece, Attack);
 			System.err.println("Board Restored MoveStillCheck2");
 			Opponent.PrintBoard(this);
@@ -2541,7 +2547,10 @@ private boolean MoveStillCheck(LinkedList<int[]> R) {
 	return true;
 }
 
-//After turn of next player done, loop through and remove piece status that just moved twice
+/**
+ * After turn of next player done, loop through and remove piece status that just moved twice
+ * @author Maury Johnson
+ */
 private void FinishMoveTwice() {
 	
 	/*
@@ -2608,7 +2617,6 @@ private void Attack(Player Opponent, char OpponentType,int[] MyPosition,Piece My
 }
 
 /**
- * @method Restore
  * Restore previous state of board
  * 
  * @param Opponent
@@ -2623,8 +2631,6 @@ private void Attack(Player Opponent, char OpponentType,int[] MyPosition,Piece My
  * Piece object AttackedPiece to restore if it exists
  * @param Attack
  * int[] position attacked
- * @return
- * void
  */
 private void Restore(Player Opponent, char OpponentType,int[] MyPosition,Piece MyPiece, Piece AttackedPiece, int[] Attack) {
 	
@@ -2642,9 +2648,9 @@ private void Restore(Player Opponent, char OpponentType,int[] MyPosition,Piece M
 }
 
 /**
- *@method OpponentCheckMate
  *If not exists case when there is not a check mate for all opponent's piece moves, then opponent is in check mate 
  * @return
+ * boolean
  *
 @author Maury Johnson
 */
@@ -2686,7 +2692,6 @@ private boolean OpponentCheckMate() {
 }
 
 /**
- * @method AddAllSets
  * Add all possible movements for each piece
  * @param R
  * Linked list to store all piece all moves
@@ -2694,8 +2699,6 @@ private boolean OpponentCheckMate() {
  * Piece to move
  * @param InnerStack
  * Indicates of this method is called from a method that does not call this method again
- * @return
- * void
  * @author Maury Johnson
  */
 private void AddAllSets(LinkedList<int[]> R,Piece P,boolean InnerStack) {
@@ -2850,10 +2853,9 @@ private void AddAllSets(LinkedList<int[]> R,Piece P,boolean InnerStack) {
 }
 
 /**
- * @method OpponentInCheck
  * Check if opponent is in check
  * @return
- * void
+ * boolean
  * @author Maury Johnson
  */
 public boolean OpponentInCheck() {

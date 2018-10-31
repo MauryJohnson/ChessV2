@@ -6,19 +6,49 @@ import Pieces.*;
 
 //"Piece_NAME" is part of package
 //Handles both players Black and White
+/**
+ * @author Maury Johnson
+ *
+ */
 public class Player extends Board{
+/**
+ * @field Player
+ * Indicated color of player
+ * @author Maury Johnson
+ */
 char Player;
-//LinkedList of Pieces
+
+/**
+ * LinkedList of Pieces
+ * Contains the list of all Piece objects
+ * @author Maury Johnson
+ */
 public LinkedList<Piece> Pieces = new LinkedList<Piece>();
 
+/**
+ * Returns the char[][]board that the playe used
+ * @return
+ * the board
+ * @author Maury Johnson
+ */
 public char[][] GetBoard(){
 	return Board;
 }
-
+/**
+ * Sets this player's color
+ * @param Player
+ * This character will indicate which player it is
+ * void
+ * @author Maury Johnson
+ */
 public Player(char Player) {
 	this.Player = Player;
 }
 
+/**
+ * Initializes all of player's pieces on board
+ * @author Maury Johnson
+ */
 public  void INIT() {
 	//LinkedList<Piece> P;
 	
@@ -44,11 +74,6 @@ public  void INIT() {
 		P.add(new Pawn<int[],int[],int[]>(Player));
 		
 		
-		
-		/* ADD MORE PIECES LATER */
-	//Set correct player for piece
-	//P[i].Pieces = P;
-	//int k=0;
 	for(int i=0;i<P.size();i+=1) {
 		P.get(i).SetPlayer(Player);
 		P.get(i).Pieces = P;

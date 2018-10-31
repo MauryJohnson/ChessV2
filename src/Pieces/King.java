@@ -2,11 +2,33 @@ package Pieces;
 
 import Moves.*;
 
+/**
+ * King piece
+ * 
+ * @author Maury Johnson
+ *
+ * @param <T>
+ * Any type that can describe the coordinates
+ * @param <Q>
+ * Any type that can describe the coordinates
+ * @param <R>
+ * Any type to return special properties about the movement
+ */
 public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q,R>,Right<T,Q,R>,UpLeft<T,Q,R>,UpRight<T,Q,R>,DownLeft<T,Q,R>,DownRight<T,Q,R>{
 
-	//Can castle initially
+	/**
+	 * Indicates if King can castle
+	 * Can castle initially
+	 * @author Maury Johnson
+	 */
 	public boolean CanCastle =  true;
 	
+	/**
+	 * Set Up king with player
+	 * @param Player
+	 * Player that piece is assigned to
+	 * @author Maury Johnson
+	 */
 	public King(char Player) {
 		super(Player);
 		// TODO Auto-generated constructor stub
@@ -14,6 +36,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 
 
 	@Override
+	/**
+	 * With King, try move down and right
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryDownRight(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -40,6 +70,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
+	/**
+	 * With King, try move down and left
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryDownLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -66,6 +104,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
+	/**
+	 * With King, try move up and right
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryUpRight(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -92,6 +138,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
+	/**
+	 * With King, try move up and left
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryUpLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -118,6 +172,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
+	/**
+	 * With King, try move right
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryRight(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -144,6 +206,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
+	/**
+	 * With King, try move left
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryLeft(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -170,6 +240,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
+	/**
+	 * With King, try move down
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryDown(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
@@ -196,6 +274,14 @@ public class King<T,Q,R> extends Piece implements Up<T,Q,R>,Down<T,Q,R>,Left<T,Q
 	}
 
 	@Override
+	/**
+	 * With King, try move up
+	 * @param i
+	 * How far to go
+	 * @return 
+	 * R
+	 * @author Maury Johnson
+	 */
 	public R TryUp(int i) {
 		// TODO Auto-generated method stub
 		int[] Ret = null;
