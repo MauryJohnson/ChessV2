@@ -2,6 +2,11 @@
 
 package Main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import Pieces.*;
@@ -45,11 +50,37 @@ public class Game {
  * Main is where game is started
  * @param args
  * Arguments given to main
+ * give argument path to test file, create list of each line, send it to parser
  * @author Maury Johnson
- */
+ */	
 public static void main(String[] args) {
 	
-
+	LinkedList<String> MyArgs = null;
+	if(args.length==1) {
+		//Open file from path
+		MyArgs  = new LinkedList<String>();
+		try {
+			/*
+			Path currentRelativePath = Paths.get("");
+			String s = currentRelativePath.toAbsolutePath().toString();
+			System.out.println("Current relative path is: " + s);
+			*/
+			System.out.printf("Path %s",args[0]);
+			BufferedReader reader = new BufferedReader(new FileReader("."+args[0]));
+			String line = null;
+			
+			do {
+		    line = reader.readLine();
+			if(line!=null) 
+			MyArgs.add(line);	
+			}while(line!=null);
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
 	
 	/**
 	 * This creates a board [8][8]
@@ -312,7 +343,7 @@ public static void main(String[] args) {
 	 * Stores the input
 	 * @author Maury Johnson
 	 */
-	String input;
+	String input = null;
 	
 	/**
 	 * Switch First Player to white
@@ -325,6 +356,8 @@ public static void main(String[] args) {
 	 * @author Maury Johnson
 	 */
 	boolean FirstTurn = true;
+	
+	int Idx = 0;
 	
 	/**
 	 * While game has not ended
@@ -351,13 +384,21 @@ public static void main(String[] args) {
 		 * while invalid input/move
 		 * @author Maury Johnson
 		 */
+		System.out.println("White turn");
 		while(Status==-1) {
 		
 		/**
 		 * Get input from the next entered line by player
 		 * @author Maury Johnson
 		 */
+		if(MyArgs==null || Idx>=MyArgs.size())
 		input = s.nextLine();
+		else {
+		System.out.println("Enter to continue");
+		s.nextLine();
+		input = MyArgs.get(Idx);
+		Idx+=1;
+		}
 		
 		/**System.out.printf("Input: %s\n", input);
 		 * Check if the input is "resign", then other player wins and leave program
@@ -398,7 +439,8 @@ public static void main(String[] args) {
 		 * @author Maury Johnson
 		 */
 		if(Status==-2) {
-			System.out.println("Player 1 wins");
+			System.out.println("Checkmate");
+			System.out.println("White wins");
 			return;
 		}
 		/**
@@ -470,7 +512,7 @@ public static void main(String[] args) {
 		 */
 		Status = -1;
 		
-		
+		System.out.println("Black turn");
 		/**
 		 * While invalid move or bad input
 		 * @author Maury Johnson
@@ -480,7 +522,15 @@ public static void main(String[] args) {
 			 * Get input from player 2
 			 * @author Maury Johnson
 			 */
+			if(MyArgs==null|| Idx>=MyArgs.size())
 			input = s.nextLine();
+			else {
+			System.out.println("Enter to continue");
+			s.nextLine();
+	
+			input = MyArgs.get(Idx);
+			Idx+=1;
+			}
 			//System.out.printf("Input: %s\n", input);
 			/**
 			 * IF player 2 enters resign, print player 1 wins and return
@@ -519,7 +569,8 @@ public static void main(String[] args) {
 			 * @author Maury Johnson
 			 */
 			if(Status==-2) {
-				System.out.println("Player 2 wins");
+				System.out.println("Checkmate");
+				System.out.println("Black wins");
 				return;
 			}
 			/**
@@ -755,8 +806,10 @@ public int ReturnStatusMove(int[] R) {
 			 * return status of trying to attack piece
 			 * @author Maury Johnson
 			 */
+			System.out.printf("K length:%d",K.length);
 			ret = KillPiece(K);			
-				
+			System.out.printf("return status: %d", ret);
+			
 			/**
 			 * @method OpponentCheckMate
 			 * CHECK MATE CHECK done on opponent
@@ -768,6 +821,9 @@ public int ReturnStatusMove(int[] R) {
 				System.out.printf("\nOpponent:%c is in CHECKMATE! %c WINS!\n",Opponent.Player,Me.Player);
 				Me.PrintBoard(this);
 				return -2;
+			}
+			else if(ret==1) {
+				return 1;
 			}
 		}
 		/**
@@ -848,6 +904,9 @@ public int ToInt(char c) {
  * @author Maury Johnson
  */
 public int[] ParseInput(String s) {
+	
+	System.out.printf("\n"
+			+ "String:%s",s);
 	
 	/**
 	System.out.printf("String Size: %d",s.length());
@@ -1081,7 +1140,6 @@ public int GetMatchingMove(Piece MyPiece, int[] To) {
 		 */
 		if(To[0]==R.get(i)[1] && To[1]==R.get(i)[2] && MyPiece.CurrentPosition[0]==R.get(i)[4] && MyPiece.CurrentPosition[1]==R.get(i)[5]) {
 			
-			
 			/**System.out.printf("\nGOT IT! GetMatchingMove2 TO [%d,%d] FROM [%d,%d]\n",To[0],To[1],R.get(i)[4],R.get(i)[5]);
 			 *@author Maury Johnson 
 			 */
@@ -1187,6 +1245,9 @@ public int TryMoveFromInput(String s) {
 	 * @author Maury Johnson
 	 */
 	else if(Math.abs(MyPiece.CurrentPosition[1]-To[1])==2 && MyPiece instanceof King<?,?,?>) {
+		
+		System.out.println("CASTLE");
+		
 		/**
 		 * If negative dist, then rooke is to right side
 		 * @author Maury Johnson
@@ -1228,7 +1289,8 @@ public int TryMoveFromInput(String s) {
 			 * @author Maury Johnson
 			 *
 			 */
-			return this.ReturnStatusMove(((Rooke<int[],int[],int[]>)this.Me.Pieces.get(7)).TryRookeLeftCastle());
+			
+			return ReturnStatusMove(((Rooke<int[],int[],int[]>)Me.Pieces.get(7)).TryRookeLeftCastle());
 		
 		}
 		/**
@@ -1272,7 +1334,7 @@ public int TryMoveFromInput(String s) {
 			 * @author Maury Johnson
 			 *
 			 */
-			return this.ReturnStatusMove(((Rooke<int[],int[],int[]>)this.Me.Pieces.get(0)).TryRookeRightCastle());
+			return ReturnStatusMove(((Rooke<int[],int[],int[]>)Me.Pieces.get(0)).TryRookeRightCastle());
 		}
 		
 	}
@@ -1337,6 +1399,9 @@ public int TryMoveFromInput(String s) {
 			Queen<int[],int[],int[]> Q = new Queen<int[],int[],int[]>(Me.Player);
 			Q.Piece = 'Q';
 			ReplacePiece(Q,MyPiece);
+			}
+			if(OpponentInCheck()) {
+				return 1;
 			}
 		}
 	}
@@ -1410,7 +1475,10 @@ private void ReplacePiece(Piece NewPiece,Piece OldPiece) {
 	 * Completely remove data of old piece from linked list
 	 * @author Maury Johnson
 	 */
-	Me.Pieces.remove(OldPiece);
+	//Me.Pieces.remove(OldPiece);
+	
+	OldPiece.CurrentPosition[0] = -1;
+	OldPiece.CurrentPosition[1] = -1;
 	
 	/**
 	 * New Board
@@ -1709,8 +1777,10 @@ private int KillPiece(int[] K) {
 	 * @author Maury Johnson
 	 */
 	else if(MyPiece instanceof Rooke<?,?,?> && K.length>=9) {
-	
-		if(K[0]<=0) {
+	 
+		System.out.printf("\n K[0]:%d \n",K[0]);
+	    	
+		if(K[0]<0) {
 			//System.out.println("Illegal move, try again");
 			return -1;
 		}
@@ -2712,10 +2782,14 @@ private void AddAllSets(LinkedList<int[]> R,Piece P,boolean InnerStack) {
 				In Piece abstract class
 				 *@author Maury Johnson 
 				 */
-				if(InnerStack) {
-				R.add(((Rooke<int[],int[],int[]>)P).TryRookeLeftCastle());
 				
+				if(InnerStack) {
+				boolean Restore = ((Rooke<int[],int[],int[]>)P).CanCastle;
+				R.add(((Rooke<int[],int[],int[]>)P).TryRookeLeftCastle());
+				((Rooke<int[],int[],int[]>)P).CanCastle = Restore;
+				//((Rooke<int[],int[],int[]>)P).CanCastle;
 				R.add(((Rooke<int[],int[],int[]>)P).TryRookeRightCastle());
+				((Rooke<int[],int[],int[]>)P).CanCastle = Restore;
 				}
 				
 				for(int i=0;i<=7;i+=1)
